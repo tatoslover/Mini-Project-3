@@ -1,32 +1,32 @@
-const connectToDatabase = require('../../database/db');
-const { BreedCache, ApiUsage } = require('../../database/models');
+const { connectToDatabase } = require("../../database/db");
+const { BreedCache, ApiUsage } = require("../../database/models");
 
 exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Content-Type": "application/json",
   };
 
   // Handle preflight OPTIONS request
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: '',
+      body: "",
     };
   }
 
   // Only allow GET requests
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Method not allowed',
+        error: "Method not allowed",
         timestamp: new Date().toISOString(),
       }),
     };
@@ -36,7 +36,7 @@ exports.handler = async (event, context) => {
     // Parse query parameters
     const queryParams = event.queryStringParameters || {};
     const limit = Math.min(parseInt(queryParams.limit) || 10, 20);
-    const timeframe = queryParams.timeframe || 'week';
+    const timeframe = queryParams.timeframe || "week";
 
     // Connect to database
     await connectToDatabase();
@@ -46,20 +46,20 @@ exports.handler = async (event, context) => {
     const now = new Date();
 
     switch (timeframe) {
-      case 'today':
+      case "today":
         const today = new Date();
         today.setHours(0, 0, 0, 0);
         dateFilter = { timestamp: { $gte: today } };
         break;
-      case 'week':
-        const weekAgo = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+      case "week":
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         dateFilter = { timestamp: { $gte: weekAgo } };
         break;
-      case 'month':
-        const monthAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
+      case "month":
+        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
         dateFilter = { timestamp: { $gte: monthAgo } };
         break;
-      case 'all':
+      case "all":
       default:
         dateFilter = {};
         break;
@@ -70,31 +70,31 @@ exports.handler = async (event, context) => {
       {
         $match: {
           ...dateFilter,
-          'metadata.breed': { $exists: true, $ne: null }
-        }
+          "metadata.breed": { $exists: true, $ne: null },
+        },
       },
       {
         $group: {
-          _id: '$metadata.breed',
+          _id: "$metadata.breed",
           viewCount: { $sum: 1 },
           searchCount: {
             $sum: {
-              $cond: [{ $eq: ['$endpoint', '/search'] }, 1, 0]
-            }
+              $cond: [{ $eq: ["$endpoint", "/search"] }, 1, 0],
+            },
           },
-          avgResponseTime: { $avg: '$responseTime' },
-          lastViewed: { $max: '$timestamp' }
-        }
+          avgResponseTime: { $avg: "$responseTime" },
+          lastViewed: { $max: "$timestamp" },
+        },
       },
       { $sort: { viewCount: -1 } },
-      { $limit: limit * 2 } // Get more to account for inactive breeds
+      { $limit: limit * 2 }, // Get more to account for inactive breeds
     ]);
 
     // Get breed details and calculate popularity scores
     const breedPromises = popularityData.map(async (pop, index) => {
       const breedData = await BreedCache.findOne({
         breed: pop._id,
-        'metadata.isActive': true
+        "metadata.isActive": true,
       });
 
       if (!breedData) return null;
@@ -105,16 +105,16 @@ exports.handler = async (event, context) => {
 
       // Calculate if trending up (simplified - compare recent activity)
       const recentViews = await ApiUsage.countDocuments({
-        'metadata.breed': pop._id,
-        timestamp: { $gte: new Date(now.getTime() - (24 * 60 * 60 * 1000)) }
+        "metadata.breed": pop._id,
+        timestamp: { $gte: new Date(now.getTime() - 24 * 60 * 60 * 1000) },
       });
 
       const olderViews = await ApiUsage.countDocuments({
-        'metadata.breed': pop._id,
+        "metadata.breed": pop._id,
         timestamp: {
-          $gte: new Date(now.getTime() - (48 * 60 * 60 * 1000)),
-          $lt: new Date(now.getTime() - (24 * 60 * 60 * 1000))
-        }
+          $gte: new Date(now.getTime() - 48 * 60 * 60 * 1000),
+          $lt: new Date(now.getTime() - 24 * 60 * 60 * 1000),
+        },
       });
 
       const trendingUp = recentViews > olderViews;
@@ -129,13 +129,13 @@ exports.handler = async (event, context) => {
         trendingUp,
         lastViewed: pop.lastViewed,
         imageCount: breedData.metadata?.imageCount || 0,
-        subBreeds: breedData.subBreed ? [breedData.subBreed] : []
+        subBreeds: breedData.subBreed ? [breedData.subBreed] : [],
       };
     });
 
     // Wait for all breed data and filter out nulls
     const breeds = (await Promise.all(breedPromises))
-      .filter(breed => breed !== null)
+      .filter((breed) => breed !== null)
       .slice(0, limit);
 
     // Re-assign ranks after filtering
@@ -151,30 +151,35 @@ exports.handler = async (event, context) => {
       metadata: {
         totalAnalyzed: popularityData.length,
         dateRange: {
-          from: timeframe === 'all' ? 'beginning' : new Date(now.getTime() - getTimeframeMs(timeframe)).toISOString(),
-          to: now.toISOString()
-        }
+          from:
+            timeframe === "all"
+              ? "beginning"
+              : new Date(
+                  now.getTime() - getTimeframeMs(timeframe),
+                ).toISOString(),
+          to: now.toISOString(),
+        },
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Log the request
     try {
       await new ApiUsage({
-        endpoint: '/breeds/popular',
-        method: 'GET',
+        endpoint: "/breeds/popular",
+        method: "GET",
         responseTime: Date.now() - context.callbackWaitsForEmptyEventLoop,
         statusCode: 200,
-        userAgent: event.headers['user-agent'],
+        userAgent: event.headers["user-agent"],
         metadata: {
           timeframe,
           limit,
-          resultCount: breeds.length
+          resultCount: breeds.length,
         },
-        timestamp: new Date()
+        timestamp: new Date(),
       }).save();
     } catch (logError) {
-      console.warn('Failed to log API usage:', logError);
+      console.warn("Failed to log API usage:", logError);
     }
 
     return {
@@ -182,15 +187,14 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify(response, null, 2),
     };
-
   } catch (error) {
-    console.error('Error in breeds-popular function:', error);
+    console.error("Error in breeds-popular function:", error);
 
     const errorResponse = {
       success: false,
-      error: 'Failed to retrieve popular breeds',
+      error: "Failed to retrieve popular breeds",
       message: error.message,
-      timeframe: event.queryStringParameters?.timeframe || 'week',
+      timeframe: event.queryStringParameters?.timeframe || "week",
       timestamp: new Date().toISOString(),
     };
 
@@ -205,11 +209,11 @@ exports.handler = async (event, context) => {
 // Helper function to get timeframe in milliseconds
 function getTimeframeMs(timeframe) {
   switch (timeframe) {
-    case 'today':
+    case "today":
       return 24 * 60 * 60 * 1000;
-    case 'week':
+    case "week":
       return 7 * 24 * 60 * 60 * 1000;
-    case 'month':
+    case "month":
       return 30 * 24 * 60 * 60 * 1000;
     default:
       return 0;

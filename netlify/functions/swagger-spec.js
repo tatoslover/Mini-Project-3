@@ -33,701 +33,1238 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Load the swagger specification
-    const swaggerPath = path.join(process.cwd(), "swagger", "swagger.json");
-    let swaggerSpec;
-
-    try {
-      const swaggerContent = fs.readFileSync(swaggerPath, "utf8");
-      swaggerSpec = JSON.parse(swaggerContent);
-    } catch (fileError) {
-      // If file doesn't exist, return a basic spec
-      swaggerSpec = {
-        openapi: "3.0.0",
-        info: {
-          title: "Barkend API",
-          version: "1.0.0",
-          description:
-            "A comprehensive RESTful API for dog breed information and images",
-          contact: {
-            name: "Barkend Team",
-          },
+    // Return structured live API specification
+    const swaggerSpec = {
+      openapi: "3.0.0",
+      info: {
+        title: "Barkend API - Live Documentation",
+        version: "1.0.0",
+        description:
+          "🐕 **Live API Documentation** - Complete REST API for dog breed management with MongoDB Atlas integration, serverless functions, and comprehensive CRUD operations.\n\n**Features:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration\n- Real-time caching\n- Full CRUD operations\n- Analytics and statistics\n\n[View raw JSON](swagger/swagger.json)",
+      },
+      servers: [
+        {
+          url: "/.netlify/functions",
+          description: "Netlify Functions - Live",
         },
-        servers: [
-          {
-            url:
-              event.headers["x-forwarded-proto"] + "://" + event.headers.host,
-            description: "Production server",
-          },
-        ],
-        paths: {
-          "/.netlify/functions/health": {
-            get: {
-              summary: "Health Check",
-              description: "Returns the health status of the API server",
-              tags: ["System"],
-              responses: {
-                200: {
-                  description: "Server is healthy",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          status: { type: "string", example: "healthy" },
-                          service: { type: "string", example: "Barkend API" },
-                          version: { type: "string", example: "1.0.0" },
-                          database: {
-                            type: "object",
-                            properties: {
-                              status: { type: "string", example: "connected" },
-                              type: {
-                                type: "string",
-                                example: "MongoDB Atlas",
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/breeds": {
-            get: {
-              summary: "Get All Breeds",
-              description: "Retrieves all available dog breeds with sub-breeds",
-              tags: ["Breeds"],
-              responses: {
-                200: {
-                  description: "List of all dog breeds",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          count: { type: "integer", example: 98 },
-                          data: {
-                            type: "array",
-                            items: {
-                              type: "object",
-                              properties: {
-                                id: {
-                                  type: "string",
-                                  example: "affenpinscher",
-                                },
-                                name: {
-                                  type: "string",
-                                  example: "affenpinscher",
-                                },
-                                breed: {
-                                  type: "string",
-                                  example: "affenpinscher",
-                                },
-                                subBreed: { type: "string", nullable: true },
-                                displayName: {
-                                  type: "string",
-                                  example: "Affenpinscher",
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/random": {
-            get: {
-              summary: "Get Random Dog Images",
-              description: "Returns random dog images from various breeds",
-              tags: ["Images"],
-              parameters: [
-                {
-                  name: "count",
-                  in: "query",
-                  description: "Number of images to return (max 50)",
-                  required: false,
-                  schema: {
-                    type: "integer",
-                    minimum: 1,
-                    maximum: 50,
-                    default: 1,
-                  },
-                },
-                {
-                  name: "breed",
-                  in: "query",
-                  description: "Specific breed to get random images from",
-                  required: false,
-                  schema: {
-                    type: "string",
-                  },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Random dog images",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          count: { type: "integer", example: 1 },
-                          data: {
-                            type: "object",
-                            properties: {
-                              url: { type: "string", format: "uri" },
-                              id: { type: "string" },
-                              breed: { type: "string" },
-                              breedDisplayName: { type: "string" },
-                              timestamp: {
-                                type: "string",
-                                format: "date-time",
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/cache-status": {
-            get: {
-              summary: "Get Cache Status",
-              description:
-                "Returns cache health, statistics, and performance metrics",
-              tags: ["Cache Management"],
-              responses: {
-                200: {
-                  description: "Cache status and statistics",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          status: { type: "string", example: "healthy" },
-                          data: {
-                            type: "object",
-                            properties: {
-                              totalBreeds: { type: "integer", example: 98 },
-                              cachedImages: { type: "integer", example: 1247 },
-                              cacheHitRate: { type: "number", example: 95.2 },
-                              lastSync: { type: "string", format: "date-time" },
-                              storage: {
-                                type: "object",
-                                properties: {
-                                  size: { type: "string", example: "45.2 MB" },
-                                  usage: { type: "number", example: 78.5 },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/search": {
-            get: {
-              summary: "Search Breeds",
-              description:
-                "Search dog breeds by name, characteristics, or popularity",
-              tags: ["Search & Discovery"],
-              parameters: [
-                {
-                  name: "q",
-                  in: "query",
-                  description: "Search query",
-                  required: true,
-                  schema: { type: "string" },
-                },
-                {
-                  name: "limit",
-                  in: "query",
-                  description: "Maximum number of results",
-                  required: false,
-                  schema: {
-                    type: "integer",
-                    minimum: 1,
-                    maximum: 50,
-                    default: 10,
-                  },
-                },
-                {
-                  name: "sortBy",
-                  in: "query",
-                  description: "Sort results by field",
-                  required: false,
-                  schema: {
-                    type: "string",
-                    enum: ["name", "popularity", "relevance"],
-                    default: "relevance",
-                  },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Search results",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          query: { type: "string", example: "labrador" },
-                          count: { type: "integer", example: 3 },
-                          results: {
-                            type: "array",
-                            items: {
-                              type: "object",
-                              properties: {
-                                breed: { type: "string", example: "labrador" },
-                                displayName: {
-                                  type: "string",
-                                  example: "Labrador",
-                                },
-                                subBreeds: {
-                                  type: "array",
-                                  items: { type: "string" },
-                                },
-                                popularity: { type: "integer", example: 85 },
-                                imageCount: { type: "integer", example: 42 },
-                                relevanceScore: {
-                                  type: "number",
-                                  example: 0.95,
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/breeds-popular": {
-            get: {
-              summary: "Get Popular Breeds",
-              description: "Returns the most viewed and requested dog breeds",
-              tags: ["Search & Discovery"],
-              parameters: [
-                {
-                  name: "limit",
-                  in: "query",
-                  description: "Number of breeds to return",
-                  required: false,
-                  schema: {
-                    type: "integer",
-                    minimum: 1,
-                    maximum: 20,
-                    default: 10,
-                  },
-                },
-                {
-                  name: "timeframe",
-                  in: "query",
-                  description: "Time period for popularity metrics",
-                  required: false,
-                  schema: {
-                    type: "string",
-                    enum: ["today", "week", "month", "all"],
-                    default: "week",
-                  },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Popular breeds list",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          timeframe: { type: "string", example: "week" },
-                          data: {
-                            type: "array",
-                            items: {
-                              type: "object",
-                              properties: {
-                                rank: { type: "integer", example: 1 },
-                                breed: { type: "string", example: "labrador" },
-                                displayName: {
-                                  type: "string",
-                                  example: "Labrador",
-                                },
-                                viewCount: { type: "integer", example: 1247 },
-                                searchCount: { type: "integer", example: 456 },
-                                popularityScore: {
-                                  type: "number",
-                                  example: 92.5,
-                                },
-                                trendingUp: { type: "boolean", example: true },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-          "/.netlify/functions/breed-analytics": {
-            get: {
-              summary: "Get Breed Analytics",
-              description:
-                "Returns detailed analytics and metrics for a specific breed",
-              tags: ["Analytics"],
-              parameters: [
-                {
-                  name: "breed",
-                  in: "query",
-                  description: "Breed name",
-                  required: true,
-                  schema: { type: "string" },
-                },
-                {
-                  name: "detailed",
-                  in: "query",
-                  description: "Include detailed analytics",
-                  required: false,
-                  schema: { type: "boolean", default: false },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Breed analytics data",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          breed: { type: "string", example: "labrador" },
-                          data: {
-                            type: "object",
-                            properties: {
-                              overview: {
-                                type: "object",
-                                properties: {
-                                  totalViews: {
-                                    type: "integer",
-                                    example: 1247,
-                                  },
-                                  totalSearches: {
-                                    type: "integer",
-                                    example: 456,
-                                  },
-                                  imagesAvailable: {
-                                    type: "integer",
-                                    example: 42,
-                                  },
-                                  lastViewed: {
-                                    type: "string",
-                                    format: "date-time",
-                                  },
-                                  popularityRank: {
-                                    type: "integer",
-                                    example: 3,
-                                  },
-                                },
-                              },
-                              trends: {
-                                type: "object",
-                                properties: {
-                                  dailyViews: {
-                                    type: "array",
-                                    items: { type: "integer" },
-                                  },
-                                  weeklyGrowth: {
-                                    type: "number",
-                                    example: 15.5,
-                                  },
-                                  peakHour: { type: "integer", example: 14 },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-                404: {
-                  description: "Breed not found",
-                },
-              },
-            },
-          },
-          "/.netlify/functions/admin-breeds": {
-            get: {
-              summary: "Get All Breeds",
-              description: "Returns all breeds with details",
-              tags: ["CRUD Operations"],
-              parameters: [],
-              responses: {
-                200: {
-                  description: "All breeds with admin details",
-                },
-              },
-            },
-            post: {
-              summary: "Add New Breed",
-              description: "Adds a new breed to the database",
-              tags: ["CRUD Operations"],
-              parameters: [],
-              requestBody: {
-                required: true,
-                content: {
-                  "application/json": {
-                    schema: {
-                      type: "object",
-                      required: ["breed", "displayName"],
-                      properties: {
-                        breed: { type: "string", example: "newfoundland" },
-                        displayName: {
-                          type: "string",
-                          example: "Newfoundland",
-                        },
-                        subBreeds: { type: "array", items: { type: "string" } },
-                        description: { type: "string" },
-                        characteristics: {
-                          type: "object",
-                          properties: {
-                            size: { type: "string", example: "large" },
-                            energy: { type: "string", example: "moderate" },
-                            temperament: { type: "string", example: "gentle" },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-              responses: {
-                201: {
-                  description: "Breed created successfully",
-                },
-                400: {
-                  description: "Invalid breed data",
-                },
-
-                409: {
-                  description: "Breed already exists",
-                },
-              },
-            },
-            put: {
-              summary: "Update Breed",
-              description: "Updates an existing breed in the database",
-              tags: ["CRUD Operations"],
-              parameters: [],
-              requestBody: {
-                required: true,
-                content: {
-                  "application/json": {
-                    schema: {
-                      type: "object",
-                      required: ["breed"],
-                      properties: {
-                        breed: { type: "string", example: "labrador" },
-                        displayName: {
-                          type: "string",
-                          example: "Labrador Retriever",
-                        },
-                        subBreeds: { type: "array", items: { type: "string" } },
-                        description: { type: "string" },
-                        isActive: { type: "boolean", example: true },
-                      },
-                    },
-                  },
-                },
-              },
-              responses: {
-                200: {
-                  description: "Breed updated successfully",
-                },
-                400: {
-                  description: "Invalid breed data",
-                },
-
-                404: {
-                  description: "Breed not found",
-                },
-              },
-            },
-            delete: {
-              summary: "Delete Breed",
-              description: "Removes a breed from the database",
-              tags: ["CRUD Operations"],
-              parameters: [
-                {
-                  name: "breed",
-                  in: "query",
-                  description: "Breed name to delete",
-                  required: true,
-                  schema: { type: "string" },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Breed deleted successfully",
-                },
-
-                404: {
-                  description: "Breed not found",
-                },
-              },
-            },
-          },
-          "/.netlify/functions/stats": {
-            get: {
-              summary: "Get Statistics",
-              description: "Returns server statistics and usage metrics",
-              tags: ["System"],
-              parameters: [
-                {
-                  name: "timeframe",
-                  in: "query",
-                  description: "Time period for statistics",
-                  required: false,
-                  schema: {
-                    type: "string",
-                    enum: ["today", "week", "month", "all"],
-                    default: "today",
-                  },
-                },
-                {
-                  name: "detailed",
-                  in: "query",
-                  description: "Include detailed analytics",
-                  required: false,
-                  schema: {
-                    type: "boolean",
-                    default: false,
-                  },
-                },
-              ],
-              responses: {
-                200: {
-                  description: "Server statistics",
-                  content: {
-                    "application/json": {
-                      schema: {
-                        type: "object",
-                        properties: {
-                          success: { type: "boolean", example: true },
-                          timeframe: { type: "string", example: "today" },
-                          data: {
-                            type: "object",
-                            properties: {
-                              overview: {
-                                type: "object",
-                                properties: {
-                                  totalRequests: { type: "integer" },
-                                  uniqueUsers: { type: "integer" },
-                                  imagesServed: { type: "integer" },
-                                  breedsViewed: { type: "integer" },
-                                  favoritesAdded: { type: "integer" },
-                                  totalBreeds: { type: "integer" },
-                                },
-                              },
-                              performance: {
-                                type: "object",
-                                properties: {
-                                  averageResponseTime: { type: "integer" },
-                                  uptime: {
-                                    type: "object",
-                                    properties: {
-                                      display: { type: "string" },
-                                      hours: { type: "integer" },
-                                      minutes: { type: "integer" },
-                                      seconds: { type: "integer" },
-                                    },
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      },
-                    },
-                  },
-                },
-              },
-            },
-          },
-        },
-        tags: [
-          {
-            name: "System",
-            description: "System health and monitoring endpoints",
-          },
-          {
-            name: "Breeds",
-            description: "Dog breed information and search",
-          },
-          {
-            name: "Images",
-            description: "Dog image retrieval endpoints",
-          },
-          {
-            name: "Cache Management",
-            description: "Database cache status and management",
-          },
-          {
-            name: "Search & Discovery",
-            description: "Search and discovery endpoints for breeds",
-          },
-          {
-            name: "Analytics",
-            description: "Breed analytics and performance metrics",
-          },
-          {
-            name: "CRUD Operations",
+      ],
+      paths: {
+        "/health": {
+          get: {
+            summary: "Health Check",
             description:
-              "Create, Read, Update, Delete operations for breed management",
+              "Returns the health status of the API server and database connection",
+            tags: ["System"],
+            responses: {
+              200: {
+                description: "Server is healthy",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/HealthResponse",
+                    },
+                  },
+                },
+              },
+              500: {
+                description: "Server error",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
           },
-        ],
-      };
-    }
-
-    // Update server URL to match current environment
-    if (swaggerSpec.servers) {
-      swaggerSpec.servers[0].url =
-        event.headers["x-forwarded-proto"] + "://" + event.headers.host;
-    }
+        },
+        "/stats": {
+          get: {
+            summary: "System Statistics",
+            description:
+              "Returns comprehensive system metrics and performance statistics",
+            tags: ["System"],
+            responses: {
+              200: {
+                description: "System statistics",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/StatsResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/cache/status": {
+          get: {
+            summary: "Cache Status",
+            description:
+              "Returns cache performance metrics and storage information",
+            tags: ["System"],
+            responses: {
+              200: {
+                description: "Cache status information",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/CacheStatusResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/breeds": {
+          get: {
+            summary: "Get All Breeds",
+            description:
+              "Retrieves all available dog breeds with sub-breeds from MongoDB Atlas",
+            tags: ["Breed Info"],
+            responses: {
+              200: {
+                description: "List of all dog breeds",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/BreedsResponse",
+                    },
+                  },
+                },
+              },
+              500: {
+                description: "Server error",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/breeds/popular": {
+          get: {
+            summary: "Get Popular Breeds",
+            description:
+              "Returns the most popular dog breeds based on usage analytics",
+            tags: ["Breed Info"],
+            parameters: [
+              {
+                name: "limit",
+                in: "query",
+                description: "Number of breeds to return",
+                required: false,
+                schema: {
+                  type: "integer",
+                  minimum: 1,
+                  maximum: 20,
+                  default: 10,
+                },
+              },
+              {
+                name: "timeframe",
+                in: "query",
+                description: "Time period for popularity calculation",
+                required: false,
+                schema: {
+                  type: "string",
+                  enum: ["today", "week", "month", "all"],
+                  default: "week",
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Popular breeds list",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/PopularBreedsResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/random": {
+          get: {
+            summary: "Get Random Breed Images",
+            description: "Returns random images for a specified breed",
+            tags: ["Breed Info"],
+            parameters: [
+              {
+                name: "breed",
+                in: "query",
+                description: "The breed name",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+              {
+                name: "count",
+                in: "query",
+                description: "Number of images to return",
+                required: false,
+                schema: {
+                  type: "integer",
+                  minimum: 1,
+                  maximum: 50,
+                  default: 1,
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Random breed images",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/RandomImagesResponse",
+                    },
+                  },
+                },
+              },
+              400: {
+                description: "Invalid breed parameter",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/search": {
+          get: {
+            summary: "Search Breeds",
+            description: "Search for dog breeds by name with relevance scoring",
+            tags: ["Breed Info"],
+            parameters: [
+              {
+                name: "q",
+                in: "query",
+                description: "Search query",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+              {
+                name: "limit",
+                in: "query",
+                description: "Number of results to return",
+                required: false,
+                schema: {
+                  type: "integer",
+                  minimum: 1,
+                  maximum: 50,
+                  default: 10,
+                },
+              },
+              {
+                name: "sortBy",
+                in: "query",
+                description: "Sort results by",
+                required: false,
+                schema: {
+                  type: "string",
+                  enum: ["relevance", "name", "popularity"],
+                  default: "relevance",
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Search results",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/SearchResponse",
+                    },
+                  },
+                },
+              },
+              400: {
+                description: "Invalid search query",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/dogs": {
+          get: {
+            summary: "Get All Dogs",
+            description: "Retrieve all dogs from the database",
+            tags: ["CRUD Operations"],
+            responses: {
+              200: {
+                description: "List of all dogs",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/DogsResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          post: {
+            summary: "Create New Dog",
+            description: "Add a new dog to the database with validation",
+            tags: ["CRUD Operations"],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/CreateDogRequest",
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Dog created successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/DogResponse",
+                    },
+                  },
+                },
+              },
+              400: {
+                description: "Validation error",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/dogs/{id}": {
+          get: {
+            summary: "Get Dog by ID",
+            description: "Retrieve a specific dog by its ID",
+            tags: ["CRUD Operations"],
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                description: "Dog ID",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Dog details",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/DogResponse",
+                    },
+                  },
+                },
+              },
+              404: {
+                description: "Dog not found",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          put: {
+            summary: "Update Dog",
+            description: "Update an existing dog's information",
+            tags: ["CRUD Operations"],
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                description: "Dog ID",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+            ],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/UpdateDogRequest",
+                  },
+                },
+              },
+            },
+            responses: {
+              200: {
+                description: "Dog updated successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/DogResponse",
+                    },
+                  },
+                },
+              },
+              404: {
+                description: "Dog not found",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+              400: {
+                description: "Validation error",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          delete: {
+            summary: "Delete Dog",
+            description: "Remove a dog from the database",
+            tags: ["CRUD Operations"],
+            parameters: [
+              {
+                name: "id",
+                in: "path",
+                description: "Dog ID",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Dog deleted successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/SuccessResponse",
+                    },
+                  },
+                },
+              },
+              404: {
+                description: "Dog not found",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        "/admin/breeds": {
+          get: {
+            summary: "Get All Breeds (Admin)",
+            description:
+              "Administrative endpoint to retrieve all breeds including inactive ones",
+            tags: ["CRUD Operations"],
+            parameters: [
+              {
+                name: "limit",
+                in: "query",
+                description: "Number of breeds to return",
+                required: false,
+                schema: {
+                  type: "integer",
+                  minimum: 1,
+                  maximum: 100,
+                  default: 50,
+                },
+              },
+              {
+                name: "includeInactive",
+                in: "query",
+                description: "Include inactive breeds",
+                required: false,
+                schema: {
+                  type: "boolean",
+                  default: false,
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Admin breeds list",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/AdminBreedsResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          post: {
+            summary: "Create New Breed",
+            description: "Add a new breed to the database",
+            tags: ["CRUD Operations"],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/CreateBreedRequest",
+                  },
+                },
+              },
+            },
+            responses: {
+              201: {
+                description: "Breed created successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/BreedResponse",
+                    },
+                  },
+                },
+              },
+              400: {
+                description: "Validation error",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+              409: {
+                description: "Breed already exists",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          put: {
+            summary: "Update Breed",
+            description: "Update an existing breed's information",
+            tags: ["CRUD Operations"],
+            requestBody: {
+              required: true,
+              content: {
+                "application/json": {
+                  schema: {
+                    $ref: "#/components/schemas/UpdateBreedRequest",
+                  },
+                },
+              },
+            },
+            responses: {
+              200: {
+                description: "Breed updated successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/BreedResponse",
+                    },
+                  },
+                },
+              },
+              404: {
+                description: "Breed not found",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+          delete: {
+            summary: "Delete Breed",
+            description: "Soft delete a breed (mark as inactive)",
+            tags: ["CRUD Operations"],
+            parameters: [
+              {
+                name: "breed",
+                in: "query",
+                description: "Breed name to delete",
+                required: true,
+                schema: {
+                  type: "string",
+                },
+              },
+            ],
+            responses: {
+              200: {
+                description: "Breed deactivated successfully",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/SuccessResponse",
+                    },
+                  },
+                },
+              },
+              404: {
+                description: "Breed not found",
+                content: {
+                  "application/json": {
+                    schema: {
+                      $ref: "#/components/schemas/ErrorResponse",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+      components: {
+        schemas: {
+          HealthResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              status: {
+                type: "string",
+                example: "healthy",
+              },
+              timestamp: {
+                type: "string",
+                format: "date-time",
+              },
+              database: {
+                type: "string",
+                example: "connected",
+              },
+              uptime: {
+                type: "string",
+                example: "1h 23m 45s",
+              },
+            },
+          },
+          StatsResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              data: {
+                type: "object",
+                properties: {
+                  imagesServed: {
+                    type: "integer",
+                    example: 15342,
+                  },
+                  breedsViewed: {
+                    type: "integer",
+                    example: 195,
+                  },
+                  apiRequests: {
+                    type: "integer",
+                    example: 847,
+                  },
+                  averageResponseTime: {
+                    type: "number",
+                    example: 125.5,
+                  },
+                },
+              },
+            },
+          },
+          BreedsResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              count: {
+                type: "integer",
+                example: 172,
+              },
+              data: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    id: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    name: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    breed: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    displayName: {
+                      type: "string",
+                      example: "Labrador",
+                    },
+                    subBreed: {
+                      type: "string",
+                      nullable: true,
+                      example: null,
+                    },
+                    imageCount: {
+                      type: "integer",
+                      example: 25,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          DogsResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              count: {
+                type: "integer",
+                example: 5,
+              },
+              data: {
+                type: "array",
+                items: {
+                  $ref: "#/components/schemas/Dog",
+                },
+              },
+            },
+          },
+          DogResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              data: {
+                $ref: "#/components/schemas/Dog",
+              },
+            },
+          },
+          Dog: {
+            type: "object",
+            properties: {
+              id: {
+                type: "string",
+                example: "60f7b1b9b9b9b9b9b9b9b9b9",
+              },
+              name: {
+                type: "string",
+                example: "Buddy",
+              },
+              breed: {
+                type: "string",
+                example: "labrador",
+              },
+              age: {
+                type: "integer",
+                example: 3,
+              },
+              color: {
+                type: "string",
+                example: "golden",
+              },
+              description: {
+                type: "string",
+                example: "Friendly and energetic dog",
+              },
+              imageUrl: {
+                type: "string",
+                example: "https://example.com/buddy.jpg",
+              },
+              createdAt: {
+                type: "string",
+                format: "date-time",
+              },
+              updatedAt: {
+                type: "string",
+                format: "date-time",
+              },
+            },
+          },
+          CreateDogRequest: {
+            type: "object",
+            required: ["name", "breed"],
+            properties: {
+              name: {
+                type: "string",
+                example: "Buddy",
+              },
+              breed: {
+                type: "string",
+                example: "labrador",
+              },
+              age: {
+                type: "integer",
+                minimum: 0,
+                maximum: 30,
+                example: 3,
+              },
+              color: {
+                type: "string",
+                example: "golden",
+              },
+              description: {
+                type: "string",
+                maxLength: 1000,
+                example: "Friendly and energetic dog",
+              },
+              imageUrl: {
+                type: "string",
+                format: "uri",
+                example: "https://example.com/buddy.jpg",
+              },
+            },
+          },
+          UpdateDogRequest: {
+            type: "object",
+            properties: {
+              name: {
+                type: "string",
+                example: "Buddy",
+              },
+              breed: {
+                type: "string",
+                example: "labrador",
+              },
+              age: {
+                type: "integer",
+                minimum: 0,
+                maximum: 30,
+                example: 3,
+              },
+              color: {
+                type: "string",
+                example: "golden",
+              },
+              description: {
+                type: "string",
+                maxLength: 1000,
+                example: "Friendly and energetic dog",
+              },
+              imageUrl: {
+                type: "string",
+                format: "uri",
+                example: "https://example.com/buddy.jpg",
+              },
+            },
+          },
+          CreateBreedRequest: {
+            type: "object",
+            required: ["breed", "displayName"],
+            properties: {
+              breed: {
+                type: "string",
+                example: "newbreed",
+              },
+              displayName: {
+                type: "string",
+                example: "New Breed",
+              },
+              subBreed: {
+                type: "string",
+                example: "variety",
+              },
+              isActive: {
+                type: "boolean",
+                default: true,
+              },
+            },
+          },
+          UpdateBreedRequest: {
+            type: "object",
+            required: ["breed"],
+            properties: {
+              breed: {
+                type: "string",
+                example: "existingbreed",
+              },
+              displayName: {
+                type: "string",
+                example: "Updated Breed Name",
+              },
+              subBreed: {
+                type: "string",
+                example: "variety",
+              },
+              isActive: {
+                type: "boolean",
+                example: true,
+              },
+            },
+          },
+          BreedResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              data: {
+                type: "object",
+                properties: {
+                  breed: {
+                    type: "string",
+                    example: "labrador",
+                  },
+                  displayName: {
+                    type: "string",
+                    example: "Labrador",
+                  },
+                  subBreed: {
+                    type: "string",
+                    nullable: true,
+                    example: null,
+                  },
+                  isActive: {
+                    type: "boolean",
+                    example: true,
+                  },
+                },
+              },
+            },
+          },
+          AdminBreedsResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              count: {
+                type: "integer",
+                example: 50,
+              },
+              totalCount: {
+                type: "integer",
+                example: 172,
+              },
+              data: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    breedId: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    breed: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    displayName: {
+                      type: "string",
+                      example: "Labrador",
+                    },
+                    isActive: {
+                      type: "boolean",
+                      example: true,
+                    },
+                    viewCount: {
+                      type: "integer",
+                      example: 125,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          SearchResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              query: {
+                type: "string",
+                example: "labrador",
+              },
+              count: {
+                type: "integer",
+                example: 3,
+              },
+              results: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    breed: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    displayName: {
+                      type: "string",
+                      example: "Labrador",
+                    },
+                    relevanceScore: {
+                      type: "number",
+                      example: 0.95,
+                    },
+                    popularity: {
+                      type: "integer",
+                      example: 125,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          PopularBreedsResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              timeframe: {
+                type: "string",
+                example: "week",
+              },
+              count: {
+                type: "integer",
+                example: 10,
+              },
+              data: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    rank: {
+                      type: "integer",
+                      example: 1,
+                    },
+                    breed: {
+                      type: "string",
+                      example: "labrador",
+                    },
+                    displayName: {
+                      type: "string",
+                      example: "Labrador",
+                    },
+                    viewCount: {
+                      type: "integer",
+                      example: 125,
+                    },
+                    popularityScore: {
+                      type: "number",
+                      example: 95.2,
+                    },
+                    trendingUp: {
+                      type: "boolean",
+                      example: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          RandomImagesResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              breed: {
+                type: "string",
+                example: "labrador",
+              },
+              count: {
+                type: "integer",
+                example: 5,
+              },
+              data: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    url: {
+                      type: "string",
+                      example:
+                        "https://images.dog.ceo/breeds/labrador/n02099712_123.jpg",
+                    },
+                    verified: {
+                      type: "boolean",
+                      example: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+          CacheStatusResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              status: {
+                type: "string",
+                example: "healthy",
+              },
+              data: {
+                type: "object",
+                properties: {
+                  totalBreeds: {
+                    type: "integer",
+                    example: 172,
+                  },
+                  cachedImages: {
+                    type: "integer",
+                    example: 1250,
+                  },
+                  hitRate: {
+                    type: "number",
+                    example: 95.2,
+                  },
+                  storage: {
+                    type: "object",
+                    properties: {
+                      size: {
+                        type: "string",
+                        example: "45.6 MB",
+                      },
+                      usage: {
+                        type: "number",
+                        example: 45.6,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          SuccessResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: true,
+              },
+              message: {
+                type: "string",
+                example: "Operation completed successfully",
+              },
+              timestamp: {
+                type: "string",
+                format: "date-time",
+              },
+            },
+          },
+          ErrorResponse: {
+            type: "object",
+            properties: {
+              success: {
+                type: "boolean",
+                example: false,
+              },
+              error: {
+                type: "string",
+                example: "Error message",
+              },
+              message: {
+                type: "string",
+                example: "Detailed error description",
+              },
+              timestamp: {
+                type: "string",
+                format: "date-time",
+              },
+            },
+          },
+        },
+      },
+      tags: [
+        {
+          name: "System",
+          description: "System health, monitoring, and performance endpoints",
+        },
+        {
+          name: "Breed Info",
+          description: "Dog breed information, search, and discovery endpoints",
+        },
+        {
+          name: "CRUD Operations",
+          description:
+            "Create, Read, Update, Delete operations for data management",
+        },
+      ],
+    };
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(swaggerSpec, null, 2),
+      body: JSON.stringify(swaggerSpec),
     };
   } catch (error) {
-    console.error("Error in swagger-spec function:", error);
+    console.error("Error generating swagger spec:", error);
 
     const errorResponse = {
       success: false,
-      error: "Failed to retrieve API specification",
+      error: "Failed to generate API specification",
       message: error.message,
       timestamp: new Date().toISOString(),
     };

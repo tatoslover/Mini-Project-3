@@ -1,32 +1,32 @@
-const connectToDatabase = require('../../database/db');
-const { BreedCache, ApiUsage } = require('../../database/models');
+const { connectToDatabase } = require("../../database/db");
+const { BreedCache, ApiUsage } = require("../../database/models");
 
 exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Content-Type': 'application/json',
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Content-Type": "application/json",
   };
 
   // Handle preflight OPTIONS request
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: '',
+      body: "",
     };
   }
 
   // Only allow GET requests
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Method not allowed',
+        error: "Method not allowed",
         timestamp: new Date().toISOString(),
       }),
     };
@@ -37,7 +37,7 @@ exports.handler = async (event, context) => {
     const queryParams = event.queryStringParameters || {};
     const searchQuery = queryParams.q;
     const limit = Math.min(parseInt(queryParams.limit) || 10, 50);
-    const sortBy = queryParams.sortBy || 'relevance';
+    const sortBy = queryParams.sortBy || "relevance";
 
     // Validate required parameters
     if (!searchQuery || searchQuery.trim().length === 0) {
@@ -46,7 +46,7 @@ exports.handler = async (event, context) => {
         headers,
         body: JSON.stringify({
           success: false,
-          error: 'Search query (q) parameter is required',
+          error: "Search query (q) parameter is required",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -62,17 +62,17 @@ exports.handler = async (event, context) => {
     pipeline.push({
       $match: {
         $and: [
-          { 'metadata.isActive': true },
+          { "metadata.isActive": true },
           {
             $or: [
-              { name: { $regex: searchQuery, $options: 'i' } },
-              { breed: { $regex: searchQuery, $options: 'i' } },
-              { displayName: { $regex: searchQuery, $options: 'i' } },
-              { subBreed: { $regex: searchQuery, $options: 'i' } }
-            ]
-          }
-        ]
-      }
+              { name: { $regex: searchQuery, $options: "i" } },
+              { breed: { $regex: searchQuery, $options: "i" } },
+              { displayName: { $regex: searchQuery, $options: "i" } },
+              { subBreed: { $regex: searchQuery, $options: "i" } },
+            ],
+          },
+        ],
+      },
     });
 
     // Add calculated fields for relevance and formatting
@@ -81,25 +81,63 @@ exports.handler = async (event, context) => {
         relevanceScore: {
           $add: [
             // Exact match bonus
-            { $cond: [{ $eq: ['$breed', searchQuery.toLowerCase()] }, 1.0, 0] },
+            { $cond: [{ $eq: ["$breed", searchQuery.toLowerCase()] }, 1.0, 0] },
             // Starts with bonus
-            { $cond: [{ $regexMatch: { input: '$breed', regex: `^${searchQuery}`, options: 'i' } }, 0.8, 0] },
+            {
+              $cond: [
+                {
+                  $regexMatch: {
+                    input: "$breed",
+                    regex: `^${searchQuery}`,
+                    options: "i",
+                  },
+                },
+                0.8,
+                0,
+              ],
+            },
             // Contains bonus
-            { $cond: [{ $regexMatch: { input: '$breed', regex: searchQuery, options: 'i' } }, 0.5, 0] },
+            {
+              $cond: [
+                {
+                  $regexMatch: {
+                    input: "$breed",
+                    regex: searchQuery,
+                    options: "i",
+                  },
+                },
+                0.5,
+                0,
+              ],
+            },
             // Display name bonus
-            { $cond: [{ $regexMatch: { input: '$displayName', regex: searchQuery, options: 'i' } }, 0.3, 0] },
+            {
+              $cond: [
+                {
+                  $regexMatch: {
+                    input: "$displayName",
+                    regex: searchQuery,
+                    options: "i",
+                  },
+                },
+                0.3,
+                0,
+              ],
+            },
             // Popularity bonus (normalized)
-            { $divide: ['$popularity.viewCount', 1000] }
-          ]
+            { $divide: ["$popularity.viewCount", 1000] },
+          ],
         },
         subBreedsArray: {
           $cond: [
-            { $and: [{ $ne: ['$subBreed', null] }, { $ne: ['$subBreed', ''] }] },
-            ['$subBreed'],
-            []
-          ]
-        }
-      }
+            {
+              $and: [{ $ne: ["$subBreed", null] }, { $ne: ["$subBreed", ""] }],
+            },
+            ["$subBreed"],
+            [],
+          ],
+        },
+      },
     });
 
     // Project final fields
@@ -107,24 +145,24 @@ exports.handler = async (event, context) => {
       $project: {
         breed: 1,
         displayName: 1,
-        subBreeds: '$subBreedsArray',
-        popularity: '$popularity.viewCount',
-        imageCount: '$metadata.imageCount',
+        subBreeds: "$subBreedsArray",
+        popularity: "$popularity.viewCount",
+        imageCount: "$metadata.imageCount",
         relevanceScore: 1,
-        lastUpdated: '$updatedAt'
-      }
+        lastUpdated: "$updatedAt",
+      },
     });
 
     // Sort based on sortBy parameter
     let sortStage = {};
     switch (sortBy) {
-      case 'name':
+      case "name":
         sortStage = { displayName: 1 };
         break;
-      case 'popularity':
+      case "popularity":
         sortStage = { popularity: -1, displayName: 1 };
         break;
-      case 'relevance':
+      case "relevance":
       default:
         sortStage = { relevanceScore: -1, popularity: -1, displayName: 1 };
         break;
@@ -146,34 +184,34 @@ exports.handler = async (event, context) => {
       sortBy,
       count: results.length,
       searchTime: `${searchTime}ms`,
-      results: results.map(result => ({
+      results: results.map((result) => ({
         breed: result.breed,
         displayName: result.displayName,
         subBreeds: result.subBreeds || [],
         popularity: result.popularity || 0,
         imageCount: result.imageCount || 0,
-        relevanceScore: Math.round(result.relevanceScore * 100) / 100
+        relevanceScore: Math.round(result.relevanceScore * 100) / 100,
       })),
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Log the search request
     try {
       await new ApiUsage({
-        endpoint: '/search',
-        method: 'GET',
+        endpoint: "/search",
+        method: "GET",
         responseTime: searchTime,
         statusCode: 200,
-        userAgent: event.headers['user-agent'],
+        userAgent: event.headers["user-agent"],
         metadata: {
           searchQuery,
           resultCount: results.length,
-          sortBy
+          sortBy,
         },
-        timestamp: new Date()
+        timestamp: new Date(),
       }).save();
     } catch (logError) {
-      console.warn('Failed to log API usage:', logError);
+      console.warn("Failed to log API usage:", logError);
     }
 
     return {
@@ -181,15 +219,14 @@ exports.handler = async (event, context) => {
       headers,
       body: JSON.stringify(searchResponse, null, 2),
     };
-
   } catch (error) {
-    console.error('Error in search function:', error);
+    console.error("Error in search function:", error);
 
     const errorResponse = {
       success: false,
-      error: 'Search failed',
+      error: "Search failed",
       message: error.message,
-      query: event.queryStringParameters?.q || '',
+      query: event.queryStringParameters?.q || "",
       timestamp: new Date().toISOString(),
     };
 

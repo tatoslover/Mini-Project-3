@@ -1,4 +1,4 @@
-const connectToDatabase = require("../../database/db");
+const { connectToDatabase } = require("../../database/db");
 const { BreedCache, ApiUsage } = require("../../database/models");
 
 // Admin authentication removed for easier access
