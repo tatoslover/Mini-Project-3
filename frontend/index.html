@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>PupHub API - Backend Documentation</title>
+        <title>Barkend API - Backend Documentation</title>
         <link
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
             rel="stylesheet"
@@ -458,7 +458,7 @@
         <header class="header">
             <div class="container">
                 <div class="header-content">
-                    <h1 class="logo">🐕 PupHub API</h1>
+                    <h1 class="logo">🐕 Barkend API</h1>
                     <p class="subtitle">
                         Backend Documentation & Implementation Guide
                     </p>
@@ -496,7 +496,7 @@
                 <section id="overview" class="section">
                     <h2 class="section-title">Backend Overview</h2>
                     <p class="section-subtitle">
-                        PupHub API is a comprehensive RESTful service built with
+                        Barkend API is a comprehensive RESTful service built with
                         Express.js that provides dog breed information, random
                         dog images, and breed-specific data by integrating with
                         the Dog CEO API.
@@ -600,7 +600,7 @@
                     <h2 class="section-title">System Architecture</h2>
                     <p class="section-subtitle">
                         Understanding the flow of data and system components in
-                        PupHub API
+                        Barkend API
                     </p>
 
                     <div class="architecture-diagram">
@@ -684,7 +684,7 @@
                                 statistics.
                             </p>
                             <div class="code-block">
-                                { "status": "healthy", "service": "PupHub API",
+                                { "status": "healthy", "service": "Barkend API",
                                 "version": "1.0.0", "uptime": "3600s",
                                 "timestamp": "2024-01-01T12:00:00Z" }
                             </div>
@@ -798,7 +798,7 @@
                     <h2 class="section-title">Implementation Details</h2>
                     <p class="section-subtitle">
                         Key implementation patterns and best practices used in
-                        PupHub API
+                        Barkend API
                     </p>
 
                     <div class="grid grid-2">
@@ -928,7 +928,7 @@
                                 View API Specification
                             </a>
                             <button
-                                onclick="window.pupHubDocs?.testEndpoint('/api/health', 'GET', this)"
+                                onclick="window.barkendDocs?.testEndpoint('/api/health', 'GET', this)"
                                 class="btn btn-secondary"
                             >
                                 <i class="fas fa-heartbeat"></i>
@@ -1000,7 +1000,7 @@
                     <div class="footer-section">
                         <h3>About</h3>
                         <p>
-                            PupHub API is a demonstration project showcasing
+                            Barkend API is a demonstration project showcasing
                             serverless architecture with MongoDB Atlas and Netlify Functions.
                         </p>
                     </div>
@@ -1013,7 +1013,7 @@
                     "
                 >
                     <p>
-                        &copy; 2024 PupHub API. Built with ❤️ for learning
+                        &copy; 2024 Barkend API. Built with ❤️ for learning
                         backend development.
                     </p>
                 </div>
@@ -1024,7 +1024,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
         <script>
             // API Status and Stats Management
-            class PupHubDocs {
+            class BarkendDocs {
                 constructor() {
                     this.baseUrl = window.location.origin;
                     this.userId = this.generateUserId();
@@ -1033,10 +1033,10 @@
                 }
 
                 generateUserId() {
-                    let userId = localStorage.getItem('puphub_user_id');
+                    let userId = localStorage.getItem('barkend_user_id');
                     if (!userId) {
                         userId = `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-                        localStorage.setItem('puphub_user_id', userId);
+                        localStorage.setItem('barkend_user_id', userId);
                     }
                     return userId;
                 }
@@ -1329,13 +1329,13 @@
 
             // Initialize the documentation app
             document.addEventListener("DOMContentLoaded", () => {
-                window.pupHubDocs = new PupHubDocs();
+                window.barkendDocs = new BarkendDocs();
             });
 
             // Refresh stats every 30 seconds
             setInterval(async () => {
-                if (window.pupHubDocs) {
-                    await window.pupHubDocs.loadStats();
+                if (window.barkendDocs) {
+                    await window.barkendDocs.loadStats();
                 }
             }, 30000);
         </script>

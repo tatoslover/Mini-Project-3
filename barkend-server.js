@@ -41,7 +41,7 @@ const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "PupHub API",
+      title: "Barkend API",
       version: "1.0.0",
       description:
         "A comprehensive RESTful API for dog breed information and images",
@@ -53,7 +53,7 @@ const swaggerOptions = {
       },
     ],
   },
-  apis: ["./puphub-server.js"], // Path to the API files
+  apis: ["./barkend-server.js"], // Path to the API files
 };
 
 const swaggerSpec = swaggerJsdoc(swaggerOptions);
@@ -84,7 +84,7 @@ app.get("/api/health", (req, res) => {
 
   res.json({
     status: "healthy",
-    service: "PupHub API",
+    service: "Barkend API",
     version: "1.0.0",
     uptime: `${uptimeSeconds}s`,
     timestamp: new Date().toISOString(),
@@ -513,7 +513,7 @@ app.use("*", (req, res) => {
     path: req.originalUrl,
     method: req.method,
     availableEndpoints: {
-      "GET /": "PupHub Control Center",
+      "GET /": "Barkend Control Center",
       "GET /api/health": "API health check",
       "GET /api/breeds": "List all dog breeds",
       "GET /api/random": "Get random dog image(s)",
@@ -543,7 +543,7 @@ app.use((err, req, res, next) => {
 
 // Start server
 const server = app.listen(PORT, async () => {
-  console.log("\n🐕 ===== PUPHUB SERVER =====");
+  console.log("\n🐕 ===== BARKEND SERVER =====");
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`🎮 Control Center: http://localhost:${PORT}`);
   console.log(`🌐 Frontend: http://localhost:${PORT}/frontend`);
@@ -591,7 +591,7 @@ process.on("SIGTERM", () => {
   console.log("\n🛑 Received SIGTERM, shutting down gracefully...");
   server.close(() => {
     console.log("✅ Server closed successfully");
-    console.log("👋 PupHub server shutdown complete");
+    console.log("👋 Barkend server shutdown complete");
     process.exit(0);
   });
 });
@@ -600,7 +600,7 @@ process.on("SIGINT", () => {
   console.log("\n🛑 Received SIGINT, shutting down gracefully...");
   server.close(() => {
     console.log("✅ Server closed successfully");
-    console.log("👋 PupHub server shutdown complete");
+    console.log("👋 Barkend server shutdown complete");
     process.exit(0);
   });
 });

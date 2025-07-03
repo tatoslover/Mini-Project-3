@@ -1,4 +1,4 @@
-# PupHub API - Backend Documentation
+# Barkend API - Backend Documentation
 
 🐕 A comprehensive RESTful API for dog breed information and images, built with Express.js and integrated with the Dog CEO API.
 

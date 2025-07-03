@@ -1,12 +1,12 @@
 {
-  "name": "puphub",
+  "name": "barkend",
   "version": "1.0.0",
-  "description": "PupHub - Your Ultimate Dog Paradise. Discover, explore, and manage dog breeds with the Dog API",
-  "main": "puphub-server.js",
+  "description": "Barkend - Your Ultimate Dog Paradise. Discover, explore, and manage dog breeds with the Dog API",
+  "main": "barkend-server.js",
   "scripts": {
-    "start": "node puphub-server.js",
-    "dev": "nodemon puphub-server.js",
-    "puphub": "node start-puphub.js",
+    "start": "node barkend-server.js",
+    "dev": "nodemon barkend-server.js",
+    "barkend": "node start-barkend.js",
     "frontend": "cd frontend && python -m http.server 8080",
     "test": "jest",
     "test:integration": "jest --testPathPattern=integration",
@@ -23,12 +23,12 @@
     "api",
     "frontend",
     "express",
-    "puphub",
+    "barkend",
     "dog-api",
     "animals",
     "pets"
   ],
-  "author": "PupHub Team",
+  "author": "Barkend Team",
   "license": "MIT",
   "dependencies": {
     "@netlify/functions": "^4.1.8",
@@ -56,10 +56,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/puphub.git"
+    "url": "git+https://github.com/yourusername/barkend.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/puphub/issues"
+    "url": "https://github.com/yourusername/barkend/issues"
   },
-  "homepage": "https://github.com/yourusername/puphub#readme"
+  "homepage": "https://github.com/yourusername/barkend#readme"
 }

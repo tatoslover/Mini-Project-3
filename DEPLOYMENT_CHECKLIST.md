@@ -1,4 +1,4 @@
-# 🚀 PupHub Deployment Checklist
+# 🚀 Barkend Deployment Checklist
 
 ## Pre-Deployment Checklist
 
@@ -66,7 +66,7 @@ Expected Response:
 ```json
 {
   "status": "healthy",
-  "service": "PupHub API",
+  "service": "Barkend API",
   "database": {
     "status": "connected",
     "type": "MongoDB Atlas"

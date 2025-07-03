@@ -1,10 +1,10 @@
-# 🐕 PupHub - Your Ultimate Dog Paradise
+# 🐕 Barkend - Your Ultimate Dog Paradise
 
-Welcome to **PupHub**, a delightful dog breed discovery platform that transforms the original Mini-Project-3 into an engaging frontend-first application using the Dog CEO API. This project demonstrates modern web development practices with a beautiful, responsive interface and optional backend enhancement.
+Welcome to **Barkend**, a delightful dog breed discovery platform that transforms the original Mini-Project-3 into an engaging frontend-first application using the Dog CEO API. This project demonstrates modern web development practices with a beautiful, responsive interface and optional backend enhancement.
 
 ## 🌟 Project Overview
 
-PupHub started as Mini-Project-3 (Real-Time Database with External API Integration) and has evolved into a dog-focused application that showcases:
+Barkend started as Mini-Project-3 (Real-Time Database with External API Integration) and has evolved into a dog-focused application that showcases:
 
 - **Frontend-First Design**: Immediate usability without complex setup
 - **Progressive Enhancement**: Backend adds advanced features when available
@@ -60,20 +60,20 @@ npx http-server . -p 8000
 ```
 
 ### Option 2: Full Experience (Frontend + Backend) 🔧
-For the complete PupHub experience with enhanced features:
+For the complete Barkend experience with enhanced features:
 
 ```bash
 # Install dependencies
 npm install
 
 # Start everything with one command
-npm run puphub
+npm run barkend
 
 # Or start manually:
 # Terminal 1 - Backend Server
 npm start
 # or
-node puphub-server.js
+node barkend-server.js
 
 # Terminal 2 - Frontend Server  
 cd frontend
@@ -95,7 +95,7 @@ The main control page allows you to manage the backend:
 
 ## 📚 API Documentation
 
-When the backend is running, PupHub provides a comprehensive REST API:
+When the backend is running, Barkend provides a comprehensive REST API:
 
 ### Base URL
 ```
@@ -160,13 +160,13 @@ Errors return descriptive messages with appropriate HTTP status codes:
 ```
 Mini-Project-3/
 ├── index.html                     # Main control center
-├── puphub-server.js               # Backend API server
-├── start-puphub.js                # Startup script
+├── barkend-server.js               # Backend API server
+├── start-barkend.js                # Startup script
 ├── package.json                   # Dependencies and scripts
 ├── frontend/                      # Frontend application
 │   ├── index.html                # Main UI application
 │   └── js/
-│       └── puphub.js             # Frontend JavaScript (external file)
+│       └── barkend.js             # Frontend JavaScript (external file)
 ├── src/                          # Original MVC backend (reference)
 │   ├── controllers/              # Business logic controllers
 │   ├── models/                   # Database models  
@@ -181,7 +181,7 @@ Mini-Project-3/
 ## 🎨 Design Philosophy
 
 ### Frontend-First Approach
-PupHub prioritizes user experience by making the frontend the primary entry point:
+Barkend prioritizes user experience by making the frontend the primary entry point:
 
 1. **Immediate Access**: Frontend works with direct Dog API calls
 2. **Zero Configuration**: No setup required for basic functionality  
@@ -204,7 +204,7 @@ PupHub prioritizes user experience by making the frontend the primary entry poin
 
 ## 🐾 Dog API Integration
 
-PupHub integrates with the free [Dog CEO API](https://dog.ceo/dog-api/):
+Barkend integrates with the free [Dog CEO API](https://dog.ceo/dog-api/):
 
 - **195+ Dog Breeds**: Including sub-breeds and variations
 - **20,000+ Images**: High-quality, curated dog photographs
@@ -270,7 +270,7 @@ DOG_API_TIMEOUT=5000        # API timeout in milliseconds
 ```bash
 npm start                    # Start backend server
 npm run dev                  # Start with auto-reload
-npm run puphub              # Start both frontend and backend
+npm run barkend              # Start both frontend and backend
 npm run frontend            # Serve frontend only
 npm test                    # Run tests (when implemented)
 npm run lint                # Code linting
@@ -398,10 +398,10 @@ This project demonstrates proficiency in:
 ### For Developers (Technical) 💻
 1. **Clone** the repository: `git clone <repo-url>`
 2. **Install** dependencies: `npm install`
-3. **Start** the full experience: `npm run puphub`
+3. **Start** the full experience: `npm run barkend`
 4. **Explore** the API at `http://localhost:3000/api/health`
 5. **Customize** the frontend in `frontend/index.html`
-6. **Extend** the backend in `puphub-server.js`
+6. **Extend** the backend in `barkend-server.js`
 
 ### For Students (Educational) 📚
 1. **Study** the frontend-first approach
@@ -466,7 +466,7 @@ npm install
 lsof -i :3000
 
 # Start with debugging
-DEBUG=* node puphub-server.js
+DEBUG=* node barkend-server.js
 ```
 
 #### Dog API Not Responding
@@ -531,13 +531,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **GitHub**: [Repository Link]
 - **Discussions**: Share ideas and get help
 - **Contributions**: Welcome from all skill levels
-- **Social Media**: Share your PupHub experience
+- **Social Media**: Share your Barkend experience
 
 ---
 
 **Made with ❤️ for dog lovers everywhere**
 
-*PupHub v1.0.0 - Your Gateway to the World of Dogs*
+*Barkend v1.0.0 - Your Gateway to the World of Dogs*
 
 🐾 **Start your dog discovery journey today!** 🐾
 
@@ -551,7 +551,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 |---------|-------------|
 | `open index.html` | Start frontend only |
 | `npm install` | Install dependencies |
-| `npm run puphub` | Start complete experience |
+| `npm run barkend` | Start complete experience |
 | `npm start` | Start backend server only |
 | `python -m http.server 8080` | Serve frontend manually |
 

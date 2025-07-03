@@ -1,6 +1,6 @@
-# PupHub API - MongoDB Atlas & Netlify Deployment Guide
+# Barkend API - MongoDB Atlas & Netlify Deployment Guide
 
-🚀 Complete guide to deploy PupHub API using MongoDB Atlas for database and Netlify for hosting.
+🚀 Complete guide to deploy Barkend API using MongoDB Atlas for database and Netlify for hosting.
 
 ## 📋 Prerequisites
 
@@ -21,7 +21,7 @@
 1. Click "Build a Database"
 2. Choose **M0 Sandbox** (Free tier)
 3. Select your preferred cloud provider and region
-4. Name your cluster (e.g., `puphub-cluster`)
+4. Name your cluster (e.g., `barkend-cluster`)
 5. Click "Create Cluster"
 
 ### Step 3: Configure Database Access
@@ -49,7 +49,7 @@
 
 Example connection string:
 ```
-mongodb+srv://puphub_user:yourpassword@puphub-cluster.abc123.mongodb.net/puphub?retryWrites=true&w=majority
+mongodb+srv://barkend_user:yourpassword@barkend-cluster.abc123.mongodb.net/puphub?retryWrites=true&w=majority
 ```
 
 ## 🌐 Netlify Deployment
@@ -63,7 +63,7 @@ mongodb+srv://puphub_user:yourpassword@puphub-cluster.abc123.mongodb.net/puphub?
 2. Sign up/login with your Git provider
 3. Click "New site from Git"
 4. Choose your Git provider
-5. Select your PupHub repository
+5. Select your Barkend repository
 
 ### Step 3: Configure Build Settings
 **Build Settings:**
@@ -135,7 +135,7 @@ Expected response:
 ```json
 {
   "status": "healthy",
-  "service": "PupHub API",
+  "service": "Barkend API",
   "database": {
     "status": "connected",
     "type": "MongoDB Atlas"
@@ -322,8 +322,8 @@ jobs:
 For issues with:
 - **MongoDB:** Contact Atlas support or check community forums
 - **Netlify:** Check Netlify status page and documentation
-- **PupHub API:** Check GitHub issues or create new issue
+- **Barkend API:** Check GitHub issues or create new issue
 
 ---
 
-**🎉 Congratulations!** Your PupHub API is now deployed with MongoDB Atlas and Netlify, providing a scalable, serverless architecture for your dog breed application.
+**🎉 Congratulations!** Your Barkend API is now deployed with MongoDB Atlas and Netlify, providing a scalable, serverless architecture for your dog breed application.

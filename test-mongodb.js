@@ -5,7 +5,7 @@ const MONGODB_URI =
   "mongodb+srv://samuelwelove:vnIsLznxJuBWeznE@iodmp3portfolio.2sjhs9u.mongodb.net/puphub?retryWrites=true&w=majority&appName=IODMP3Portfolio";
 
 async function testMongoDBConnection() {
-  console.log("🧪 Testing MongoDB Atlas Connection...\n");
+  console.log("🧪 Testing Barkend MongoDB Atlas Connection...\n");
 
   try {
     console.log("📡 Connecting to MongoDB Atlas...");
@@ -31,7 +31,7 @@ async function testMongoDBConnection() {
     // Insert a test document
     const testDoc = {
       timestamp: new Date(),
-      test: "MongoDB connection successful",
+      test: "Barkend MongoDB connection successful",
       environment: "development",
       user: "samuelwelove",
     };
@@ -123,14 +123,16 @@ async function testMongoDBConnection() {
     await perfTestCollection.deleteMany({ index: { $exists: true } });
     console.log("✅ Performance test cleanup completed");
 
-    console.log("\n🎉 MongoDB Atlas connection test completed successfully!");
+    console.log(
+      "\n🎉 Barkend MongoDB Atlas connection test completed successfully!",
+    );
     console.log("\n📋 Connection Summary:");
     console.log(`   • Database: puphub`);
     console.log(`   • Cluster: IODMP3Portfolio`);
     console.log(`   • User: samuelwelove`);
-    console.log(`   • Status: Ready for production deployment`);
+    console.log(`   • Status: Ready for Barkend production deployment`);
   } catch (error) {
-    console.error("❌ MongoDB connection test failed:");
+    console.error("❌ Barkend MongoDB connection test failed:");
     console.error("Error:", error.message);
 
     if (error.name === "MongoNetworkError") {

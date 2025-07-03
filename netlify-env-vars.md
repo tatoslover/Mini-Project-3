@@ -1,6 +1,6 @@
 # Netlify Environment Variables Setup
 
-## Required Environment Variables for PupHub Deployment
+## Required Environment Variables for Barkend Deployment
 
 When deploying to Netlify, you need to set these environment variables in your site settings:
 

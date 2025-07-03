@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PupHub - Your Dog Paradise</title>
+    <title>Barkend - Your Dog Paradise</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap" rel="stylesheet">
     <style>
@@ -400,7 +400,7 @@
 
     <div class="container">
         <div class="header">
-            <h1 class="logo">🐕 PupHub</h1>
+            <h1 class="logo">🐕 Barkend</h1>
             <p class="subtitle">Your Ultimate Dog Paradise</p>
             <p class="tagline">Discover, collect, and manage your favorite dog breeds with our powerful API</p>
         </div>
@@ -513,7 +513,7 @@
     </div>
 
     <script>
-        class PupHubController {
+        class BarkendController {
             constructor() {
                 this.serverProcess = null;
                 this.serverStatus = 'offline';
@@ -610,7 +610,7 @@
                     }
                 } catch (error) {
                     // Server not running, need to start it
-                    this.log('📝 To start the backend server, run: node puphub-server.js');
+                    this.log('📝 To start the backend server, run: node barkend-server.js');
                     this.log('🔧 Or use: npm start');
                     this.log('⚡ The frontend will work with the Dog API directly until then');
                 }
@@ -636,7 +636,7 @@
                         statusElement.className = 'status-indicator status-online';
                         statusElement.innerHTML = '<i class="fas fa-circle"></i> Backend Connected';
                         document.getElementById('totalBreeds').textContent = data.breedsAvailable || 'Unknown';
-                        this.log(`✅ PupHub Backend is online - ${data.breedsAvailable} breeds available`);
+                        this.log(`✅ Barkend Backend is online - ${data.breedsAvailable} breeds available`);
                         return;
                     }
                 } catch (error) {
@@ -683,7 +683,7 @@
                         dbStatusElement.innerHTML = '<i class="fas fa-circle"></i> Dog API';
 
                         this.serverStatus = 'online';
-                        this.log(`🚀 PupHub backend detected - ${data.stats.imagesServed} images served`);
+                        this.log(`🚀 Barkend backend detected - ${data.stats.imagesServed} images served`);
                         return;
                     }
                 } catch (error) {
@@ -777,9 +777,9 @@
             }
         }
 
-        // Initialize PupHub Controller when page loads
+        // Initialize Barkend Controller when page loads
         document.addEventListener('DOMContentLoaded', () => {
-            new PupHubController();
+            new BarkendController();
         });
     </script>
 </body>

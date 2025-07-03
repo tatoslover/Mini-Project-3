@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
 // MongoDB Atlas connection string - replace with your actual connection string
-const MONGODB_URI = "mongodb+srv://samuelwelove:vnIsLznxJuBWeznE@iodmp3portfolio.2sjhs9u.mongodb.net/puphub?retryWrites=true&w=majority&appName=IODMP3Portfolio";
+const MONGODB_URI =
+  "mongodb+srv://samuelwelove:vnIsLznxJuBWeznE@iodmp3portfolio.2sjhs9u.mongodb.net/puphub?retryWrites=true&w=majority&appName=IODMP3Portfolio";
 
 async function testConnection() {
-  console.log("🧪 Testing MongoDB Atlas Connection...\n");
+  console.log("🧪 Testing Barkend MongoDB Atlas Connection...\n");
 
   try {
     console.log("📡 Connecting to MongoDB Atlas...");
@@ -30,7 +31,7 @@ async function testConnection() {
     const testDoc = {
       timestamp: new Date(),
       test: "Connection successful",
-      ip: "119.224.12.59"
+      ip: "119.224.12.59",
     };
 
     const result = await testCollection.insertOne(testDoc);
@@ -44,17 +45,20 @@ async function testConnection() {
     await testCollection.deleteOne({ _id: result.insertedId });
     console.log("✅ Test document cleaned up");
 
-    console.log("\n🎉 MongoDB connection test PASSED!");
-
+    console.log("\n🎉 Barkend MongoDB connection test PASSED!");
   } catch (error) {
-    console.error("❌ MongoDB connection test FAILED:");
+    console.error("❌ Barkend MongoDB connection test FAILED:");
     console.error("Error:", error.message);
 
     if (error.message.includes("IP")) {
       console.error("\n🔧 IP Whitelist Issue:");
-      console.error("   • Your IP (119.224.12.59) needs to be whitelisted in MongoDB Atlas");
+      console.error(
+        "   • Your IP (119.224.12.59) needs to be whitelisted in MongoDB Atlas",
+      );
       console.error("   • Go to Network Access in Atlas and add your IP");
-      console.error("   • Or allow access from anywhere (0.0.0.0/0) for testing");
+      console.error(
+        "   • Or allow access from anywhere (0.0.0.0/0) for testing",
+      );
     }
 
     if (error.message.includes("authentication")) {
