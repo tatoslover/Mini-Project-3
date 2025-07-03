@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { connectToDatabase } = require("../../database/db/db");
+const { connectToDatabase } = require("../../database/db");
 const { BreedCache, ServerStats, ApiUsage } = require("../../database/models");
 
 const DOG_API_BASE = "https://dog.ceo/api";
