@@ -159,23 +159,27 @@ Errors return descriptive messages with appropriate HTTP status codes:
 
 ```
 Mini-Project-3/
-├── index.html                     # Main control center
-├── barkend-server.js               # Backend API server
-├── start-barkend.js                # Startup script
 ├── package.json                   # Dependencies and scripts
 ├── frontend/                      # Frontend application
-│   ├── index.html                # Main UI application
-│   └── js/
-│       └── barkend.js             # Frontend JavaScript (external file)
-├── src/                          # Original MVC backend (reference)
-│   ├── controllers/              # Business logic controllers
-│   ├── models/                   # Database models  
-│   ├── routes/                   # API route definitions
-│   ├── services/                 # External API integration
-│   └── utils/                    # Utility functions
-├── docs/                         # Documentation
-├── logs/                         # Application logs
-└── README.md                     # This file
+│   ├── index.html                # Main UI (Homepage/Documentation/Demo tabs)
+│   ├── api-docs.html             # API documentation page
+│   ├── css/                      # Stylesheets
+│   └── js/                       # JavaScript files
+├── netlify/                      # Netlify deployment files
+│   ├── netlify.toml              # Netlify configuration
+│   ├── netlify-env-vars.md       # Environment variables guide
+│   └── functions/                # Serverless API functions
+│       ├── breeds.js             # Breed management
+│       ├── favorites.js          # Favorites system
+│       ├── health.js             # Health checks
+│       ├── random.js             # Random dog images
+│       ├── stats.js              # Statistics
+│       └── swagger-spec.js       # API documentation
+├── database/                     # Database files
+│   ├── models.js                 # Mongoose schemas
+│   └── db.js                     # Database connection utilities
+└── swagger/                      # API documentation
+    └── swagger.json              # OpenAPI specification
 ```
 
 ## 🎨 Design Philosophy

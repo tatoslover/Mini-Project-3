@@ -1,286 +1,889 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barkend API Documentation</title>
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui.css" />
-    <link rel="icon" type="image/png" href="https://petco.scene7.com/is/image/PETCO/dog-category-090121-369w-269h-hero-cutout-d?fmt=png-alpha" sizes="32x32" />
-    <style>
-        html {
-            box-sizing: border-box;
-            overflow: -moz-scrollbars-vertical;
-            overflow-y: scroll;
-        }
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Barkend API Documentation</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui.css"
+        />
+        <link
+            rel="icon"
+            type="image/png"
+            href="https://petco.scene7.com/is/image/PETCO/dog-category-090121-369w-269h-hero-cutout-d?fmt=png-alpha"
+            sizes="32x32"
+        />
+        <style>
+            html {
+                box-sizing: border-box;
+                overflow: -moz-scrollbars-vertical;
+                overflow-y: scroll;
+            }
 
-        *, *:before, *:after {
-            box-sizing: inherit;
-        }
+            *,
+            *:before,
+            *:after {
+                box-sizing: inherit;
+            }
 
-        body {
-            margin: 0;
-            background: #fafafa;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+            body {
+                margin: 0;
+                background: #fafafa;
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            }
 
-        .swagger-ui .topbar {
-            background-color: #2563eb;
-            background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
+            .swagger-ui .topbar {
+                background-color: #2563eb;
+                background-image: linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                );
+            }
 
-        .swagger-ui .topbar .download-url-wrapper .select-label {
-            color: #fff;
-        }
+            .swagger-ui .topbar .download-url-wrapper .select-label {
+                color: #fff;
+            }
 
-        .swagger-ui .topbar .download-url-wrapper input[type=text] {
-            border: 2px solid #fff;
-            border-radius: 4px;
-        }
+            .swagger-ui .topbar .download-url-wrapper input[type="text"] {
+                border: 2px solid #fff;
+                border-radius: 4px;
+            }
 
-        .swagger-ui .topbar .download-url-wrapper .download-url-button {
-            background: #fff;
-            color: #2563eb;
-            border: 2px solid #fff;
-            border-radius: 4px;
-            font-weight: 600;
-        }
+            .swagger-ui .topbar .download-url-wrapper .download-url-button {
+                background: #fff;
+                color: #2563eb;
+                border: 2px solid #fff;
+                border-radius: 4px;
+                font-weight: 600;
+            }
 
-        .swagger-ui .topbar .download-url-wrapper .download-url-button:hover {
-            background: #f1f5f9;
-        }
+            .swagger-ui
+                .topbar
+                .download-url-wrapper
+                .download-url-button:hover {
+                background: #f1f5f9;
+            }
 
-        .swagger-ui .info .title {
-            color: #2563eb;
-        }
+            .swagger-ui .info .title {
+                color: #2563eb;
+            }
 
-        .swagger-ui .scheme-container {
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 10px;
-            margin: 20px 0;
-        }
+            .swagger-ui .scheme-container {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 10px;
+                margin: 20px 0;
+            }
 
-        .custom-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin-bottom: 0;
-        }
+            .custom-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px;
+                text-align: center;
+                margin-bottom: 0;
+            }
 
-        .custom-header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
+            .custom-header h1 {
+                margin: 0;
+                font-size: 2.5rem;
+                font-weight: 700;
+            }
 
-        .custom-header p {
-            margin: 10px 0 0 0;
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
+            .custom-header p {
+                margin: 10px 0 0 0;
+                font-size: 1.1rem;
+                opacity: 0.9;
+            }
 
-        .custom-footer {
-            background: #1e293b;
-            color: white;
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-        }
+            .custom-footer {
+                background: #1e293b;
+                color: white;
+                text-align: center;
+                padding: 20px;
+                margin-top: 40px;
+            }
 
-        .custom-footer a {
-            color: #60a5fa;
-            text-decoration: none;
-        }
+            .custom-footer a {
+                color: #60a5fa;
+                text-decoration: none;
+            }
 
-        .custom-footer a:hover {
-            text-decoration: underline;
-        }
+            .custom-footer a:hover {
+                text-decoration: underline;
+            }
 
-        #swagger-ui {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+            #swagger-ui {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+            }
 
-        .swagger-ui .info .markdown p {
-            font-size: 16px;
-            line-height: 1.6;
-        }
+            .swagger-ui .info .markdown p {
+                font-size: 16px;
+                line-height: 1.6;
+            }
 
-        .swagger-ui .btn.authorize {
-            background: #10b981;
-            border-color: #10b981;
-        }
+            .swagger-ui .btn.authorize {
+                background: #10b981;
+                border-color: #10b981;
+            }
 
-        .swagger-ui .btn.authorize:hover {
-            background: #059669;
-            border-color: #059669;
-        }
+            .swagger-ui .btn.authorize:hover {
+                background: #059669;
+                border-color: #059669;
+            }
 
-        .loading-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 200px;
-            flex-direction: column;
-        }
+            .loading-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 200px;
+                flex-direction: column;
+            }
 
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #e2e8f0;
-            border-top: 4px solid #2563eb;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
+            .loading-spinner {
+                width: 50px;
+                height: 50px;
+                border: 4px solid #e2e8f0;
+                border-top: 4px solid #2563eb;
+                border-radius: 50%;
+                animation: spin 1s linear infinite;
+                margin-bottom: 20px;
+            }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
 
-        .error-container {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px;
-            text-align: center;
-        }
+            .error-container {
+                background: #fef2f2;
+                border: 1px solid #fecaca;
+                color: #991b1b;
+                padding: 20px;
+                border-radius: 8px;
+                margin: 20px;
+                text-align: center;
+            }
 
-        .error-container h3 {
-            margin-top: 0;
-        }
+            .error-container h3 {
+                margin-top: 0;
+            }
 
-        .status-badge {
-            display: inline-block;
-            background: #10b981;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
+            .status-badge {
+                display: inline-block;
+                background: #10b981;
+                color: white;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 12px;
+                font-weight: 600;
+                margin-left: 10px;
+            }
 
-        .status-badge.offline {
-            background: #ef4444;
-        }
-    </style>
-</head>
-<body>
-    <div class="custom-header">
-        <h1>🐕 Barkend API Documentation</h1>
-        <p>Comprehensive RESTful API for dog breed information and images</p>
-        <span id="api-status" class="status-badge">Checking...</span>
-    </div>
-
-    <div id="swagger-ui">
-        <div class="loading-container">
-            <div class="loading-spinner"></div>
-            <p>Loading API documentation...</p>
+            .status-badge.offline {
+                background: #ef4444;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="custom-header">
+            <h1>🐕 Barkend API Documentation</h1>
+            <p>
+                Comprehensive RESTful API for dog breed information and images
+            </p>
+            <span id="api-status" class="status-badge">Checking...</span>
         </div>
-    </div>
 
-    <div class="custom-footer">
-        <p>&copy; 2025 Barkend API. Built with ❤️ for dog lovers everywhere.</p>
-        <p>
-            <a href="/">← Back to Main App</a> |
-            <a href="/.netlify/functions/health">API Health</a> |
-            <a href="https://github.com/yourusername/barkend">GitHub</a>
-        </p>
-    </div>
+        <div id="swagger-ui">
+            <div class="loading-container">
+                <div class="loading-spinner"></div>
+                <p>Loading API documentation...</p>
+            </div>
+        </div>
 
-    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
-    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
-    <script>
-        // Check API status
-        async function checkApiStatus() {
-            const statusElement = document.getElementById('api-status');
-            try {
-                const response = await fetch('/.netlify/functions/health');
-                if (response.ok) {
-                    const data = await response.json();
-                    statusElement.textContent = `API Online - ${data.service}`;
-                    statusElement.className = 'status-badge';
-                } else {
-                    throw new Error('API response not ok');
-                }
-            } catch (error) {
-                statusElement.textContent = 'API Offline';
-                statusElement.className = 'status-badge offline';
-            }
-        }
+        <div class="custom-footer">
+            <p>
+                &copy; 2025 Barkend API. Built with ❤️ for dog lovers
+                everywhere.
+            </p>
+            <p>
+                <a href="/">← Back to Main App</a> |
+                <a href="/.netlify/functions/health">API Health</a> |
+                <a href="https://github.com/yourusername/barkend">GitHub</a>
+            </p>
+        </div>
 
-        // Initialize Swagger UI
-        async function initSwaggerUI() {
-            try {
-                // Get the API spec
-                const specUrl = '/.netlify/functions/swagger-spec';
-                const response = await fetch(specUrl);
-
-                if (!response.ok) {
-                    throw new Error(`Failed to load API spec: ${response.status}`);
-                }
-
-                const spec = await response.json();
-
-                // Initialize Swagger UI
-                const ui = SwaggerUIBundle({
-                    spec: spec,
-                    dom_id: '#swagger-ui',
-                    deepLinking: true,
-                    presets: [
-                        SwaggerUIBundle.presets.apis,
-                        SwaggerUIStandalonePreset
-                    ],
-                    plugins: [
-                        SwaggerUIBundle.plugins.DownloadUrl
-                    ],
-                    layout: "StandaloneLayout",
-                    validatorUrl: null,
-                    tryItOutEnabled: true,
-                    supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-                    onComplete: function() {
-                        console.log('Barkend API documentation loaded successfully');
-                    },
-                    onFailure: function(error) {
-                        console.error('Failed to load Swagger UI:', error);
-                        showError('Failed to initialize API documentation');
-                    },
-                    docExpansion: 'list',
-                    filter: true,
-                    showRequestHeaders: true,
-                    showCommonExtensions: true,
-                    requestInterceptor: function(request) {
-                        // Add any custom headers if needed
-                        request.headers['Accept'] = 'application/json';
-                        return request;
-                    },
-                    responseInterceptor: function(response) {
-                        // Log responses for debugging
-                        console.log('API Response:', response.status, response.url);
-                        return response;
+        <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
+        <script>
+            // Check API status
+            async function checkApiStatus() {
+                const statusElement = document.getElementById("api-status");
+                try {
+                    const response = await fetch("/.netlify/functions/health");
+                    if (response.ok) {
+                        const data = await response.json();
+                        statusElement.textContent = `API Online - ${data.service}`;
+                        statusElement.className = "status-badge";
+                    } else {
+                        throw new Error("API response not ok");
                     }
-                });
-
-                // Add custom styling after initialization
-                setTimeout(() => {
-                    addCustomStyling();
-                }, 1000);
-
-            } catch (error) {
-                console.error('Error initializing Swagger UI:', error);
-                showError('Failed to load API documentation. Please check if the API is running.');
+                } catch (error) {
+                    statusElement.textContent = "API Offline";
+                    statusElement.className = "status-badge offline";
+                }
             }
-        }
 
-        function showError(message) {
-            document.getElementById('swagger-ui').innerHTML = `
+            // Offline fallback spec
+            const offlineSwaggerSpec = {
+                openapi: "3.0.0",
+                info: {
+                    title: "Barkend API - Offline Demo",
+                    version: "1.0.0",
+                    description:
+                        "🐕 **Offline Demo Mode** - This is a demonstration of the Barkend API documentation. The actual API is currently offline, but you can explore the interface and see what endpoints are available when the system is running.",
+                    contact: {
+                        name: "Barkend Team",
+                        email: "support@barkend.com",
+                    },
+                    license: {
+                        name: "MIT",
+                        url: "https://opensource.org/licenses/MIT",
+                    },
+                },
+                servers: [
+                    {
+                        url: "/.netlify/functions",
+                        description: "Netlify Functions (Currently Offline)",
+                    },
+                ],
+                paths: {
+                    "/health": {
+                        get: {
+                            summary: "Health Check",
+                            description:
+                                "Returns the health status of the API server",
+                            tags: ["System"],
+                            responses: {
+                                200: {
+                                    description: "Server is healthy",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/HealthResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/breeds": {
+                        get: {
+                            summary: "Get All Breeds",
+                            description:
+                                "Retrieves all available dog breeds with sub-breeds",
+                            tags: ["Breeds"],
+                            responses: {
+                                200: {
+                                    description: "List of all dog breeds",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/BreedsResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/random": {
+                        get: {
+                            summary: "Get Random Dog Images",
+                            description:
+                                "Returns random dog images from all breeds",
+                            tags: ["Images"],
+                            parameters: [
+                                {
+                                    name: "count",
+                                    in: "query",
+                                    description:
+                                        "Number of random images to return",
+                                    required: false,
+                                    schema: {
+                                        type: "integer",
+                                        minimum: 1,
+                                        maximum: 50,
+                                        default: 1,
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Random dog images",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ImagesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/breeds/{breed}/images": {
+                        get: {
+                            summary: "Get Images by Breed",
+                            description: "Returns images for a specific breed",
+                            tags: ["Images"],
+                            parameters: [
+                                {
+                                    name: "breed",
+                                    in: "path",
+                                    description: "The breed name",
+                                    required: true,
+                                    schema: {
+                                        type: "string",
+                                    },
+                                },
+                                {
+                                    name: "count",
+                                    in: "query",
+                                    description: "Number of images to return",
+                                    required: false,
+                                    schema: {
+                                        type: "integer",
+                                        minimum: 1,
+                                        maximum: 50,
+                                        default: 10,
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Breed images",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/BreedImagesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                404: {
+                                    description: "Breed not found",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/favorites": {
+                        get: {
+                            summary: "Get Favorite Dogs",
+                            description: "Returns all favorite dog images",
+                            tags: ["Favorites"],
+                            responses: {
+                                200: {
+                                    description: "List of favorite dogs",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/FavoritesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        post: {
+                            summary: "Add Favorite Dog",
+                            description: "Adds a dog image to favorites",
+                            tags: ["Favorites"],
+                            requestBody: {
+                                required: true,
+                                content: {
+                                    "application/json": {
+                                        schema: {
+                                            $ref: "#/components/schemas/AddFavoriteRequest",
+                                        },
+                                    },
+                                },
+                            },
+                            responses: {
+                                201: {
+                                    description: "Dog added to favorites",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/AddFavoriteResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                400: {
+                                    description: "Invalid request",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/stats": {
+                        get: {
+                            summary: "Get API Statistics",
+                            description: "Returns usage statistics for the API",
+                            tags: ["System"],
+                            responses: {
+                                200: {
+                                    description: "API statistics",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/StatsResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                components: {
+                    schemas: {
+                        HealthResponse: {
+                            type: "object",
+                            properties: {
+                                status: {
+                                    type: "string",
+                                    example: "healthy",
+                                },
+                                service: {
+                                    type: "string",
+                                    example: "Barkend API",
+                                },
+                                version: {
+                                    type: "string",
+                                    example: "1.0.0",
+                                },
+                                uptime: {
+                                    type: "number",
+                                    example: 12345,
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        BreedsResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 195,
+                                },
+                                data: {
+                                    type: "object",
+                                    additionalProperties: {
+                                        type: "array",
+                                        items: {
+                                            type: "string",
+                                        },
+                                    },
+                                    example: {
+                                        poodle: [
+                                            "miniature",
+                                            "standard",
+                                            "toy",
+                                        ],
+                                        labrador: [],
+                                        spaniel: ["cocker", "english", "irish"],
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        ImagesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 3,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        type: "string",
+                                    },
+                                    example: [
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
+                                        "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_4582.jpg",
+                                    ],
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        BreedImagesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 10,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        type: "string",
+                                    },
+                                    example: [
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                        "https://images.dog.ceo/breeds/poodle-miniature/n02113712_4913.jpg",
+                                    ],
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        FavoritesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 5,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        $ref: "#/components/schemas/Favorite",
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        Favorite: {
+                            type: "object",
+                            properties: {
+                                id: {
+                                    type: "string",
+                                    example: "fav_123",
+                                },
+                                url: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                name: {
+                                    type: "string",
+                                    example: "Fluffy",
+                                },
+                                addedAt: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        AddFavoriteRequest: {
+                            type: "object",
+                            required: ["url", "breed"],
+                            properties: {
+                                url: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                name: {
+                                    type: "string",
+                                    example: "Fluffy",
+                                },
+                            },
+                        },
+                        AddFavoriteResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                message: {
+                                    type: "string",
+                                    example: "Dog added to favorites",
+                                },
+                                data: {
+                                    $ref: "#/components/schemas/Favorite",
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        StatsResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                data: {
+                                    type: "object",
+                                    properties: {
+                                        imagesServed: {
+                                            type: "integer",
+                                            example: 15342,
+                                        },
+                                        breedsViewed: {
+                                            type: "integer",
+                                            example: 195,
+                                        },
+                                        favoritesCount: {
+                                            type: "integer",
+                                            example: 127,
+                                        },
+                                        serverStartTime: {
+                                            type: "string",
+                                            example: "2025-01-01T00:00:00Z",
+                                        },
+                                        uptime: {
+                                            type: "object",
+                                            properties: {
+                                                milliseconds: {
+                                                    type: "integer",
+                                                    example: 86400000,
+                                                },
+                                                minutes: {
+                                                    type: "number",
+                                                    example: 1440,
+                                                },
+                                                seconds: {
+                                                    type: "number",
+                                                    example: 86400,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        ErrorResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: false,
+                                },
+                                error: {
+                                    type: "string",
+                                    example: "ValidationError",
+                                },
+                                message: {
+                                    type: "string",
+                                    example: "Invalid breed name provided",
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                    },
+                },
+                tags: [
+                    {
+                        name: "System",
+                        description: "System health and status operations",
+                    },
+                    {
+                        name: "Breeds",
+                        description: "Dog breed information and management",
+                    },
+                    {
+                        name: "Images",
+                        description: "Dog image retrieval and management",
+                    },
+                    {
+                        name: "Favorites",
+                        description: "Favorite dog management operations",
+                    },
+                ],
+            };
+
+            // Initialize Swagger UI
+            async function initSwaggerUI() {
+                try {
+                    // Get the API spec
+                    const specUrl = "/.netlify/functions/swagger-spec";
+                    const response = await fetch(specUrl);
+
+                    if (!response.ok) {
+                        throw new Error(
+                            `Failed to load API spec: ${response.status}`,
+                        );
+                    }
+
+                    const spec = await response.json();
+
+                    // Initialize Swagger UI
+                    const ui = SwaggerUIBundle({
+                        spec: spec,
+                        dom_id: "#swagger-ui",
+                        deepLinking: true,
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset,
+                        ],
+                        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                        layout: "StandaloneLayout",
+                        validatorUrl: null,
+                        tryItOutEnabled: true,
+                        supportedSubmitMethods: [
+                            "get",
+                            "post",
+                            "put",
+                            "delete",
+                            "patch",
+                        ],
+                        onComplete: function () {
+                            console.log(
+                                "Barkend API documentation loaded successfully",
+                            );
+                        },
+                        onFailure: function (error) {
+                            console.error("Failed to load Swagger UI:", error);
+                            showError("Failed to initialize API documentation");
+                        },
+                        docExpansion: "list",
+                        filter: true,
+                        showRequestHeaders: true,
+                        showCommonExtensions: true,
+                        requestInterceptor: function (request) {
+                            // Add any custom headers if needed
+                            request.headers["Accept"] = "application/json";
+                            return request;
+                        },
+                        responseInterceptor: function (response) {
+                            // Log responses for debugging
+                            console.log(
+                                "API Response:",
+                                response.status,
+                                response.url,
+                            );
+                            return response;
+                        },
+                    });
+
+                    // Add custom styling after initialization
+                    setTimeout(() => {
+                        addCustomStyling();
+                    }, 1000);
+                } catch (error) {
+                    console.error("Error initializing Swagger UI:", error);
+                    console.log(
+                        "API is offline, loading demo documentation...",
+                    );
+                    showOfflineDemo();
+                }
+            }
+
+            function showError(message) {
+                document.getElementById("swagger-ui").innerHTML = `
                 <div class="error-container">
                     <h3>⚠️ Error Loading Documentation</h3>
                     <p>${message}</p>
@@ -303,60 +906,102 @@
                     </button>
                 </div>
             `;
-        }
-
-        function addCustomStyling() {
-            // Add custom classes and styling after Swagger UI loads
-            const info = document.querySelector('.swagger-ui .info');
-            if (info) {
-                const dogEmoji = document.createElement('div');
-                dogEmoji.innerHTML = '🐕🦮🐕‍🦺';
-                dogEmoji.style.fontSize = '2rem';
-                dogEmoji.style.textAlign = 'center';
-                dogEmoji.style.marginBottom = '20px';
-                info.insertBefore(dogEmoji, info.firstChild);
             }
 
-            // Customize operation tags
-            const operationTags = document.querySelectorAll('.swagger-ui .opblock-tag');
-            operationTags.forEach(tag => {
-                const tagText = tag.textContent.trim();
-                let emoji = '';
-                switch(tagText) {
-                    case 'System':
-                        emoji = '⚙️ ';
-                        break;
-                    case 'Breeds':
-                        emoji = '🐕 ';
-                        break;
-                    case 'Images':
-                        emoji = '📸 ';
-                        break;
-                    case 'Favorites':
-                        emoji = '❤️ ';
-                        break;
+            function showOfflineDemo() {
+                document.getElementById("swagger-ui").innerHTML = `
+                <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center;">
+                    <strong>📡 Offline Demo Mode</strong><br>
+                    API is currently offline. Showing demo documentation.
+                    <button onclick="window.location.reload()" style="margin-left: 1rem; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; background: #007bff; color: white; cursor: pointer; font-size: 0.8rem;">
+                        🔄 Retry
+                    </button>
+                </div>
+                <div id="swagger-ui-offline"></div>
+            `;
+
+                // Initialize offline Swagger UI
+                SwaggerUIBundle({
+                    spec: offlineSwaggerSpec,
+                    dom_id: "#swagger-ui-offline",
+                    deepLinking: true,
+                    presets: [
+                        SwaggerUIBundle.presets.apis,
+                        SwaggerUIStandalonePreset,
+                    ],
+                    plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                    layout: "StandaloneLayout",
+                    validatorUrl: null,
+                    tryItOutEnabled: false, // Disable try-it-out for offline mode
+                    docExpansion: "list",
+                    filter: true,
+                    showRequestHeaders: true,
+                    showCommonExtensions: true,
+                    onComplete: function () {
+                        console.log(
+                            "Offline Barkend API documentation loaded successfully",
+                        );
+                        setTimeout(() => {
+                            addCustomStyling();
+                        }, 1000);
+                    },
+                });
+            }
+
+            function addCustomStyling() {
+                // Add custom classes and styling after Swagger UI loads
+                const info = document.querySelector(".swagger-ui .info");
+                if (info) {
+                    const dogEmoji = document.createElement("div");
+                    dogEmoji.innerHTML = "🐕🦮🐕‍🦺";
+                    dogEmoji.style.fontSize = "2rem";
+                    dogEmoji.style.textAlign = "center";
+                    dogEmoji.style.marginBottom = "20px";
+                    info.insertBefore(dogEmoji, info.firstChild);
                 }
-                if (emoji) {
-                    tag.innerHTML = emoji + tag.innerHTML;
+
+                // Customize operation tags
+                const operationTags = document.querySelectorAll(
+                    ".swagger-ui .opblock-tag",
+                );
+                operationTags.forEach((tag) => {
+                    const tagText = tag.textContent.trim();
+                    let emoji = "";
+                    switch (tagText) {
+                        case "System":
+                            emoji = "⚙️ ";
+                            break;
+                        case "Breeds":
+                            emoji = "🐕 ";
+                            break;
+                        case "Images":
+                            emoji = "📸 ";
+                            break;
+                        case "Favorites":
+                            emoji = "❤️ ";
+                            break;
+                    }
+                    if (emoji) {
+                        tag.innerHTML = emoji + tag.innerHTML;
+                    }
+                });
+            }
+
+            // Initialize everything when page loads
+            document.addEventListener("DOMContentLoaded", function () {
+                checkApiStatus();
+                initSwaggerUI();
+
+                // Refresh API status every 30 seconds
+                setInterval(checkApiStatus, 30000);
+            });
+
+            // Handle page visibility changes
+            document.addEventListener("visibilitychange", function () {
+                if (!document.hidden) {
+                    checkApiStatus();
                 }
             });
-        }
-
-        // Initialize everything when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            checkApiStatus();
-            initSwaggerUI();
-
-            // Refresh API status every 30 seconds
-            setInterval(checkApiStatus, 30000);
-        });
-
-        // Handle page visibility changes
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                checkApiStatus();
-            }
-        });
-    </script>
-</body>
+        </script>
+    </body>
 </html>

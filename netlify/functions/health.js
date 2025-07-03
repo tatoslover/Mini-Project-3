@@ -1,5 +1,5 @@
-const { connectToDatabase } = require("../../utils/db");
-const { ServerStats } = require("../../models/models");
+const { connectToDatabase } = require("../../database/db");
+const { ServerStats } = require("../../database/models");
 
 exports.handler = async (event, context) => {
   // Set CORS headers

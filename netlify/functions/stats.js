@@ -1,36 +1,42 @@
-const { connectToDatabase } = require('../../utils/db');
-const { ServerStats, ApiUsage, User, FavoriteImage, BreedCache } = require('../../models/models');
+const { connectToDatabase } = require("../../database/db");
+const {
+  ServerStats,
+  ApiUsage,
+  User,
+  FavoriteImage,
+  BreedCache,
+} = require("../../database/models");
 
 exports.handler = async (event, context) => {
   const startTime = Date.now();
 
   // Set CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, x-user-id, x-session-id',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Content-Type': 'application/json'
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, x-user-id, x-session-id",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Content-Type": "application/json",
   };
 
   // Handle preflight OPTIONS request
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: ''
+      body: "",
     };
   }
 
   // Only allow GET requests
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Method not allowed',
-        timestamp: new Date().toISOString()
-      })
+        error: "Method not allowed",
+        timestamp: new Date().toISOString(),
+      }),
     };
   }
 
@@ -42,26 +48,26 @@ exports.handler = async (event, context) => {
     await connectToDatabase();
 
     // Extract user info from headers
-    userId = event.headers['x-user-id'] || 'anonymous';
-    sessionId = event.headers['x-session-id'] || `session_${Date.now()}`;
+    userId = event.headers["x-user-id"] || "anonymous";
+    sessionId = event.headers["x-session-id"] || `session_${Date.now()}`;
 
     // Parse query parameters
     const queryParams = event.queryStringParameters || {};
-    const timeframe = queryParams.timeframe || 'today'; // today, week, month, all
-    const detailed = queryParams.detailed === 'true';
+    const timeframe = queryParams.timeframe || "today"; // today, week, month, all
+    const detailed = queryParams.detailed === "true";
 
     // Calculate date ranges
     const now = new Date();
     let startDate;
 
     switch (timeframe) {
-      case 'week':
+      case "week":
         startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
         break;
-      case 'month':
+      case "month":
         startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
         break;
-      case 'all':
+      case "all":
         startDate = new Date(0); // Beginning of time
         break;
       default: // today
@@ -75,30 +81,30 @@ exports.handler = async (event, context) => {
     const serverStats = await ServerStats.aggregate([
       {
         $match: {
-          date: { $gte: startDate, $lte: endDate }
-        }
+          date: { $gte: startDate, $lte: endDate },
+        },
       },
       {
         $group: {
           _id: null,
-          totalRequests: { $sum: '$metrics.totalRequests' },
-          uniqueUsers: { $sum: '$metrics.uniqueUsers' },
-          imagesServed: { $sum: '$metrics.imagesServed' },
-          breedsViewed: { $sum: '$metrics.breedsViewed' },
-          favoritesAdded: { $sum: '$metrics.favoritesAdded' },
-          searchesPerformed: { $sum: '$metrics.searchesPerformed' },
-          errorCount: { $sum: '$metrics.errorCount' },
-          avgResponseTime: { $avg: '$metrics.averageResponseTime' },
+          totalRequests: { $sum: "$metrics.totalRequests" },
+          uniqueUsers: { $sum: "$metrics.uniqueUsers" },
+          imagesServed: { $sum: "$metrics.imagesServed" },
+          breedsViewed: { $sum: "$metrics.breedsViewed" },
+          favoritesAdded: { $sum: "$metrics.favoritesAdded" },
+          searchesPerformed: { $sum: "$metrics.searchesPerformed" },
+          errorCount: { $sum: "$metrics.errorCount" },
+          avgResponseTime: { $avg: "$metrics.averageResponseTime" },
           // Endpoint statistics
-          healthCalls: { $sum: '$endpoints.health' },
-          breedsCalls: { $sum: '$endpoints.breeds' },
-          randomCalls: { $sum: '$endpoints.random' },
-          breedImagesCalls: { $sum: '$endpoints.breedImages' },
-          favoritesCalls: { $sum: '$endpoints.favorites' },
-          searchCalls: { $sum: '$endpoints.search' },
-          statsCalls: { $sum: '$endpoints.stats' }
-        }
-      }
+          healthCalls: { $sum: "$endpoints.health" },
+          breedsCalls: { $sum: "$endpoints.breeds" },
+          randomCalls: { $sum: "$endpoints.random" },
+          breedImagesCalls: { $sum: "$endpoints.breedImages" },
+          favoritesCalls: { $sum: "$endpoints.favorites" },
+          searchCalls: { $sum: "$endpoints.search" },
+          statsCalls: { $sum: "$endpoints.stats" },
+        },
+      },
     ]);
 
     const stats = serverStats[0] || {
@@ -116,17 +122,19 @@ exports.handler = async (event, context) => {
       breedImagesCalls: 0,
       favoritesCalls: 0,
       searchCalls: 0,
-      statsCalls: 0
+      statsCalls: 0,
     };
 
     // Get total breeds available
-    const totalBreeds = await BreedCache.countDocuments({ 'metadata.isActive': true });
+    const totalBreeds = await BreedCache.countDocuments({
+      "metadata.isActive": true,
+    });
 
     // Get top breeds by popularity
-    const topBreeds = await BreedCache.find({ 'metadata.isActive': true })
-      .sort({ 'popularity.viewCount': -1 })
+    const topBreeds = await BreedCache.find({ "metadata.isActive": true })
+      .sort({ "popularity.viewCount": -1 })
       .limit(10)
-      .select('displayName popularity.viewCount popularity.favoriteCount')
+      .select("displayName popularity.viewCount popularity.favoriteCount")
       .lean();
 
     // Calculate uptime (simplified for serverless)
@@ -151,24 +159,30 @@ exports.handler = async (event, context) => {
           favoritesAdded: stats.favoritesAdded,
           searchesPerformed: stats.searchesPerformed,
           totalBreeds: totalBreeds,
-          errorRate: stats.totalRequests > 0 ?
-            ((stats.errorCount / stats.totalRequests) * 100).toFixed(2) + '%' : '0%'
+          errorRate:
+            stats.totalRequests > 0
+              ? ((stats.errorCount / stats.totalRequests) * 100).toFixed(2) +
+                "%"
+              : "0%",
         },
         performance: {
           averageResponseTime: Math.round(stats.avgResponseTime || 0),
           uptime: {
             milliseconds: uptime,
-            display: uptimeHours > 0 ?
-              `${uptimeHours}h ${uptimeMinutes}m ${uptimeSeconds}s` :
-              uptimeMinutes > 0 ?
-                `${uptimeMinutes}m ${uptimeSeconds}s` :
-                `${uptimeSeconds}s`,
+            display:
+              uptimeHours > 0
+                ? `${uptimeHours}h ${uptimeMinutes}m ${uptimeSeconds}s`
+                : uptimeMinutes > 0
+                  ? `${uptimeMinutes}m ${uptimeSeconds}s`
+                  : `${uptimeSeconds}s`,
             hours: uptimeHours,
             minutes: uptimeMinutes,
-            seconds: uptimeSeconds
+            seconds: uptimeSeconds,
           },
-          requestsPerHour: uptimeHours > 0 ?
-            Math.round(stats.totalRequests / uptimeHours) : stats.totalRequests
+          requestsPerHour:
+            uptimeHours > 0
+              ? Math.round(stats.totalRequests / uptimeHours)
+              : stats.totalRequests,
         },
         endpoints: {
           health: stats.healthCalls,
@@ -177,23 +191,23 @@ exports.handler = async (event, context) => {
           breedImages: stats.breedImagesCalls,
           favorites: stats.favoritesCalls,
           search: stats.searchCalls,
-          stats: stats.statsCalls + 1 // Include current request
+          stats: stats.statsCalls + 1, // Include current request
         },
-        topBreeds: topBreeds.map(breed => ({
+        topBreeds: topBreeds.map((breed) => ({
           name: breed.displayName,
           views: breed.popularity?.viewCount || 0,
-          favorites: breed.popularity?.favoriteCount || 0
-        }))
+          favorites: breed.popularity?.favoriteCount || 0,
+        })),
       },
       metadata: {
         responseTime: `${responseTime}ms`,
         generatedAt: new Date().toISOString(),
         period: {
           start: startDate.toISOString(),
-          end: endDate.toISOString()
-        }
+          end: endDate.toISOString(),
+        },
       },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     // Add detailed analytics if requested
@@ -202,52 +216,52 @@ exports.handler = async (event, context) => {
       const recentUsage = await ApiUsage.aggregate([
         {
           $match: {
-            timestamp: { $gte: startDate, $lte: endDate }
-          }
+            timestamp: { $gte: startDate, $lte: endDate },
+          },
         },
         {
           $group: {
             _id: {
-              endpoint: '$endpoint',
-              hour: { $hour: '$timestamp' }
+              endpoint: "$endpoint",
+              hour: { $hour: "$timestamp" },
             },
             count: { $sum: 1 },
-            avgResponseTime: { $avg: '$responseTime' },
+            avgResponseTime: { $avg: "$responseTime" },
             errors: {
               $sum: {
-                $cond: [{ $gte: ['$statusCode', 400] }, 1, 0]
-              }
-            }
-          }
+                $cond: [{ $gte: ["$statusCode", 400] }, 1, 0],
+              },
+            },
+          },
         },
         {
-          $sort: { '_id.hour': 1 }
-        }
+          $sort: { "_id.hour": 1 },
+        },
       ]);
 
       // Get user engagement stats
       const userStats = await User.aggregate([
         {
           $match: {
-            'stats.lastActive': { $gte: startDate, $lte: endDate }
-          }
+            "stats.lastActive": { $gte: startDate, $lte: endDate },
+          },
         },
         {
           $group: {
             _id: null,
             totalUsers: { $sum: 1 },
-            avgImagesViewed: { $avg: '$stats.imagesViewed' },
-            avgBreedsExplored: { $avg: '$stats.breedsExplored' },
-            totalSessions: { $sum: '$stats.sessionCount' }
-          }
-        }
+            avgImagesViewed: { $avg: "$stats.imagesViewed" },
+            avgBreedsExplored: { $avg: "$stats.breedsExplored" },
+            totalSessions: { $sum: "$stats.sessionCount" },
+          },
+        },
       ]);
 
       const userEngagement = userStats[0] || {
         totalUsers: 0,
         avgImagesViewed: 0,
         avgBreedsExplored: 0,
-        totalSessions: 0
+        totalSessions: 0,
       };
 
       // Get error distribution
@@ -255,19 +269,19 @@ exports.handler = async (event, context) => {
         {
           $match: {
             timestamp: { $gte: startDate, $lte: endDate },
-            statusCode: { $gte: 400 }
-          }
+            statusCode: { $gte: 400 },
+          },
         },
         {
           $group: {
-            _id: '$statusCode',
+            _id: "$statusCode",
             count: { $sum: 1 },
-            endpoints: { $addToSet: '$endpoint' }
-          }
+            endpoints: { $addToSet: "$endpoint" },
+          },
         },
         {
-          $sort: { count: -1 }
-        }
+          $sort: { count: -1 },
+        },
       ]);
 
       response.data.detailed = {
@@ -275,33 +289,39 @@ exports.handler = async (event, context) => {
         userEngagement: {
           totalActiveUsers: userEngagement.totalUsers,
           averageImagesPerUser: Math.round(userEngagement.avgImagesViewed || 0),
-          averageBreedsPerUser: Math.round(userEngagement.avgBreedsExplored || 0),
+          averageBreedsPerUser: Math.round(
+            userEngagement.avgBreedsExplored || 0,
+          ),
           totalSessions: userEngagement.totalSessions,
-          avgSessionsPerUser: userEngagement.totalUsers > 0 ?
-            (userEngagement.totalSessions / userEngagement.totalUsers).toFixed(2) : 0
+          avgSessionsPerUser:
+            userEngagement.totalUsers > 0
+              ? (
+                  userEngagement.totalSessions / userEngagement.totalUsers
+                ).toFixed(2)
+              : 0,
         },
-        errors: errorDistribution.map(error => ({
+        errors: errorDistribution.map((error) => ({
           statusCode: error._id,
           count: error.count,
-          affectedEndpoints: error.endpoints
-        }))
+          affectedEndpoints: error.endpoints,
+        })),
       };
     }
 
     // Log this API call
     await ApiUsage.create({
-      endpoint: '/stats',
-      method: 'GET',
+      endpoint: "/stats",
+      method: "GET",
       userId,
       sessionId,
       responseTime,
       statusCode: 200,
-      userAgent: event.headers['user-agent'],
+      userAgent: event.headers["user-agent"],
       timestamp: new Date(),
       metadata: {
         timeframe: timeframe,
-        detailed: detailed
-      }
+        detailed: detailed,
+      },
     });
 
     // Update daily stats
@@ -312,54 +332,53 @@ exports.handler = async (event, context) => {
       { date: today },
       {
         $inc: {
-          'metrics.totalRequests': 1,
-          'endpoints.stats': 1
+          "metrics.totalRequests": 1,
+          "endpoints.stats": 1,
         },
         $set: {
-          'metrics.averageResponseTime': responseTime,
-          updatedAt: new Date()
-        }
+          "metrics.averageResponseTime": responseTime,
+          updatedAt: new Date(),
+        },
       },
-      { upsert: true, new: true }
+      { upsert: true, new: true },
     );
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(response)
+      body: JSON.stringify(response),
     };
-
   } catch (error) {
-    console.error('Error in stats function:', error);
+    console.error("Error in stats function:", error);
 
     const responseTime = Date.now() - startTime;
 
     // Log error
     await ApiUsage.create({
-      endpoint: '/stats',
-      method: 'GET',
+      endpoint: "/stats",
+      method: "GET",
       userId,
       sessionId,
       responseTime,
       statusCode: 500,
-      userAgent: event.headers['user-agent'],
+      userAgent: event.headers["user-agent"],
       timestamp: new Date(),
       metadata: {
-        error: error.message
-      }
+        error: error.message,
+      },
     }).catch(console.error);
 
     const errorResponse = {
       success: false,
-      error: 'Failed to retrieve statistics',
+      error: "Failed to retrieve statistics",
       message: error.message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify(errorResponse)
+      body: JSON.stringify(errorResponse),
     };
   }
 };

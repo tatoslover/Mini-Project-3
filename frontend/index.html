@@ -1,936 +1,1534 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Barkend - Your Ultimate Dog Paradise</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui.css" />
-    <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --error-color: #ef4444;
-            --text-primary: #2d3748;
-            --text-secondary: #4a5568;
-            --bg-light: #f7fafc;
-            --card-bg: rgba(255, 255, 255, 0.95);
-            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --border-radius: 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--primary-gradient);
-            background-attachment: fixed;
-            min-height: 100vh;
-            color: var(--text-primary);
-        }
-
-        /* Navigation */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 1000;
-            padding: 1rem 0;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .nav-logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            text-decoration: none;
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--text-secondary);
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-link:hover {
-            color: var(--text-primary);
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        .nav-link.active {
-            color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
-        }
-
-        .api-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--error-color);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-
-        .status-dot.online {
-            background: var(--success-color);
-        }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-top: 80px;
-            min-height: calc(100vh - 80px);
-        }
-
-        .tab-content {
-            display: none;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* Homepage Styles */
-        .hero-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            color: white;
-        }
-
-        .hero-title {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .feature-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        .feature-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Demo Page Styles */
-        .demo-header {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            margin-bottom: 2rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-        }
-
-        .demo-controls {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .search-container {
-            position: relative;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 50px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: #667eea;
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-        }
-
-        .btn {
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary-gradient);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-
-        .btn-accent {
-            background: var(--accent-gradient);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .dog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .dog-card {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-        }
-
-        .dog-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .dog-image {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .dog-info {
-            padding: 1.5rem;
-        }
-
-        .dog-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-        }
-
-        .dog-description {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .dog-actions {
-            display: flex;
-            gap: 0.5rem;
-            justify-content: space-between;
-        }
-
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            border-radius: 25px;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .page-btn {
-            padding: 0.75rem 1rem;
-            border: 2px solid #e2e8f0;
-            background: white;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .page-btn:hover {
-            border-color: #667eea;
-            background: #f8fafc;
-        }
-
-        .page-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 2000;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .modal-close:hover {
-            color: var(--text-primary);
-        }
-
-        .breed-images {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .breed-image {
-            width: 100%;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .breed-image:hover {
-            transform: scale(1.05);
-        }
-
-        /* Loading and Empty States */
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
-        }
-
-        .loading i {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: var(--text-secondary);
-        }
-
-        .empty-state i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .error-message {
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            color: #991b1b;
-            padding: 1rem;
-            border-radius: 10px;
-            text-align: center;
-            margin: 1rem 0;
-        }
-
-        /* Swagger UI Customization */
-        .swagger-container {
-            background: white;
-            border-radius: var(--border-radius);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin-top: 2rem;
-        }
-
-        .swagger-ui .topbar {
-            display: none;
-        }
-
-        .swagger-ui .info .title {
-            color: #667eea;
-        }
-
-        /* Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-
-        .stat-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #667eea;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-        }
-
-        /* Mobile Responsiveness */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Barkend - Your Ultimate Dog Paradise</title>
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet"
+        />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            :root {
+                --primary-gradient: linear-gradient(
+                    135deg,
+                    #667eea 0%,
+                    #764ba2 100%
+                );
+                --secondary-gradient: linear-gradient(
+                    135deg,
+                    #f093fb 0%,
+                    #f5576c 100%
+                );
+                --accent-gradient: linear-gradient(
+                    135deg,
+                    #4facfe 0%,
+                    #00f2fe 100%
+                );
+                --success-color: #10b981;
+                --warning-color: #f59e0b;
+                --error-color: #ef4444;
+                --text-primary: #2d3748;
+                --text-secondary: #4a5568;
+                --bg-light: #f7fafc;
+                --card-bg: rgba(255, 255, 255, 0.95);
+                --shadow:
+                    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+                    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+                --border-radius: 20px;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
             }
 
-            .feature-cards {
-                grid-template-columns: 1fr;
-                padding: 1rem;
+            body {
+                font-family: "Poppins", sans-serif;
+                background: var(--primary-gradient);
+                background-attachment: fixed;
+                min-height: 100vh;
+                color: var(--text-primary);
             }
 
-            .demo-controls {
-                flex-direction: column;
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+
+            .header {
+                text-align: center;
+                margin-bottom: 3rem;
+                padding-top: 2rem;
+                color: white;
+            }
+
+            .logo {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .subtitle {
+                font-size: 1.5rem;
+                margin-bottom: 0.5rem;
+                font-weight: 500;
+                opacity: 0.9;
+            }
+
+            .tagline {
+                font-size: 1.1rem;
+                opacity: 0.8;
+                font-weight: 300;
+            }
+
+            .nav-tabs {
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .nav-tab {
+                padding: 1rem 2rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+                border-radius: 50px;
+                color: white;
+                font-weight: 500;
+                font-size: 1rem;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .nav-tab:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .nav-tab.active {
+                background: var(--card-bg);
+                color: var(--text-primary);
+                box-shadow: var(--shadow);
+            }
+
+            .api-status {
+                display: flex;
                 align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                margin-bottom: 2rem;
+                padding: 1rem;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50px;
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                color: white;
+                font-weight: 500;
+            }
+
+            .status-dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: var(--error-color);
+                animation: pulse 2s infinite;
+            }
+
+            .status-dot.online {
+                background: var(--success-color);
+            }
+
+            .status-dot.loading {
+                background: var(--warning-color);
+            }
+
+            @keyframes pulse {
+                0%,
+                100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+            }
+
+            .tab-content {
+                display: none;
+                background: var(--card-bg);
+                border-radius: var(--border-radius);
+                padding: 2.5rem;
+                box-shadow: var(--shadow);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .tab-content.active {
+                display: block;
+            }
+
+            /* Homepage Styles */
+            .homepage-section {
+                margin-bottom: 3rem;
+            }
+
+            .homepage-section h2 {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+                color: var(--text-primary);
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .homepage-section p {
+                color: var(--text-secondary);
+                line-height: 1.6;
+                margin-bottom: 1.5rem;
+            }
+
+            .architecture-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
+            }
+
+            .architecture-card {
+                background: rgba(255, 255, 255, 0.8);
+                border-radius: 15px;
+                padding: 2rem;
+                text-align: center;
+                transition: transform 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .architecture-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .architecture-card i {
+                font-size: 3rem;
+                margin-bottom: 1rem;
+                background: var(--primary-gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+
+            .architecture-card h3 {
+                font-size: 1.5rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .architecture-card p {
+                color: var(--text-secondary);
+                line-height: 1.6;
+            }
+
+            /* Documentation Styles */
+            .swagger-container {
+                background: white;
+                border-radius: 15px;
+                padding: 2rem;
+                min-height: 600px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .loading {
+                text-align: center;
+                padding: 3rem;
+                color: var(--text-secondary);
+            }
+
+            .loading i {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                animation: spin 1s linear infinite;
+            }
+
+            @keyframes spin {
+                from {
+                    transform: rotate(0deg);
+                }
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+
+            /* Demo Styles */
+            .demo-header {
+                text-align: center;
+                margin-bottom: 2rem;
+                padding-bottom: 2rem;
+                border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            }
+
+            .demo-header h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+            }
+
+            .demo-header p {
+                color: var(--text-secondary);
+                font-size: 1.1rem;
             }
 
             .dog-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-                gap: 1rem;
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 2rem;
+                margin-top: 2rem;
             }
 
+            .dog-card {
+                background: white;
+                border-radius: 15px;
+                overflow: hidden;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s ease;
+                cursor: pointer;
+                border: 1px solid rgba(255, 255, 255, 0.3);
+            }
+
+            .dog-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            }
+
+            .dog-image {
+                width: 100%;
+                height: 250px;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+
+            .dog-card:hover .dog-image {
+                transform: scale(1.05);
+            }
+
+            .dog-info {
+                padding: 1.5rem;
+                text-align: center;
+            }
+
+            .dog-name {
+                font-size: 1.25rem;
+                font-weight: 600;
+                color: var(--text-primary);
+                text-transform: capitalize;
+            }
+
+            .error-message {
+                text-align: center;
+                padding: 2rem;
+                color: var(--error-color);
+                background: rgba(239, 68, 68, 0.1);
+                border-radius: 10px;
+                margin: 2rem 0;
+            }
+
+            /* Modal Styles */
             .modal {
-                padding: 1rem;
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.8);
+                z-index: 1000;
+                padding: 2rem;
+                overflow-y: auto;
+            }
+
+            .modal-content {
+                background: white;
+                border-radius: 20px;
+                max-width: 800px;
+                margin: 2rem auto;
+                padding: 2rem;
+                position: relative;
+            }
+
+            .modal-close {
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+                background: none;
+                border: none;
+                font-size: 2rem;
+                cursor: pointer;
+                color: var(--text-secondary);
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                transition: all 0.3s ease;
+            }
+
+            .modal-close:hover {
+                background: rgba(0, 0, 0, 0.1);
+                color: var(--text-primary);
+            }
+
+            .modal h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+                color: var(--text-primary);
+                text-transform: capitalize;
             }
 
             .breed-images {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1rem;
+                margin-top: 1rem;
             }
-        }
-    </style>
-</head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">🐕 Barkend</a>
-            <ul class="nav-menu">
-                <li class="nav-item">
-                    <a class="nav-link active" onclick="showTab('homepage')">Homepage</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('swagger')">Swagger UI</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" onclick="showTab('demo')">Demo</a>
-                </li>
-            </ul>
-            <div class="api-status">
-                <span class="status-dot" id="statusDot"></span>
-                <span id="statusText">Checking API...</span>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Homepage Tab -->
-        <div id="homepage" class="tab-content active">
-            <section class="hero-section">
-                <h1 class="hero-title">🐕 Barkend API</h1>
-                <p class="hero-subtitle">Your Ultimate Dog Paradise - Comprehensive RESTful API for dog breed information and images</p>
-                <div style="margin-top: 2rem;">
-                    <button class="btn btn-primary" onclick="showTab('demo')">
-                        <i class="fas fa-paw"></i> Explore Demo
-                    </button>
-                    <button class="btn btn-accent" onclick="showTab('swagger')" style="margin-left: 1rem;">
-                        <i class="fas fa-code"></i> API Documentation
-                    </button>
-                </div>
-            </section>
+            .breed-image {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 10px;
+                transition: transform 0.3s ease;
+            }
 
-            <div class="feature-cards">
-                <div class="feature-card">
-                    <div class="feature-icon">🐕</div>
-                    <h3 class="feature-title">195+ Dog Breeds</h3>
-                    <p class="feature-description">
-                        Access comprehensive information about over 195 dog breeds including sub-breeds and variations from around the world.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📸</div>
-                    <h3 class="feature-title">20,000+ Images</h3>
-                    <p class="feature-description">
-                        High-quality, curated dog photographs sourced from the Dog CEO API with smart caching and optimization.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">❤️</div>
-                    <h3 class="feature-title">Favorites System</h3>
-                    <p class="feature-description">
-                        Save and manage your favorite dog images with persistent storage and easy retrieval capabilities.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Lightning Fast</h3>
-                    <p class="feature-description">
-                        Built on Netlify Functions with MongoDB Atlas for global edge deployment and microsecond response times.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔧</div>
-                    <h3 class="feature-title">RESTful API</h3>
-                    <p class="feature-description">
-                        Modern REST architecture with comprehensive endpoints, error handling, and detailed API documentation.
-                    </p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📊</div>
-                    <h3 class="feature-title">Analytics & Stats</h3>
-                    <p class="feature-description">
-                        Real-time usage analytics, performance monitoring, and detailed statistics for API optimization.
-                    </p>
-                </div>
-            </div>
-        </div>
+            .breed-image:hover {
+                transform: scale(1.05);
+            }
 
-        <!-- Swagger UI Tab -->
-        <div id="swagger" class="tab-content">
-            <div class="demo-header">
-                <h2 style="margin-bottom: 1rem;">📚 API Documentation & Testing</h2>
-                <p>Interactive Swagger UI for testing all Barkend API endpoints</p>
-                <div class="api-status" style="justify-content: center; margin-top: 1rem;">
-                    <span class="status-dot" id="swaggerStatusDot"></span>
-                    <span id="swaggerStatusText">Checking API...</span>
-                </div>
-            </div>
+            /* Responsive Design */
+            @media (max-width: 768px) {
+                .container {
+                    padding: 1rem;
+                }
 
-            <div class="swagger-container">
-                <div id="swagger-ui">
-                    <div class="loading">
-                        <i class="fas fa-spinner"></i>
-                        <p>Loading API documentation...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                .logo {
+                    font-size: 2.5rem;
+                }
 
-        <!-- Demo Tab -->
-        <div id="demo" class="tab-content">
-            <div class="demo-header">
-                <h2 style="margin-bottom: 1rem;">🐾 Dog Breed Explorer</h2>
-                <p>Discover and explore amazing dog breeds from around the world</p>
+                .nav-tabs {
+                    flex-direction: column;
+                    align-items: center;
+                }
 
-                <div class="stats-grid" style="margin-top: 2rem;">
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalBreedsCount">0</div>
-                        <div class="stat-label">Total Breeds</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="imagesViewedCount">0</div>
-                        <div class="stat-label">Images Viewed</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="favoritesCount">0</div>
-                        <div class="stat-label">Favorites</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="sessionTime">0s</div>
-                        <div class="stat-label">Session Time</div>
-                    </div>
-                </div>
-            </div>
+                .nav-tab {
+                    width: 100%;
+                    max-width: 300px;
+                }
 
-            <div class="demo-controls">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="breedSearch" class="search-input" placeholder="Search dog breeds..." onkeypress="if(event.key==='Enter') barkend.searchBreeds()">
+                .architecture-grid {
+                    grid-template-columns: 1fr;
+                }
+
+                .dog-grid {
+                    grid-template-columns: repeat(
+                        auto-fill,
+                        minmax(250px, 1fr)
+                    );
+                }
+
+                .modal {
+                    padding: 1rem;
+                }
+
+                .modal-content {
+                    margin: 1rem auto;
+                    padding: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header class="header">
+                <h1 class="logo">🐕 Barkend</h1>
+                <p class="subtitle">Your Ultimate Dog Paradise</p>
+                <p class="tagline">
+                    Discover, explore, and manage dog breeds with the Dog API
+                </p>
+
+                <div class="api-status" id="apiStatus">
+                    <span class="status-dot loading" id="statusDot"></span>
+                    <span id="statusText">Checking API connection...</span>
                 </div>
-                <button class="btn btn-primary" onclick="barkend.searchBreeds()">
-                    <i class="fas fa-search"></i> Search
+            </header>
+
+            <nav class="nav-tabs">
+                <button class="nav-tab active" onclick="showTab('homepage')">
+                    <i class="fas fa-home"></i> Homepage
                 </button>
-                <button class="btn btn-secondary" onclick="barkend.loadAllBreeds()">
-                    <i class="fas fa-list"></i> All Breeds
+                <button class="nav-tab" onclick="showTab('documentation')">
+                    <i class="fas fa-book"></i> Documentation
                 </button>
-                <button class="btn btn-accent" onclick="barkend.loadRandomDogs()">
-                    <i class="fas fa-random"></i> Random Dogs
+                <button class="nav-tab" onclick="showTab('demo')">
+                    <i class="fas fa-paw"></i> Demo
                 </button>
-            </div>
+            </nav>
 
-            <div class="demo-content">
-                <!-- Navigation Tabs for Demo -->
-                <div style="display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem;">
-                    <button class="nav-link active" onclick="showDemoTab('breeds')">🐕 All Breeds</button>
-                    <button class="nav-link" onclick="showDemoTab('random')">🎲 Random</button>
-                    <button class="nav-link" onclick="showDemoTab('favorites')">❤️ Favorites</button>
+            <!-- Homepage Tab -->
+            <div id="homepage" class="tab-content active">
+                <div class="homepage-section">
+                    <h2><i class="fas fa-rocket"></i> Backend Architecture</h2>
+                    <p>
+                        Barkend is built on a modern serverless architecture
+                        that combines the power of Netlify Functions with
+                        MongoDB Atlas for a scalable, high-performance dog breed
+                        API.
+                    </p>
+
+                    <div class="architecture-grid">
+                        <div class="architecture-card">
+                            <i class="fas fa-server"></i>
+                            <h3>Netlify Functions</h3>
+                            <p>
+                                Serverless backend functions that handle API
+                                requests, process data, and manage database
+                                operations with automatic scaling.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-database"></i>
+                            <h3>MongoDB Atlas</h3>
+                            <p>
+                                Cloud-hosted MongoDB database providing fast,
+                                reliable storage for user data, favorites, and
+                                cached breed information.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-cloud"></i>
+                            <h3>Dog CEO API</h3>
+                            <p>
+                                External API integration providing access to
+                                thousands of dog breed images and comprehensive
+                                breed information.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-globe"></i>
+                            <h3>Global CDN</h3>
+                            <p>
+                                Netlify's global content delivery network
+                                ensures fast loading times and high availability
+                                worldwide.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Breeds Tab -->
-                <div id="breeds" class="demo-tab active">
-                    <div id="breedResults" class="dog-grid">
+                <div class="homepage-section">
+                    <h2><i class="fas fa-cogs"></i> Key Features</h2>
+                    <p>
+                        Our API provides comprehensive dog breed data with
+                        advanced caching, real-time statistics, and a robust
+                        favorites system. Built for developers who need
+                        reliable, fast access to dog breed information.
+                    </p>
+
+                    <div class="architecture-grid">
+                        <div class="architecture-card">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <h3>High Performance</h3>
+                            <p>
+                                Optimized queries, smart caching, and edge
+                                computing deliver lightning-fast response times
+                                under 100ms.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-shield-alt"></i>
+                            <h3>Secure & Reliable</h3>
+                            <p>
+                                Enterprise-grade security with MongoDB Atlas,
+                                HTTPS encryption, and comprehensive error
+                                handling.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Analytics Ready</h3>
+                            <p>
+                                Built-in analytics and monitoring provide
+                                insights into API usage, performance metrics,
+                                and user behavior.
+                            </p>
+                        </div>
+                        <div class="architecture-card">
+                            <i class="fas fa-code"></i>
+                            <h3>Developer Friendly</h3>
+                            <p>
+                                RESTful API design with comprehensive
+                                documentation, interactive testing, and clear
+                                error messages.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documentation Tab -->
+            <div id="documentation" class="tab-content">
+                <div class="swagger-container">
+                    <div id="swagger-ui">
                         <div class="loading">
                             <i class="fas fa-spinner"></i>
-                            <p>Loading amazing dogs...</p>
-                        </div>
-                    </div>
-                    <div id="breedPagination" class="pagination"></div>
-                </div>
-
-                <!-- Random Tab -->
-                <div id="random" class="demo-tab" style="display: none;">
-                    <div id="randomDogs" class="dog-grid"></div>
-                </div>
-
-                <!-- Favorites Tab -->
-                <div id="favorites" class="demo-tab" style="display: none;">
-                    <div id="favoritesList" class="dog-grid">
-                        <div class="empty-state">
-                            <i class="fas fa-heart"></i>
-                            <h3>No favorites yet</h3>
-                            <p>Start exploring breeds and add your favorites!</p>
+                            <p>Loading API documentation...</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
 
-    <!-- Modal -->
-    <div id="dogModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="barkend.closeModal()">
-                <i class="fas fa-times"></i>
-            </button>
-            <h2 id="modalTitle"></h2>
-            <div id="modalContent"></div>
-        </div>
-    </div>
+            <!-- Demo Tab -->
+            <div id="demo" class="tab-content">
+                <div class="demo-header">
+                    <h2>🐕 Dog Breed Demonstration</h2>
+                    <p>
+                        Demonstration of data retrieval from our API (click a
+                        card to see more pics)
+                    </p>
+                </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
-    <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
-    <script src="js/barkend.js"></script>
-    <script>
-        // Global app state
-        let swaggerUI = null;
-
-        // Tab Management
-        function showTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Remove active class from nav links
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-
-            // Show selected tab
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-
-            // Load content for specific tabs
-            switch(tabName) {
-                case 'swagger':
-                    if (!swaggerUI) {
-                        loadSwaggerUI();
-                    }
-                    updateApiStatus('swagger');
-                    break;
-                case 'demo':
-                    if (window.barkend) {
-                        // Load initial data if not already loaded
-                        if (document.getElementById('breedResults').innerHTML.includes('Loading')) {
-                            window.barkend.loadAllBreeds();
-                        }
-                    }
-                    break;
-                case 'homepage':
-                    updateApiStatus('main');
-                    break;
-            }
-        }
-
-        // Demo Tab Management
-        function showDemoTab(tabName) {
-            // Hide all demo tabs
-            document.querySelectorAll('.demo-tab').forEach(tab => {
-                tab.style.display = 'none';
-            });
-
-            // Remove active class from demo nav links
-            document.querySelectorAll('.demo-content .nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-
-            // Show selected demo tab
-            document.getElementById(tabName).style.display = 'block';
-            event.target.classList.add('active');
-
-            // Load content for specific demo tabs
-            if (window.barkend) {
-                switch(tabName) {
-                    case 'random':
-                        if (document.getElementById('randomDogs').innerHTML.trim() === '') {
-                            window.barkend.loadRandomDogs();
-                        }
-                        break;
-                    case 'favorites':
-                        window.barkend.loadFavorites();
-                        break;
-                }
-            }
-        }
-
-        // API Status Management
-        async function updateApiStatus(context = 'main') {
-            const statusElements = {
-                main: { dot: 'statusDot', text: 'statusText' },
-                swagger: { dot: 'swaggerStatusDot', text: 'swaggerStatusText' }
-            };
-
-            const { dot, text } = statusElements[context] || statusElements.main;
-            const statusDot = document.getElementById(dot);
-            const statusText = document.getElementById(text);
-
-            try {
-                const response = await fetch('/.netlify/functions/health');
-                if (response.ok) {
-                    const data = await response.json();
-                    statusDot.className = 'status-dot online';
-                    statusText.textContent = `${data.service} Online`;
-                } else {
-                    throw new Error('API response not ok');
-                }
-            } catch (error) {
-                statusDot.className = 'status-dot';
-                statusText.textContent = 'API Offline';
-            }
-        }
-
-        // Swagger UI Loader
-        async function loadSwaggerUI() {
-            const swaggerContainer = document.getElementById('swagger-ui');
-
-            try {
-                // Show loading
-                swaggerContainer.innerHTML = `
+                <div id="dogResults" class="dog-grid">
                     <div class="loading">
                         <i class="fas fa-spinner"></i>
-                        <p>Loading API documentation...</p>
+                        <p>Loading dog breeds...</p>
                     </div>
-                `;
+                </div>
+            </div>
+        </div>
 
-                // Get the API spec
-                const response = await fetch('/.netlify/functions/swagger-spec');
-                if (!response.ok) {
-                    throw new Error(`Failed to load API spec: ${response.status}`);
-                }
+        <!-- Modal -->
+        <div id="dogModal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+                <h2 id="modalTitle"></h2>
+                <div id="modalContent"></div>
+            </div>
+        </div>
 
-                const spec = await response.json();
+        <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-standalone-preset.js"></script>
+        <script>
+            let swaggerUI = null;
+            let breedData = {};
 
-                // Initialize Swagger UI
-                swaggerUI = SwaggerUIBundle({
-                    spec: spec,
-                    dom_id: '#swagger-ui',
-                    deepLinking: true,
-                    presets: [
-                        SwaggerUIBundle.presets.apis,
-                        SwaggerUIStandalonePreset
-                    ],
-                    plugins: [
-                        SwaggerUIBundle.plugins.DownloadUrl
-                    ],
-                    layout: "BaseLayout",
-                    validatorUrl: null,
-                    tryItOutEnabled: true,
-                    supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
-                    onComplete: function() {
-                        console.log('Barkend API documentation loaded successfully');
-                        customizeSwaggerUI();
+            // Offline fallback data
+            const offlineDogData = [
+                {
+                    name: "poodle",
+                    image: "https://pbs.twimg.com/media/DTOYHghVQAAvlh_.jpg",
+                },
+                {
+                    name: "labrador",
+                    image: "https://www.hdwallpapers.in/download/funny_dog_black_labrador_retriever_under_body_of_water_4k_hd_funny_dog-HD.jpg",
+                },
+                {
+                    name: "spaniel",
+                    image: "https://pbs.twimg.com/media/FQVhrGpXoAI8ZXv.jpg",
+                },
+            ];
+
+            const offlineSwaggerSpec = {
+                openapi: "3.0.0",
+                info: {
+                    title: "Barkend API - Offline Demo",
+                    version: "1.0.0",
+                    description:
+                        "🐕 **Offline Demo Mode** - This is a demonstration of the Barkend API documentation. The actual API is currently offline, but you can explore the interface and see what endpoints are available when the system is running.",
+                    contact: {
+                        name: "Barkend Team",
+                        email: "support@barkend.com",
                     },
-                    onFailure: function(error) {
-                        console.error('Failed to load Swagger UI:', error);
-                        showSwaggerError('Failed to initialize API documentation');
+                    license: {
+                        name: "MIT",
+                        url: "https://opensource.org/licenses/MIT",
                     },
-                    docExpansion: 'list',
-                    filter: true
+                },
+                servers: [
+                    {
+                        url: "/.netlify/functions",
+                        description: "Netlify Functions (Currently Offline)",
+                    },
+                ],
+                paths: {
+                    "/health": {
+                        get: {
+                            summary: "Health Check",
+                            description:
+                                "Returns the health status of the API server",
+                            tags: ["System"],
+                            responses: {
+                                200: {
+                                    description: "Server is healthy",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/HealthResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/breeds": {
+                        get: {
+                            summary: "Get All Breeds",
+                            description:
+                                "Retrieves all available dog breeds with sub-breeds",
+                            tags: ["Breeds"],
+                            responses: {
+                                200: {
+                                    description: "List of all dog breeds",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/BreedsResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/random": {
+                        get: {
+                            summary: "Get Random Dog Images",
+                            description:
+                                "Returns random dog images from all breeds",
+                            tags: ["Images"],
+                            parameters: [
+                                {
+                                    name: "count",
+                                    in: "query",
+                                    description:
+                                        "Number of random images to return",
+                                    required: false,
+                                    schema: {
+                                        type: "integer",
+                                        minimum: 1,
+                                        maximum: 50,
+                                        default: 1,
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Random dog images",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ImagesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/breeds/{breed}/images": {
+                        get: {
+                            summary: "Get Images by Breed",
+                            description: "Returns images for a specific breed",
+                            tags: ["Images"],
+                            parameters: [
+                                {
+                                    name: "breed",
+                                    in: "path",
+                                    description: "The breed name",
+                                    required: true,
+                                    schema: {
+                                        type: "string",
+                                    },
+                                },
+                                {
+                                    name: "count",
+                                    in: "query",
+                                    description: "Number of images to return",
+                                    required: false,
+                                    schema: {
+                                        type: "integer",
+                                        minimum: 1,
+                                        maximum: 50,
+                                        default: 10,
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Breed images",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/BreedImagesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                404: {
+                                    description: "Breed not found",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                500: {
+                                    description: "Server error",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/favorites": {
+                        get: {
+                            summary: "Get Favorite Dogs",
+                            description: "Returns all favorite dog images",
+                            tags: ["Favorites"],
+                            responses: {
+                                200: {
+                                    description: "List of favorite dogs",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/FavoritesResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        post: {
+                            summary: "Add Favorite Dog",
+                            description: "Adds a dog image to favorites",
+                            tags: ["Favorites"],
+                            requestBody: {
+                                required: true,
+                                content: {
+                                    "application/json": {
+                                        schema: {
+                                            $ref: "#/components/schemas/AddFavoriteRequest",
+                                        },
+                                    },
+                                },
+                            },
+                            responses: {
+                                201: {
+                                    description: "Dog added to favorites",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/AddFavoriteResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                400: {
+                                    description: "Invalid request",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/stats": {
+                        get: {
+                            summary: "Get API Statistics",
+                            description: "Returns usage statistics for the API",
+                            tags: ["System"],
+                            responses: {
+                                200: {
+                                    description: "API statistics",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/StatsResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                components: {
+                    schemas: {
+                        HealthResponse: {
+                            type: "object",
+                            properties: {
+                                status: {
+                                    type: "string",
+                                    example: "healthy",
+                                },
+                                service: {
+                                    type: "string",
+                                    example: "Barkend API",
+                                },
+                                version: {
+                                    type: "string",
+                                    example: "1.0.0",
+                                },
+                                uptime: {
+                                    type: "number",
+                                    example: 12345,
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        BreedsResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 195,
+                                },
+                                data: {
+                                    type: "object",
+                                    additionalProperties: {
+                                        type: "array",
+                                        items: {
+                                            type: "string",
+                                        },
+                                    },
+                                    example: {
+                                        poodle: [
+                                            "miniature",
+                                            "standard",
+                                            "toy",
+                                        ],
+                                        labrador: [],
+                                        spaniel: ["cocker", "english", "irish"],
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        ImagesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 3,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        type: "string",
+                                    },
+                                    example: [
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
+                                        "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_4582.jpg",
+                                    ],
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        BreedImagesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 10,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        type: "string",
+                                    },
+                                    example: [
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                        "https://images.dog.ceo/breeds/poodle-miniature/n02113712_4913.jpg",
+                                    ],
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        FavoritesResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                count: {
+                                    type: "integer",
+                                    example: 5,
+                                },
+                                data: {
+                                    type: "array",
+                                    items: {
+                                        $ref: "#/components/schemas/Favorite",
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        Favorite: {
+                            type: "object",
+                            properties: {
+                                id: {
+                                    type: "string",
+                                    example: "fav_123",
+                                },
+                                url: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                name: {
+                                    type: "string",
+                                    example: "Fluffy",
+                                },
+                                addedAt: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        AddFavoriteRequest: {
+                            type: "object",
+                            required: ["url", "breed"],
+                            properties: {
+                                url: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "poodle",
+                                },
+                                name: {
+                                    type: "string",
+                                    example: "Fluffy",
+                                },
+                            },
+                        },
+                        AddFavoriteResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                message: {
+                                    type: "string",
+                                    example: "Dog added to favorites",
+                                },
+                                data: {
+                                    $ref: "#/components/schemas/Favorite",
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        StatsResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                data: {
+                                    type: "object",
+                                    properties: {
+                                        imagesServed: {
+                                            type: "integer",
+                                            example: 15342,
+                                        },
+                                        breedsViewed: {
+                                            type: "integer",
+                                            example: 195,
+                                        },
+                                        favoritesCount: {
+                                            type: "integer",
+                                            example: 127,
+                                        },
+                                        serverStartTime: {
+                                            type: "string",
+                                            example: "2025-01-01T00:00:00Z",
+                                        },
+                                        uptime: {
+                                            type: "object",
+                                            properties: {
+                                                milliseconds: {
+                                                    type: "integer",
+                                                    example: 86400000,
+                                                },
+                                                minutes: {
+                                                    type: "number",
+                                                    example: 1440,
+                                                },
+                                                seconds: {
+                                                    type: "number",
+                                                    example: 86400,
+                                                },
+                                            },
+                                        },
+                                    },
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        ErrorResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: false,
+                                },
+                                error: {
+                                    type: "string",
+                                    example: "ValidationError",
+                                },
+                                message: {
+                                    type: "string",
+                                    example: "Invalid breed name provided",
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                    },
+                },
+                tags: [
+                    {
+                        name: "System",
+                        description: "System health and status operations",
+                    },
+                    {
+                        name: "Breeds",
+                        description: "Dog breed information and management",
+                    },
+                    {
+                        name: "Images",
+                        description: "Dog image retrieval and management",
+                    },
+                    {
+                        name: "Favorites",
+                        description: "Favorite dog management operations",
+                    },
+                ],
+            };
+
+            // Tab Management
+            function showTab(tabName) {
+                // Hide all tabs
+                document.querySelectorAll(".tab-content").forEach((tab) => {
+                    tab.classList.remove("active");
                 });
 
-            } catch (error) {
-                console.error('Error loading Swagger UI:', error);
-                showSwaggerError('Failed to load API documentation. Please check if the API is running.');
+                // Remove active class from nav tabs
+                document.querySelectorAll(".nav-tab").forEach((tab) => {
+                    tab.classList.remove("active");
+                });
+
+                // Show selected tab
+                document.getElementById(tabName).classList.add("active");
+                event.target.classList.add("active");
+
+                // Load content for specific tabs
+                if (tabName === "documentation" && !swaggerUI) {
+                    loadSwaggerUI();
+                } else if (
+                    tabName === "demo" &&
+                    Object.keys(breedData).length === 0
+                ) {
+                    loadDemoData();
+                }
             }
-        }
 
-        function showSwaggerError(message) {
-            document.getElementById('swagger-ui').innerHTML = `
-                <div class="error-message">
-                    <h3>⚠️ Error Loading Documentation</h3>
-                    <p>${message}</p>
-                    <button onclick="loadSwaggerUI()" class="btn btn-primary" style="margin-top: 1rem;">
-                        🔄 Retry
-                    </button>
-                </div>
-            `;
-        }
+            // Load Swagger UI
+            async function loadSwaggerUI() {
+                const swaggerContainer = document.getElementById("swagger-ui");
 
-        function customizeSwaggerUI() {
-            // Add custom styling after Swagger UI loads
-            setTimeout(() => {
-                const info = document.querySelector('.swagger-ui .info');
-                if (info) {
-                    const header = document.createElement('div');
-                    header.innerHTML = `
-                        <div style="text-align: center; margin-bottom: 2rem;">
-                            <h1 style="color: #667eea; margin-bottom: 0.5rem;">🐕 Barkend API</h1>
-                            <p style="color: #6b7280;">Interactive API Documentation & Testing</p>
+                try {
+                    const response = await fetch(
+                        "/.netlify/functions/swagger-spec",
+                    );
+                    if (!response.ok)
+                        throw new Error("Failed to load API spec");
+
+                    const spec = await response.json();
+
+                    swaggerUI = SwaggerUIBundle({
+                        spec: spec,
+                        dom_id: "#swagger-ui",
+                        deepLinking: true,
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset,
+                        ],
+                        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                        layout: "BaseLayout",
+                        validatorUrl: null,
+                        tryItOutEnabled: true,
+                        docExpansion: "list",
+                        filter: true,
+                    });
+                } catch (error) {
+                    console.log(
+                        "API is offline, loading demo documentation...",
+                    );
+
+                    // Show offline demo with fallback spec
+                    swaggerContainer.innerHTML = `
+                        <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center;">
+                            <strong>📡 Offline Demo Mode</strong><br>
+                            API is currently offline. Showing demo documentation.
+                            <button onclick="loadSwaggerUI()" style="margin-left: 1rem; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; background: #007bff; color: white; cursor: pointer; font-size: 0.8rem;">
+                                🔄 Retry
+                            </button>
+                        </div>
+                        <div id="swagger-ui-offline"></div>
+                    `;
+
+                    swaggerUI = SwaggerUIBundle({
+                        spec: offlineSwaggerSpec,
+                        dom_id: "#swagger-ui-offline",
+                        deepLinking: true,
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset,
+                        ],
+                        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
+                        layout: "BaseLayout",
+                        validatorUrl: null,
+                        tryItOutEnabled: false, // Disable try-it-out for offline mode
+                        docExpansion: "list",
+                        filter: true,
+                    });
+                }
+            }
+
+            // Load Demo Data
+            async function loadDemoData() {
+                const dogResults = document.getElementById("dogResults");
+
+                try {
+                    const response = await fetch("/.netlify/functions/breeds");
+                    if (!response.ok) throw new Error("Failed to fetch breeds");
+
+                    const data = await response.json();
+                    breedData = data.message || {};
+
+                    // Get first 12 breeds for demo
+                    const breeds = Object.keys(breedData).slice(0, 12);
+                    const dogCards = await Promise.all(
+                        breeds.map(async (breed) => {
+                            try {
+                                const imageResponse = await fetch(
+                                    `/.netlify/functions/random?breed=${breed}`,
+                                );
+                                const imageData = await imageResponse.json();
+                                const imageUrl =
+                                    imageData.message ||
+                                    "https://via.placeholder.com/300x250?text=No+Image";
+
+                                return `
+                                <div class="dog-card" onclick="showBreedModal('${breed}')">
+                                    <img src="${imageUrl}" alt="${breed}" class="dog-image" onerror="this.src='https://via.placeholder.com/300x250?text=No+Image'">
+                                    <div class="dog-info">
+                                        <h3 class="dog-name">${breed}</h3>
+                                    </div>
+                                </div>
+                            `;
+                            } catch (error) {
+                                return `
+                                <div class="dog-card">
+                                    <img src="https://via.placeholder.com/300x250?text=No+Image" alt="${breed}" class="dog-image">
+                                    <div class="dog-info">
+                                        <h3 class="dog-name">${breed}</h3>
+                                    </div>
+                                </div>
+                            `;
+                            }
+                        }),
+                    );
+
+                    dogResults.innerHTML = dogCards.join("");
+                } catch (error) {
+                    console.log("API is offline, loading demo dogs...");
+
+                    // Show offline demo with fallback data
+                    const offlineNotice = `
+                        <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
+                            <strong>📡 Offline Demo Mode</strong><br>
+                            API is currently offline. Showing demo dog breeds.
+                            <button onclick="loadDemoData()" style="margin-left: 1rem; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; background: #007bff; color: white; cursor: pointer; font-size: 0.8rem;">
+                                🔄 Retry
+                            </button>
                         </div>
                     `;
-                    info.insertBefore(header, info.firstChild);
+
+                    const offlineDogCards = offlineDogData
+                        .map(
+                            (dog) => `
+                        <div class="dog-card" onclick="showBreedModal('${dog.name}')">
+                            <img src="${dog.image}" alt="${dog.name}" class="dog-image" onerror="this.src='https://via.placeholder.com/300x250?text=${dog.name}'">
+                            <div class="dog-info">
+                                <h3 class="dog-name">${dog.name}</h3>
+                            </div>
+                        </div>
+                    `,
+                        )
+                        .join("");
+
+                    dogResults.innerHTML = offlineNotice + offlineDogCards;
+
+                    // Set up offline breed data for modal
+                    breedData = {
+                        poodle: ["miniature", "standard", "toy"],
+                        labrador: [],
+                        spaniel: ["cocker", "english", "irish"],
+                    };
                 }
-            }, 500);
-        }
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', function() {
-            updateApiStatus('main');
-
-            // Update API status every 30 seconds
-            setInterval(() => updateApiStatus('main'), 30000);
-
-            // Initialize Barkend app if available
-            if (window.barkend) {
-                console.log('Barkend app initialized');
             }
-        });
+
+            // Show Breed Modal
+            async function showBreedModal(breed) {
+                const modal = document.getElementById("dogModal");
+                const modalTitle = document.getElementById("modalTitle");
+                const modalContent = document.getElementById("modalContent");
+
+                modalTitle.textContent = breed;
+                modalContent.innerHTML = `
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>Loading more ${breed} images...</p>
+                </div>
+            `;
+
+                modal.style.display = "block";
+
+                try {
+                    const response = await fetch(
+                        `/.netlify/functions/random?breed=${breed}&count=8`,
+                    );
+                    const data = await response.json();
+
+                    let images = [];
+                    if (Array.isArray(data.message)) {
+                        images = data.message;
+                    } else if (data.message) {
+                        images = [data.message];
+                    }
+
+                    if (images.length === 0) {
+                        throw new Error("No images found");
+                    }
+
+                    const imageGrid = images
+                        .map(
+                            (img) => `
+                    <img src="${img}" alt="${breed}" class="breed-image" onerror="this.style.display='none'">
+                `,
+                        )
+                        .join("");
+
+                    modalContent.innerHTML = `
+                    <div class="breed-images">
+                        ${imageGrid}
+                    </div>
+                `;
+                } catch (error) {
+                    // Show offline mode with fallback images
+                    console.log(
+                        "API is offline, showing demo images for",
+                        breed,
+                    );
+
+                    const offlineImages = getOfflineImages(breed);
+
+                    if (offlineImages.length > 0) {
+                        const imageGrid = offlineImages
+                            .map(
+                                (img) => `
+                        <img src="${img}" alt="${breed}" class="breed-image" onerror="this.style.display='none'">
+                    `,
+                            )
+                            .join("");
+
+                        modalContent.innerHTML = `
+                            <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 0.5rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; font-size: 0.9rem;">
+                                <strong>📡 Offline Demo Mode</strong> - Showing sample images
+                            </div>
+                            <div class="breed-images">
+                                ${imageGrid}
+                            </div>
+                        `;
+                    } else {
+                        modalContent.innerHTML = `
+                        <div class="error-message">
+                            <h3>⚠️ Error Loading Images</h3>
+                            <p>Failed to load more images for ${breed}.</p>
+                        </div>
+                    `;
+                    }
+                }
+            }
+
+            // Get offline images for breed
+            function getOfflineImages(breed) {
+                const offlineImageSets = {
+                    poodle: [
+                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                        "https://images.dog.ceo/breeds/poodle-miniature/n02113712_4913.jpg",
+                        "https://images.dog.ceo/breeds/poodle-toy/n02113624_1444.jpg",
+                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_4708.jpg",
+                    ],
+                    labrador: [
+                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
+                        "https://images.dog.ceo/breeds/labrador/n02099712_6321.jpg",
+                        "https://images.dog.ceo/breeds/labrador/n02099712_1742.jpg",
+                        "https://images.dog.ceo/breeds/labrador/n02099712_4396.jpg",
+                    ],
+                    spaniel: [
+                        "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_4582.jpg",
+                        "https://images.dog.ceo/breeds/spaniel-english/n02102480_7094.jpg",
+                        "https://images.dog.ceo/breeds/spaniel-irish/n02102973_1438.jpg",
+                        "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_7026.jpg",
+                    ],
+                };
+
+                return offlineImageSets[breed] || [];
+            }
+
+            // Close Modal
+            function closeModal() {
+                document.getElementById("dogModal").style.display = "none";
+            }
+
+            // Close modal when clicking outside
+            window.onclick = function (event) {
+                const modal = document.getElementById("dogModal");
+                if (event.target === modal) {
+                    closeModal();
+                }
+            };
+
+            // Update API Status
+            async function updateApiStatus() {
+                const statusDot = document.getElementById("statusDot");
+                const statusText = document.getElementById("statusText");
+
+                try {
+                    const response = await fetch("/.netlify/functions/health");
+                    if (response.ok) {
+                        const data = await response.json();
+                        statusDot.className = "status-dot online";
+                        statusText.textContent = `${data.service || "Barkend API"} Connected`;
+                    } else {
+                        throw new Error("API response not ok");
+                    }
+                } catch (error) {
+                    statusDot.className = "status-dot";
+                    statusText.textContent = "API Offline";
+                }
+            }
+
+            // Initialize app
+            document.addEventListener("DOMContentLoaded", function () {
+                console.log("Barkend initialized");
+                updateApiStatus();
+                // Update API status every 30 seconds
+                setInterval(updateApiStatus, 30000);
+            });
+        </script>
+    </body>
+</html>

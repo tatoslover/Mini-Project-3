@@ -2,20 +2,14 @@
   "name": "barkend",
   "version": "1.0.0",
   "description": "Barkend - Your Ultimate Dog Paradise. Discover, explore, and manage dog breeds with the Dog API",
-  "main": "barkend-server.js",
+  "main": "frontend/index.html",
   "scripts": {
-    "start": "node barkend-server.js",
-    "dev": "nodemon barkend-server.js",
-    "barkend": "node start-barkend.js",
-    "frontend": "cd frontend && python -m http.server 8080",
-    "test": "jest",
-    "test:integration": "jest --testPathPattern=integration",
-    "test:coverage": "jest --coverage",
-    "lint": "eslint *.js",
-    "lint:fix": "eslint *.js --fix",
-    "netlify:dev": "netlify dev",
-    "netlify:build": "npm run build",
-    "build": "echo 'Build complete'"
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod",
+    "build": "echo 'Build complete - static files ready'",
+    "lint": "eslint netlify/functions/*.js",
+    "lint:fix": "eslint netlify/functions/*.js --fix",
+    "start": "netlify dev"
   },
   "keywords": [
     "dogs",
