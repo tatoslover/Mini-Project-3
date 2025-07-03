@@ -202,7 +202,7 @@ exports.handler = async (event, context) => {
               },
             },
           },
-          "/.netlify/functions/cache/status": {
+          "/.netlify/functions/cache-status": {
             get: {
               summary: "Get Cache Status",
               description:
@@ -322,7 +322,7 @@ exports.handler = async (event, context) => {
               },
             },
           },
-          "/.netlify/functions/breeds/popular": {
+          "/.netlify/functions/breeds-popular": {
             get: {
               summary: "Get Popular Breeds",
               description: "Returns the most viewed and requested dog breeds",
@@ -391,7 +391,7 @@ exports.handler = async (event, context) => {
               },
             },
           },
-          "/.netlify/functions/breeds/{breed}/analytics": {
+          "/.netlify/functions/breed-analytics": {
             get: {
               summary: "Get Breed Analytics",
               description:
@@ -400,7 +400,7 @@ exports.handler = async (event, context) => {
               parameters: [
                 {
                   name: "breed",
-                  in: "path",
+                  in: "query",
                   description: "Breed name",
                   required: true,
                   schema: { type: "string" },
@@ -478,7 +478,7 @@ exports.handler = async (event, context) => {
               },
             },
           },
-          "/.netlify/functions/admin/breeds": {
+          "/.netlify/functions/admin-breeds": {
             get: {
               summary: "Admin: Get All Breeds",
               description: "Returns all breeds with administrative details",
