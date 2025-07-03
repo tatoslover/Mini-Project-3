@@ -1,26 +1,18 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "PupHub API",
+    "title": "Barkend API",
     "version": "1.0.0",
-    "description": "A comprehensive RESTful API for dog breed information and images",
-    "contact": {
-      "name": "PupHub Team",
-      "email": "support@puphub.com"
-    },
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
+    "description": "A comprehensive dog breed management system with real-time database integration and external API integration.\n\n[View raw JSON](swagger/swagger.json)"
   },
   "servers": [
     {
-      "url": "http://localhost:3000",
-      "description": "Development server"
+      "url": "/.netlify/functions",
+      "description": "Netlify Functions"
     }
   ],
   "paths": {
-    "/api/health": {
+    "/health": {
       "get": {
         "summary": "Health Check",
         "description": "Returns the health status of the API server",
@@ -39,11 +31,11 @@
         }
       }
     },
-    "/api/breeds": {
+    "/breeds": {
       "get": {
         "summary": "Get All Breeds",
         "description": "Retrieves all available dog breeds with sub-breeds",
-        "tags": ["Breeds"],
+        "tags": ["Breed Info"],
         "responses": {
           "200": {
             "description": "List of all dog breeds",
@@ -56,7 +48,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -68,16 +60,16 @@
         }
       }
     },
-    "/api/random": {
+    "/random": {
       "get": {
         "summary": "Get Random Dog Images",
-        "description": "Returns random dog images from various breeds",
-        "tags": ["Images"],
+        "description": "Returns random dog images from all breeds",
+        "tags": ["Breed Info"],
         "parameters": [
           {
             "name": "count",
             "in": "query",
-            "description": "Number of images to return (max 50)",
+            "description": "Number of random images to return",
             "required": false,
             "schema": {
               "type": "integer",
@@ -99,7 +91,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -111,16 +103,16 @@
         }
       }
     },
-    "/api/breeds/{breed}/images": {
+    "/breeds/{breed}/images": {
       "get": {
-        "summary": "Get Breed Images",
+        "summary": "Get Images by Breed",
         "description": "Returns images for a specific breed",
-        "tags": ["Images"],
+        "tags": ["Breed Info"],
         "parameters": [
           {
             "name": "breed",
             "in": "path",
-            "description": "Breed name (use hyphen for sub-breeds, e.g., 'golden-retriever')",
+            "description": "The breed name",
             "required": true,
             "schema": {
               "type": "string"
@@ -129,7 +121,7 @@
           {
             "name": "count",
             "in": "query",
-            "description": "Number of images to return (max 50)",
+            "description": "Number of images to return",
             "required": false,
             "schema": {
               "type": "integer",
@@ -161,7 +153,7 @@
             }
           },
           "500": {
-            "description": "Internal server error",
+            "description": "Server error",
             "content": {
               "application/json": {
                 "schema": {
@@ -173,80 +165,18 @@
         }
       }
     },
-    "/api/breeds/{breed}/random": {
+    "/dogs": {
       "get": {
-        "summary": "Get Random Breed Images",
-        "description": "Returns random images for a specific breed",
-        "tags": ["Images"],
-        "parameters": [
-          {
-            "name": "breed",
-            "in": "path",
-            "description": "Breed name (use hyphen for sub-breeds, e.g., 'golden-retriever')",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "count",
-            "in": "query",
-            "description": "Number of images to return (max 10)",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 10,
-              "default": 1
-            }
-          }
-        ],
+        "summary": "Get All Dogs",
+        "description": "Retrieves all dogs in the database",
+        "tags": ["CRUD"],
         "responses": {
           "200": {
-            "description": "Random breed images",
+            "description": "List of all dogs",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BreedImagesResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Breed not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal server error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/favorites": {
-      "get": {
-        "summary": "Get Favorites",
-        "description": "Returns all favorite dog images",
-        "tags": ["Favorites"],
-        "responses": {
-          "200": {
-            "description": "List of favorite images",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/FavoritesResponse"
+                  "$ref": "#/components/schemas/DogsResponse"
                 }
               }
             }
@@ -254,32 +184,32 @@
         }
       },
       "post": {
-        "summary": "Add Favorite",
-        "description": "Adds a dog image to favorites",
-        "tags": ["Favorites"],
+        "summary": "Create Dog",
+        "description": "Creates a new dog record",
+        "tags": ["CRUD"],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AddFavoriteRequest"
+                "$ref": "#/components/schemas/CreateDogRequest"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Favorite added successfully",
+            "description": "Dog created successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AddFavoriteResponse"
+                  "$ref": "#/components/schemas/DogResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Bad request",
+            "description": "Invalid request",
             "content": {
               "application/json": {
                 "schema": {
@@ -291,16 +221,16 @@
         }
       }
     },
-    "/api/favorites/{id}": {
-      "delete": {
-        "summary": "Remove Favorite",
-        "description": "Removes a dog image from favorites",
-        "tags": ["Favorites"],
+    "/dogs/{id}": {
+      "get": {
+        "summary": "Get Dog by ID",
+        "description": "Retrieves a specific dog by ID",
+        "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Favorite ID",
+            "description": "Dog ID",
             "required": true,
             "schema": {
               "type": "string"
@@ -309,7 +239,103 @@
         ],
         "responses": {
           "200": {
-            "description": "Favorite removed successfully",
+            "description": "Dog details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dog not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update Dog",
+        "description": "Updates an existing dog record",
+        "tags": ["CRUD"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dog ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateDogRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Dog updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DogResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Dog not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Dog",
+        "description": "Deletes a dog record",
+        "tags": ["CRUD"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Dog ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dog deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -319,7 +345,7 @@
             }
           },
           "404": {
-            "description": "Favorite not found",
+            "description": "Dog not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -331,88 +357,18 @@
         }
       }
     },
-    "/api/stats": {
+    "/stats": {
       "get": {
-        "summary": "Get Statistics",
-        "description": "Returns server statistics and usage metrics",
+        "summary": "Get API Statistics",
+        "description": "Returns usage statistics for the API",
         "tags": ["System"],
         "responses": {
           "200": {
-            "description": "Server statistics",
+            "description": "API statistics",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StatsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/search": {
-      "get": {
-        "summary": "Search Breeds",
-        "description": "Search for dog breeds by name",
-        "tags": ["Breeds"],
-        "parameters": [
-          {
-            "name": "q",
-            "in": "query",
-            "description": "Search query (minimum 2 characters)",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 2
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Search results",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SearchResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid search query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/test-connection": {
-      "get": {
-        "summary": "Test External API Connection",
-        "description": "Tests the connection to the external Dog CEO API",
-        "tags": ["System"],
-        "responses": {
-          "200": {
-            "description": "Connection test results",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ConnectionTestResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Connection failed",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -432,7 +388,7 @@
           },
           "service": {
             "type": "string",
-            "example": "PupHub API"
+            "example": "Barkend API"
           },
           "version": {
             "type": "string",
@@ -440,57 +396,11 @@
           },
           "uptime": {
             "type": "string",
-            "example": "3600s"
+            "example": "12345s"
           },
           "timestamp": {
             "type": "string",
             "format": "date-time"
-          },
-          "stats": {
-            "type": "object",
-            "properties": {
-              "imagesServed": {
-                "type": "integer"
-              },
-              "breedsViewed": {
-                "type": "integer"
-              },
-              "favoritesCount": {
-                "type": "integer"
-              }
-            }
-          },
-          "endpoints": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "string"
-            }
-          }
-        }
-      },
-      "Breed": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "affenpinscher"
-          },
-          "name": {
-            "type": "string",
-            "example": "affenpinscher"
-          },
-          "breed": {
-            "type": "string",
-            "example": "affenpinscher"
-          },
-          "subBreed": {
-            "type": "string",
-            "nullable": true,
-            "example": null
-          },
-          "displayName": {
-            "type": "string",
-            "example": "Affenpinscher"
           }
         }
       },
@@ -503,31 +413,35 @@
           },
           "count": {
             "type": "integer",
-            "example": 98
+            "example": 195
           },
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Breed"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "poodle-standard"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "poodle standard"
+                },
+                "breed": {
+                  "type": "string",
+                  "example": "poodle"
+                },
+                "subBreed": {
+                  "type": "string",
+                  "example": "standard"
+                },
+                "displayName": {
+                  "type": "string",
+                  "example": "Poodle Standard"
+                }
+              }
             }
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "DogImage": {
-        "type": "object",
-        "properties": {
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "example": "https://images.dog.ceo/breeds/affenpinscher/n02110627_11783.jpg"
-          },
-          "breed": {
-            "type": "string",
-            "example": "affenpinscher"
           },
           "timestamp": {
             "type": "string",
@@ -544,13 +458,17 @@
           },
           "count": {
             "type": "integer",
-            "example": 5
+            "example": 3
           },
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DogImage"
-            }
+              "type": "string"
+            },
+            "example": [
+              "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+              "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg"
+            ]
           },
           "timestamp": {
             "type": "string",
@@ -567,7 +485,7 @@
           },
           "breed": {
             "type": "string",
-            "example": "golden-retriever"
+            "example": "poodle"
           },
           "count": {
             "type": "integer",
@@ -576,8 +494,12 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DogImage"
-            }
+              "type": "string"
+            },
+            "example": [
+              "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+              "https://images.dog.ceo/breeds/poodle-miniature/n02113712_4913.jpg"
+            ]
           },
           "timestamp": {
             "type": "string",
@@ -585,33 +507,7 @@
           }
         }
       },
-      "Favorite": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "fav_12345"
-          },
-          "url": {
-            "type": "string",
-            "format": "uri",
-            "example": "https://images.dog.ceo/breeds/golden/n02099601_1001.jpg"
-          },
-          "breed": {
-            "type": "string",
-            "example": "golden-retriever"
-          },
-          "name": {
-            "type": "string",
-            "example": "Golden Retriever"
-          },
-          "addedAt": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "FavoritesResponse": {
+      "DogsResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -620,12 +516,12 @@
           },
           "count": {
             "type": "integer",
-            "example": 3
+            "example": 12
           },
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Favorite"
+              "$ref": "#/components/schemas/Dog"
             }
           },
           "timestamp": {
@@ -634,38 +530,118 @@
           }
         }
       },
-      "AddFavoriteRequest": {
+      "Dog": {
         "type": "object",
-        "required": ["url"],
         "properties": {
-          "url": {
+          "id": {
             "type": "string",
-            "format": "uri",
-            "example": "https://images.dog.ceo/breeds/golden/n02099601_1001.jpg"
-          },
-          "breed": {
-            "type": "string",
-            "example": "golden-retriever"
+            "example": "dog_123"
           },
           "name": {
             "type": "string",
-            "example": "Golden Retriever"
+            "example": "Buddy"
+          },
+          "breed": {
+            "type": "string",
+            "example": "labrador"
+          },
+          "age": {
+            "type": "integer",
+            "example": 3
+          },
+          "color": {
+            "type": "string",
+            "example": "golden"
+          },
+          "description": {
+            "type": "string",
+            "example": "A friendly and energetic dog"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
-      "AddFavoriteResponse": {
+      "CreateDogRequest": {
+        "type": "object",
+        "required": ["name", "breed"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Buddy"
+          },
+          "breed": {
+            "type": "string",
+            "example": "labrador"
+          },
+          "age": {
+            "type": "integer",
+            "example": 3
+          },
+          "color": {
+            "type": "string",
+            "example": "golden"
+          },
+          "description": {
+            "type": "string",
+            "example": "A friendly and energetic dog"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg"
+          }
+        }
+      },
+      "UpdateDogRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Buddy"
+          },
+          "breed": {
+            "type": "string",
+            "example": "labrador"
+          },
+          "age": {
+            "type": "integer",
+            "example": 4
+          },
+          "color": {
+            "type": "string",
+            "example": "golden"
+          },
+          "description": {
+            "type": "string",
+            "example": "A friendly and energetic dog"
+          },
+          "imageUrl": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg"
+          }
+        }
+      },
+      "DogResponse": {
         "type": "object",
         "properties": {
           "success": {
             "type": "boolean",
             "example": true
           },
-          "message": {
-            "type": "string",
-            "example": "Favorite added successfully"
-          },
           "data": {
-            "$ref": "#/components/schemas/Favorite"
+            "$ref": "#/components/schemas/Dog"
           },
           "timestamp": {
             "type": "string",
@@ -685,108 +661,38 @@
             "properties": {
               "imagesServed": {
                 "type": "integer",
-                "example": 1337
+                "example": 15342
               },
               "breedsViewed": {
                 "type": "integer",
-                "example": 42
+                "example": 195
               },
-              "favoritesCount": {
+              "dogsManaged": {
                 "type": "integer",
-                "example": 15
+                "example": 127
               },
               "serverStartTime": {
-                "type": "integer",
-                "example": 1641024000000
+                "type": "string",
+                "example": "2025-01-01T00:00:00Z"
               },
               "uptime": {
                 "type": "object",
                 "properties": {
                   "milliseconds": {
                     "type": "integer",
-                    "example": 3600000
+                    "example": 86400000
                   },
                   "minutes": {
-                    "type": "integer",
-                    "example": 60
+                    "type": "number",
+                    "example": 1440
                   },
                   "seconds": {
-                    "type": "integer",
-                    "example": 30
+                    "type": "number",
+                    "example": 86400
                   }
                 }
               }
             }
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "SearchResult": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "example": "golden-retriever"
-          },
-          "name": {
-            "type": "string",
-            "example": "golden retriever"
-          },
-          "match": {
-            "type": "string",
-            "enum": ["exact", "partial"],
-            "example": "exact"
-          }
-        }
-      },
-      "SearchResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "query": {
-            "type": "string",
-            "example": "golden"
-          },
-          "count": {
-            "type": "integer",
-            "example": 1
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SearchResult"
-            }
-          },
-          "timestamp": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "ConnectionTestResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "dogApiStatus": {
-            "type": "string",
-            "example": "connected"
-          },
-          "responseTime": {
-            "type": "string",
-            "example": "123ms"
-          },
-          "breedsAvailable": {
-            "type": "integer",
-            "example": 98
           },
           "timestamp": {
             "type": "string",
@@ -820,11 +726,11 @@
           },
           "error": {
             "type": "string",
-            "example": "An error occurred"
+            "example": "ValidationError"
           },
           "message": {
             "type": "string",
-            "example": "Detailed error message"
+            "example": "Invalid breed name provided"
           },
           "timestamp": {
             "type": "string",
@@ -837,19 +743,50 @@
   "tags": [
     {
       "name": "System",
-      "description": "System health and monitoring endpoints"
+      "description": "System health and status operations",
+      "x-displayName": "System",
+      "x-tagGroups": [
+        {
+          "name": "System",
+          "tags": ["System"]
+        }
+      ]
     },
     {
-      "name": "Breeds",
-      "description": "Dog breed information and search"
+      "name": "Breed Info",
+      "description": "Dog breed information and image retrieval",
+      "x-displayName": "Breed Info",
+      "x-tagGroups": [
+        {
+          "name": "Breed Info",
+          "tags": ["Breed Info"]
+        }
+      ]
     },
     {
-      "name": "Images",
-      "description": "Dog image retrieval endpoints"
+      "name": "CRUD",
+      "description": "Dog data management operations (Create, Read, Update, Delete)",
+      "x-displayName": "CRUD Operations",
+      "x-tagGroups": [
+        {
+          "name": "CRUD Operations",
+          "tags": ["CRUD"]
+        }
+      ]
+    }
+  ],
+  "x-tagGroups": [
+    {
+      "name": "System",
+      "tags": ["System"]
     },
     {
-      "name": "Favorites",
-      "description": "Favorite dog images management"
+      "name": "Breed Info",
+      "tags": ["Breed Info"]
+    },
+    {
+      "name": "CRUD Operations",
+      "tags": ["CRUD"]
     }
   ]
 }

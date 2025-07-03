@@ -1,0 +1,571 @@
+const { connectToDatabase } = require("../../database/db");
+const { Dog, ServerStats, ApiUsage } = require("../../database/models");
+
+exports.handler = async (event, context) => {
+  const startTime = Date.now();
+
+  // Set CORS headers
+  const headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type, x-user-id, x-session-id",
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Content-Type": "application/json",
+  };
+
+  // Handle preflight OPTIONS request
+  if (event.httpMethod === "OPTIONS") {
+    return {
+      statusCode: 200,
+      headers,
+      body: "",
+    };
+  }
+
+  let userId = null;
+  let sessionId = null;
+
+  try {
+    // Connect to database
+    await connectToDatabase();
+
+    // Extract user info from headers
+    userId = event.headers["x-user-id"] || "anonymous";
+    sessionId = event.headers["x-session-id"] || `session_${Date.now()}`;
+
+    // Parse the path to extract dog ID for specific operations
+    const pathSegments = event.path.split("/");
+    const dogId = pathSegments[pathSegments.length - 1];
+    const isSpecificDog = dogId !== "dogs" && dogId.length > 0;
+
+    const responseTime = Date.now() - startTime;
+
+    // Route to appropriate handler based on HTTP method and path
+    switch (event.httpMethod) {
+      case "GET":
+        if (isSpecificDog) {
+          return await handleGetDogById(
+            dogId,
+            userId,
+            sessionId,
+            headers,
+            responseTime,
+            event
+          );
+        } else {
+          return await handleGetAllDogs(
+            userId,
+            sessionId,
+            headers,
+            responseTime,
+            event
+          );
+        }
+
+      case "POST":
+        return await handleCreateDog(
+          userId,
+          sessionId,
+          headers,
+          responseTime,
+          event
+        );
+
+      case "PUT":
+        if (isSpecificDog) {
+          return await handleUpdateDog(
+            dogId,
+            userId,
+            sessionId,
+            headers,
+            responseTime,
+            event
+          );
+        } else {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({
+              success: false,
+              error: "Dog ID is required for update operations",
+              timestamp: new Date().toISOString(),
+            }),
+          };
+        }
+
+      case "DELETE":
+        if (isSpecificDog) {
+          return await handleDeleteDog(
+            dogId,
+            userId,
+            sessionId,
+            headers,
+            responseTime,
+            event
+          );
+        } else {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({
+              success: false,
+              error: "Dog ID is required for delete operations",
+              timestamp: new Date().toISOString(),
+            }),
+          };
+        }
+
+      default:
+        return {
+          statusCode: 405,
+          headers,
+          body: JSON.stringify({
+            success: false,
+            error: "Method not allowed",
+            timestamp: new Date().toISOString(),
+          }),
+        };
+    }
+  } catch (error) {
+    console.error("Error in dogs function:", error);
+
+    const responseTime = Date.now() - startTime;
+
+    // Log error
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: event.httpMethod,
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 500,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        error: error.message,
+      },
+    }).catch(console.error);
+
+    const errorResponse = {
+      success: false,
+      error: "Internal server error",
+      message: error.message,
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify(errorResponse),
+    };
+  }
+};
+
+// Get all dogs
+async function handleGetAllDogs(userId, sessionId, headers, responseTime, event) {
+  try {
+    const dogs = await Dog.find({})
+      .sort({ createdAt: -1 })
+      .lean();
+
+    // Log API usage
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: "GET",
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 200,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        count: dogs.length,
+      },
+    });
+
+    // Update daily stats
+    await updateDailyStats(responseTime, "dogs");
+
+    const response = {
+      success: true,
+      count: dogs.length,
+      data: dogs.map(formatDogResponse),
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    throw error;
+  }
+}
+
+// Get dog by ID
+async function handleGetDogById(dogId, userId, sessionId, headers, responseTime, event) {
+  try {
+    const dog = await Dog.findById(dogId).lean();
+
+    if (!dog) {
+      return {
+        statusCode: 404,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Dog not found",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+
+    // Log API usage
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: "GET",
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 200,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        dogId: dogId,
+      },
+    });
+
+    // Update daily stats
+    await updateDailyStats(responseTime, "dogs");
+
+    const response = {
+      success: true,
+      data: formatDogResponse(dog),
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    if (error.name === "CastError") {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Invalid dog ID format",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    throw error;
+  }
+}
+
+// Create new dog
+async function handleCreateDog(userId, sessionId, headers, responseTime, event) {
+  try {
+    const body = JSON.parse(event.body || "{}");
+    const { name, breed, age, color, description, imageUrl } = body;
+
+    // Validate required fields
+    if (!name || !breed) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Name and breed are required",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+
+    // Create new dog
+    const dog = await Dog.create({
+      name: name.trim(),
+      breed: breed.trim(),
+      age: age || undefined,
+      color: color ? color.trim() : undefined,
+      description: description ? description.trim() : undefined,
+      imageUrl: imageUrl ? imageUrl.trim() : undefined,
+    });
+
+    // Log API usage
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: "POST",
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 201,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        dogId: dog._id.toString(),
+        breed: breed,
+        action: "create_dog",
+      },
+    });
+
+    // Update daily stats
+    await updateDailyStats(responseTime, "dogs");
+
+    const response = {
+      success: true,
+      data: formatDogResponse(dog),
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 201,
+      headers,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Invalid JSON in request body",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    if (error.name === "ValidationError") {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Validation error",
+          message: Object.values(error.errors).map(e => e.message).join(", "),
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    throw error;
+  }
+}
+
+// Update dog
+async function handleUpdateDog(dogId, userId, sessionId, headers, responseTime, event) {
+  try {
+    const body = JSON.parse(event.body || "{}");
+    const { name, breed, age, color, description, imageUrl } = body;
+
+    // Build update object with only provided fields
+    const updateData = {};
+    if (name) updateData.name = name.trim();
+    if (breed) updateData.breed = breed.trim();
+    if (age !== undefined) updateData.age = age;
+    if (color) updateData.color = color.trim();
+    if (description) updateData.description = description.trim();
+    if (imageUrl) updateData.imageUrl = imageUrl.trim();
+
+    if (Object.keys(updateData).length === 0) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "No valid fields provided for update",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+
+    const dog = await Dog.findByIdAndUpdate(
+      dogId,
+      updateData,
+      { new: true, runValidators: true }
+    ).lean();
+
+    if (!dog) {
+      return {
+        statusCode: 404,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Dog not found",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+
+    // Log API usage
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: "PUT",
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 200,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        dogId: dogId,
+        action: "update_dog",
+        updatedFields: Object.keys(updateData),
+      },
+    });
+
+    // Update daily stats
+    await updateDailyStats(responseTime, "dogs");
+
+    const response = {
+      success: true,
+      data: formatDogResponse(dog),
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    if (error instanceof SyntaxError) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Invalid JSON in request body",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    if (error.name === "ValidationError") {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Validation error",
+          message: Object.values(error.errors).map(e => e.message).join(", "),
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    if (error.name === "CastError") {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Invalid dog ID format",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    throw error;
+  }
+}
+
+// Delete dog
+async function handleDeleteDog(dogId, userId, sessionId, headers, responseTime, event) {
+  try {
+    const dog = await Dog.findByIdAndDelete(dogId).lean();
+
+    if (!dog) {
+      return {
+        statusCode: 404,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Dog not found",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+
+    // Log API usage
+    await ApiUsage.create({
+      endpoint: "/dogs",
+      method: "DELETE",
+      userId,
+      sessionId,
+      responseTime,
+      statusCode: 200,
+      userAgent: event.headers["user-agent"],
+      timestamp: new Date(),
+      metadata: {
+        dogId: dogId,
+        action: "delete_dog",
+        deletedDog: {
+          name: dog.name,
+          breed: dog.breed,
+        },
+      },
+    });
+
+    // Update daily stats
+    await updateDailyStats(responseTime, "dogs");
+
+    const response = {
+      success: true,
+      message: "Dog deleted successfully",
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify(response),
+    };
+  } catch (error) {
+    if (error.name === "CastError") {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Invalid dog ID format",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
+    throw error;
+  }
+}
+
+// Helper function to format dog response
+function formatDogResponse(dog) {
+  return {
+    id: dog._id.toString(),
+    name: dog.name,
+    breed: dog.breed,
+    age: dog.age,
+    color: dog.color,
+    description: dog.description,
+    imageUrl: dog.imageUrl,
+    createdAt: dog.createdAt,
+    updatedAt: dog.updatedAt,
+  };
+}
+
+// Helper function to update daily stats
+async function updateDailyStats(responseTime, endpoint) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  await ServerStats.findOneAndUpdate(
+    { date: today },
+    {
+      $inc: {
+        "metrics.totalRequests": 1,
+        [`endpoints.${endpoint}`]: 1,
+      },
+      $set: {
+        "metrics.averageResponseTime": responseTime,
+        updatedAt: new Date(),
+      },
+    },
+    { upsert: true, new: true }
+  );
+}

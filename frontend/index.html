@@ -64,8 +64,9 @@
                 <div class="homepage-section">
                     <h1 class="main-title">Barkend</h1>
                     <p class="main-subtitle">
-                        Real-time database system with external API integration,
-                        following MVC architecture with full CRUD operations
+                        Serverless backend architecture with MongoDB
+                        integration, RESTful API design, and scalable
+                        cloud-native patterns
                     </p>
                     <div class="badge-container">
                         <span class="badge badge-netlify">
@@ -91,12 +92,12 @@
                 <div class="homepage-section">
                     <h2><i class="fas fa-bullseye"></i> Project Overview</h2>
                     <p>
-                        Barkend is a comprehensive dog breed management system
-                        that demonstrates real-time database integration with
-                        external APIs. This Mini-Project 3 implementation
-                        showcases advanced database operations, MVC
-                        architecture, and full CRUD functionality using modern
-                        web technologies.
+                        Barkend demonstrates comprehensive backend architecture
+                        mastery through serverless functions, database design,
+                        and API integration. This system showcases advanced
+                        MongoDB operations, RESTful API design, external API
+                        consumption, error handling, and scalable serverless
+                        architecture patterns.
                     </p>
 
                     <!-- Tabbed Subsections -->
@@ -105,100 +106,96 @@
                             class="subsection-tab active"
                             onclick="showSubTab('features', 'project')"
                         >
-                            <i class="fas fa-star"></i> Features
+                            <i class="fas fa-server"></i> Backend Architecture
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('data', 'project')"
                         >
-                            <i class="fas fa-database"></i> Data
+                            <i class="fas fa-database"></i> Data Layer
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('crud', 'project')"
                         >
-                            <i class="fas fa-edit"></i> CRUD
+                            <i class="fas fa-edit"></i> Database Operations
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('statistics', 'project')"
                         >
-                            <i class="fas fa-chart-bar"></i> Statistics
+                            <i class="fas fa-chart-bar"></i> System Metrics
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('extensions', 'project')"
                         >
-                            <i class="fas fa-puzzle-piece"></i> Extensions
+                            <i class="fas fa-puzzle-piece"></i> Architecture
+                            Benefits
                         </button>
                     </div>
 
-                    <!-- Features Tab -->
+                    <!-- Backend Architecture Tab -->
                     <div
                         id="project-features"
                         class="subsection-content active"
                     >
                         <div class="architecture-grid">
                             <div class="architecture-card">
-                                <i class="fas fa-paw"></i>
-                                <h3>Dog Breed Explorer</h3>
+                                <i class="fas fa-server"></i>
+                                <h3>RESTful API Architecture</h3>
                                 <p>
-                                    Browse and discover over 100+ dog breeds
-                                    with high-quality images, breed
-                                    characteristics, and detailed information
-                                    sourced from reliable APIs.
+                                    Scalable serverless functions with proper
+                                    HTTP methods, status codes, error handling,
+                                    and JSON responses following REST principles
+                                    and OpenAPI specifications.
+                                </p>
+                            </div>
+
+                            <div class="architecture-card">
+                                <i class="fas fa-cloud"></i>
+                                <h3>Serverless Functions</h3>
+                                <p>
+                                    Netlify Functions for scalable backend
+                                    logic, automatic scaling, environment-based
+                                    configuration, and seamless deployment with
+                                    zero server maintenance required.
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-heart"></i>
-                                <h3>Favorite Management</h3>
+                                <i class="fas fa-exchange-alt"></i>
+                                <h3>API Integration</h3>
                                 <p>
-                                    Save your favorite dog breeds and images
-                                    with persistent storage, easy organization,
-                                    and quick access to your preferred breeds.
+                                    External API consumption with proper error
+                                    handling, rate limiting, data
+                                    transformation, and fallback mechanisms for
+                                    robust third-party service integration.
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-search"></i>
-                                <h3>Advanced Search</h3>
+                                <i class="fas fa-file-code"></i>
+                                <h3>OpenAPI Documentation</h3>
                                 <p>
-                                    Find specific breeds quickly with
-                                    intelligent search functionality, filtering
-                                    options, and breed categorization for easy
-                                    navigation.
+                                    Comprehensive API documentation with Swagger
+                                    UI, interactive endpoints, request/response
+                                    schemas, and automatic specification
+                                    generation following industry standards.
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-images"></i>
-                                <h3>Image Gallery</h3>
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Error Handling & Validation</h3>
                                 <p>
-                                    View multiple high-resolution images for
-                                    each breed with smooth navigation, zoom
-                                    capabilities, and optimized loading.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-chart-line"></i>
-                                <h3>Real-time Statistics</h3>
-                                <p>
-                                    Track system performance, popular breeds,
-                                    user engagement metrics, and database
-                                    statistics with live updates.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-mobile-alt"></i>
-                                <h3>Responsive Design</h3>
-                                <p>
-                                    Fully optimized for all devices with touch-
-                                    friendly interface, adaptive layouts, and
-                                    seamless mobile experience.
+                                    Comprehensive error handling with proper
+                                    HTTP status codes, input validation, request
+                                    sanitization, and graceful degradation for
+                                    production-ready reliability.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Data Tab -->
+                    <!-- Data Layer Tab -->
                     <div id="project-data" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
@@ -224,10 +221,10 @@
                                 <i class="fas fa-database"></i>
                                 <h3>Database Storage</h3>
                                 <p>
-                                    MongoDB collections store breeds, favorites,
-                                    user data, and analytics with optimized
-                                    schemas and compound indexes for
-                                    performance.
+                                    MongoDB collections store breed data,
+                                    analytics, and system metrics with optimized
+                                    schemas, compound indexes, and aggregation
+                                    pipelines for high performance.
                                 </p>
                             </div>
                             <div class="architecture-card">
@@ -260,25 +257,27 @@
                         </div>
                     </div>
 
-                    <!-- CRUD Tab -->
+                    <!-- Database Operations Tab -->
                     <div id="project-crud" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
                                 <i class="fas fa-plus-circle"></i>
                                 <h3>Create Operations</h3>
                                 <p>
-                                    Add new favorites, create user profiles,
-                                    insert breed data, and populate collections
-                                    with validation and duplicate checking.
+                                    Insert breed data, populate collections,
+                                    create API endpoints, and manage data with
+                                    Mongoose validation and duplicate prevention
+                                    using compound indexes.
                                 </p>
                             </div>
                             <div class="architecture-card">
                                 <i class="fas fa-search"></i>
                                 <h3>Read Operations</h3>
                                 <p>
-                                    Retrieve breed lists, fetch user favorites,
-                                    get statistics, and search with filtering,
-                                    pagination, and sorting capabilities.
+                                    Retrieve breed lists with MongoDB queries,
+                                    fetch external API data, generate analytics,
+                                    and implement search with aggregation
+                                    pipelines, pagination, and sorting.
                                 </p>
                             </div>
                             <div class="architecture-card">
@@ -295,10 +294,10 @@
                                 <i class="fas fa-trash-alt"></i>
                                 <h3>Delete Operations</h3>
                                 <p>
-                                    Remove favorites, delete user data, clean
-                                    expired cache entries, and maintain
-                                    referential integrity with cascade
-                                    operations.
+                                    Clean expired cache entries, remove outdated
+                                    data, implement database cleanup jobs, and
+                                    maintain referential integrity with MongoDB
+                                    transactions and cascade operations.
                                 </p>
                             </div>
                             <div class="architecture-card">
@@ -322,7 +321,7 @@
                         </div>
                     </div>
 
-                    <!-- Extensions Tab -->
+                    <!-- Architecture Benefits Tab -->
                     <div id="project-extensions" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
@@ -366,25 +365,26 @@
                                 <i class="fas fa-users"></i>
                                 <h3>User Features</h3>
                                 <p>
-                                    Personalized favorites, user profiles,
-                                    recommendation systems, and social features
-                                    for enhanced engagement.
+                                    Backend API powering breed exploration,
+                                    search functionality, data retrieval, and
+                                    serving structured JSON responses with
+                                    proper HTTP status codes.
                                 </p>
                             </div>
                             <div class="architecture-card">
                                 <i class="fas fa-rocket"></i>
                                 <h3>Future Extensions</h3>
                                 <p>
-                                    Machine learning integration, advanced
-                                    analytics, mobile app support, and
-                                    integration with additional pet-related
-                                    APIs.
+                                    GraphQL API implementation, advanced
+                                    analytics with time-series data, webhook
+                                    support, and integration with additional
+                                    external APIs for data enrichment.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Statistics Tab -->
+                    <!-- System Metrics Tab -->
                     <div id="project-statistics" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
@@ -396,7 +396,7 @@
                                     <strong id="images-stored">0</strong> breed
                                     images stored<br />
                                     <strong id="favorites-tracked">0</strong>
-                                    user favorites tracked
+                                    API requests processed
                                 </p>
                             </div>
                             <div class="architecture-card">
@@ -438,7 +438,7 @@
             <!-- Documentation Tab -->
             <div id="documentation" class="tab-content">
                 <div class="demo-header">
-                    <h2 class="section-title">API Documentation</h2>
+                    <h1 class="main-title">API Documentation</h1>
                     <p>
                         Explore the comprehensive RESTful API for dog breed
                         information. Interactive documentation with live
@@ -458,10 +458,10 @@
             <!-- Demo Tab -->
             <div id="demo" class="tab-content">
                 <div class="demo-header">
-                    <h2 class="section-title">Dog Breed Demonstration</h2>
+                    <h1 class="main-title">Dog Breed Demonstration</h1>
                     <p>
-                        Demonstration of data retrieval from our API (click a
-                        card to see more pics)
+                        Demonstration of data retrieval from the API <br />
+                        (click a card to see more pics)
                     </p>
                 </div>
 
@@ -543,20 +543,12 @@
                     title: "Barkend API - Offline Demo",
                     version: "1.0.0",
                     description:
-                        "🐕 **Offline Demo Mode** - This is a demonstration of the Barkend API documentation. The actual API is currently offline, but you can explore the interface and see what endpoints are available when the system is running.",
-                    contact: {
-                        name: "Barkend Team",
-                        email: "support@barkend.com",
-                    },
-                    license: {
-                        name: "MIT",
-                        url: "https://opensource.org/licenses/MIT",
-                    },
+                        "🐕 **Offline Demo Mode** - This is a demonstration of the Barkend API documentation. The actual API is currently offline, but you can explore the interface and see what endpoints are available when the system is running.\n\n[View raw JSON](swagger/swagger.json)",
                 },
                 servers: [
                     {
                         url: "/.netlify/functions",
-                        description: "Netlify Functions (Currently Offline)",
+                        description: "Netlify Functions",
                     },
                 ],
                 paths: {
@@ -585,7 +577,7 @@
                             summary: "Get All Breeds",
                             description:
                                 "Retrieves all available dog breeds with sub-breeds",
-                            tags: ["Breeds"],
+                            tags: ["Breed Info"],
                             responses: {
                                 200: {
                                     description: "List of all dog breeds",
@@ -615,7 +607,7 @@
                             summary: "Get Random Dog Images",
                             description:
                                 "Returns random dog images from all breeds",
-                            tags: ["Images"],
+                            tags: ["Breed Info"],
                             parameters: [
                                 {
                                     name: "count",
@@ -659,7 +651,7 @@
                         get: {
                             summary: "Get Images by Breed",
                             description: "Returns images for a specific breed",
-                            tags: ["Images"],
+                            tags: ["Breed Info"],
                             parameters: [
                                 {
                                     name: "breed",
@@ -717,18 +709,18 @@
                             },
                         },
                     },
-                    "/favorites": {
+                    "/dogs": {
                         get: {
-                            summary: "Get Favorite Dogs",
-                            description: "Returns all favorite dog images",
-                            tags: ["Favorites"],
+                            summary: "Get All Dogs",
+                            description: "Retrieves all dogs in the database",
+                            tags: ["CRUD"],
                             responses: {
                                 200: {
-                                    description: "List of favorite dogs",
+                                    description: "List of all dogs",
                                     content: {
                                         "application/json": {
                                             schema: {
-                                                $ref: "#/components/schemas/FavoritesResponse",
+                                                $ref: "#/components/schemas/DogsResponse",
                                             },
                                         },
                                     },
@@ -736,32 +728,168 @@
                             },
                         },
                         post: {
-                            summary: "Add Favorite Dog",
-                            description: "Adds a dog image to favorites",
-                            tags: ["Favorites"],
+                            summary: "Create Dog",
+                            description: "Creates a new dog record",
+                            tags: ["CRUD"],
                             requestBody: {
                                 required: true,
                                 content: {
                                     "application/json": {
                                         schema: {
-                                            $ref: "#/components/schemas/AddFavoriteRequest",
+                                            $ref: "#/components/schemas/CreateDogRequest",
                                         },
                                     },
                                 },
                             },
                             responses: {
                                 201: {
-                                    description: "Dog added to favorites",
+                                    description: "Dog created successfully",
                                     content: {
                                         "application/json": {
                                             schema: {
-                                                $ref: "#/components/schemas/AddFavoriteResponse",
+                                                $ref: "#/components/schemas/DogResponse",
                                             },
                                         },
                                     },
                                 },
                                 400: {
                                     description: "Invalid request",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                    },
+                    "/dogs/{id}": {
+                        get: {
+                            summary: "Get Dog by ID",
+                            description: "Retrieves a specific dog by ID",
+                            tags: ["CRUD"],
+                            parameters: [
+                                {
+                                    name: "id",
+                                    in: "path",
+                                    description: "Dog ID",
+                                    required: true,
+                                    schema: {
+                                        type: "string",
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Dog details",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/DogResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                404: {
+                                    description: "Dog not found",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        put: {
+                            summary: "Update Dog",
+                            description: "Updates an existing dog record",
+                            tags: ["CRUD"],
+                            parameters: [
+                                {
+                                    name: "id",
+                                    in: "path",
+                                    description: "Dog ID",
+                                    required: true,
+                                    schema: {
+                                        type: "string",
+                                    },
+                                },
+                            ],
+                            requestBody: {
+                                required: true,
+                                content: {
+                                    "application/json": {
+                                        schema: {
+                                            $ref: "#/components/schemas/UpdateDogRequest",
+                                        },
+                                    },
+                                },
+                            },
+                            responses: {
+                                200: {
+                                    description: "Dog updated successfully",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/DogResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                400: {
+                                    description: "Invalid request",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                404: {
+                                    description: "Dog not found",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/ErrorResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        delete: {
+                            summary: "Delete Dog",
+                            description: "Deletes a dog record",
+                            tags: ["CRUD"],
+                            parameters: [
+                                {
+                                    name: "id",
+                                    in: "path",
+                                    description: "Dog ID",
+                                    required: true,
+                                    schema: {
+                                        type: "string",
+                                    },
+                                },
+                            ],
+                            responses: {
+                                200: {
+                                    description: "Dog deleted successfully",
+                                    content: {
+                                        "application/json": {
+                                            schema: {
+                                                $ref: "#/components/schemas/SuccessResponse",
+                                            },
+                                        },
+                                    },
+                                },
+                                404: {
+                                    description: "Dog not found",
                                     content: {
                                         "application/json": {
                                             schema: {
@@ -914,7 +1042,7 @@
                                 },
                             },
                         },
-                        FavoritesResponse: {
+                        DogsResponse: {
                             type: "object",
                             properties: {
                                 success: {
@@ -923,12 +1051,12 @@
                                 },
                                 count: {
                                     type: "integer",
-                                    example: 5,
+                                    example: 12,
                                 },
                                 data: {
                                     type: "array",
                                     items: {
-                                        $ref: "#/components/schemas/Favorite",
+                                        $ref: "#/components/schemas/Dog",
                                     },
                                 },
                                 timestamp: {
@@ -937,54 +1065,129 @@
                                 },
                             },
                         },
-                        Favorite: {
+                        Dog: {
                             type: "object",
                             properties: {
                                 id: {
                                     type: "string",
-                                    example: "fav_123",
-                                },
-                                url: {
-                                    type: "string",
-                                    format: "uri",
-                                    example:
-                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
-                                },
-                                breed: {
-                                    type: "string",
-                                    example: "poodle",
+                                    example: "dog_123",
                                 },
                                 name: {
                                     type: "string",
-                                    example: "Fluffy",
+                                    example: "Buddy",
                                 },
-                                addedAt: {
+                                breed: {
+                                    type: "string",
+                                    example: "labrador",
+                                },
+                                age: {
+                                    type: "integer",
+                                    example: 3,
+                                },
+                                color: {
+                                    type: "string",
+                                    example: "golden",
+                                },
+                                description: {
+                                    type: "string",
+                                    example: "A friendly and energetic dog",
+                                },
+                                imageUrl: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
+                                },
+                                createdAt: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                                updatedAt: {
                                     type: "string",
                                     format: "date-time",
                                 },
                             },
                         },
-                        AddFavoriteRequest: {
+                        CreateDogRequest: {
                             type: "object",
-                            required: ["url", "breed"],
+                            required: ["name", "breed"],
                             properties: {
-                                url: {
+                                name: {
                                     type: "string",
-                                    format: "uri",
-                                    example:
-                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
+                                    example: "Buddy",
                                 },
                                 breed: {
                                     type: "string",
-                                    example: "poodle",
+                                    example: "labrador",
                                 },
-                                name: {
+                                age: {
+                                    type: "integer",
+                                    example: 3,
+                                },
+                                color: {
                                     type: "string",
-                                    example: "Fluffy",
+                                    example: "golden",
+                                },
+                                description: {
+                                    type: "string",
+                                    example: "A friendly and energetic dog",
+                                },
+                                imageUrl: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
                                 },
                             },
                         },
-                        AddFavoriteResponse: {
+                        UpdateDogRequest: {
+                            type: "object",
+                            properties: {
+                                name: {
+                                    type: "string",
+                                    example: "Buddy",
+                                },
+                                breed: {
+                                    type: "string",
+                                    example: "labrador",
+                                },
+                                age: {
+                                    type: "integer",
+                                    example: 4,
+                                },
+                                color: {
+                                    type: "string",
+                                    example: "golden",
+                                },
+                                description: {
+                                    type: "string",
+                                    example: "A friendly and energetic dog",
+                                },
+                                imageUrl: {
+                                    type: "string",
+                                    format: "uri",
+                                    example:
+                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
+                                },
+                            },
+                        },
+                        DogResponse: {
+                            type: "object",
+                            properties: {
+                                success: {
+                                    type: "boolean",
+                                    example: true,
+                                },
+                                data: {
+                                    $ref: "#/components/schemas/Dog",
+                                },
+                                timestamp: {
+                                    type: "string",
+                                    format: "date-time",
+                                },
+                            },
+                        },
+                        SuccessResponse: {
                             type: "object",
                             properties: {
                                 success: {
@@ -993,10 +1196,7 @@
                                 },
                                 message: {
                                     type: "string",
-                                    example: "Dog added to favorites",
-                                },
-                                data: {
-                                    $ref: "#/components/schemas/Favorite",
+                                    example: "Operation completed successfully",
                                 },
                                 timestamp: {
                                     type: "string",
@@ -1022,9 +1222,9 @@
                                             type: "integer",
                                             example: 195,
                                         },
-                                        favoritesCount: {
+                                        apiRequests: {
                                             type: "integer",
-                                            example: 127,
+                                            example: 847,
                                         },
                                         serverStartTime: {
                                             type: "string",
@@ -1084,16 +1284,14 @@
                         description: "System health and status operations",
                     },
                     {
-                        name: "Breeds",
-                        description: "Dog breed information and management",
+                        name: "Breed Info",
+                        description:
+                            "Dog breed information and image retrieval",
                     },
                     {
-                        name: "Images",
-                        description: "Dog image retrieval and management",
-                    },
-                    {
-                        name: "Favorites",
-                        description: "Favorite dog management operations",
+                        name: "CRUD",
+                        description:
+                            "Dog data management operations (Create, Read, Update, Delete)",
                     },
                 ],
             };
@@ -1282,8 +1480,14 @@
                         layout: "BaseLayout",
                         validatorUrl: null,
                         tryItOutEnabled: true,
-                        docExpansion: "list",
+                        docExpansion: "none",
+                        defaultModelsExpandDepth: 1,
+                        defaultModelExpandDepth: 1,
                         filter: true,
+                        showExtensions: true,
+                        showCommonExtensions: true,
+                        displayOperationId: false,
+                        displayRequestDuration: true,
                         onComplete: function () {
                             console.log(
                                 "Live API documentation loaded successfully",
@@ -1322,8 +1526,14 @@
                         layout: "BaseLayout",
                         validatorUrl: null,
                         tryItOutEnabled: false, // Disable try-it-out for offline mode
-                        docExpansion: "list",
+                        docExpansion: "none",
+                        defaultModelsExpandDepth: 1,
+                        defaultModelExpandDepth: 1,
                         filter: true,
+                        showExtensions: true,
+                        showCommonExtensions: true,
+                        displayOperationId: false,
+                        displayRequestDuration: true,
                         onComplete: function () {
                             console.log(
                                 "Offline API documentation loaded successfully",
@@ -1391,7 +1601,7 @@
                 document.getElementById("images-stored").textContent =
                     stats.imagesServed || 0;
                 document.getElementById("favorites-tracked").textContent =
-                    stats.favoritesCount || 0;
+                    stats.apiRequests || 0;
                 document.getElementById("avg-response").textContent =
                     (stats.averageResponseTime || 0) + "ms";
                 document.getElementById("uptime").textContent = "99.9%";
@@ -1615,7 +1825,7 @@
                     const offlineNotice = `
                         <div class="offline-notice">
                             <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
-                            ${isManualDisconnect ? "API connection disabled to demonstrate fallback system. Showing demo dog breeds." : "API is currently offline. Showing demo dog breeds."}
+                            ${isManualDisconnect ? "API connection disabled to demonstrate fallback system. <br> Showing demo dog breeds." : "API is currently offline. <br> Showing demo dog breeds."}
                         </div>
                     `;
 
