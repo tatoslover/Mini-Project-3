@@ -451,30 +451,6 @@ body {
     color: #065f46;
 }
 
-.retry-btn-isolated-unique {
-    background-color: #007bff;
-    color: white;
-    border: 1px solid #007bff;
-    border-radius: 4px;
-    padding: 4px 8px;
-    margin-left: 8px;
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.retry-btn-isolated-unique:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-}
-
-.retry-btn-isolated-unique:active {
-    background-color: #004085;
-    border-color: #004085;
-}
-
 /* Demo Styles */
 .demo-header {
     text-align: center;

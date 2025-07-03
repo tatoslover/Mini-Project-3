@@ -480,40 +480,21 @@ exports.handler = async (event, context) => {
           },
           "/.netlify/functions/admin-breeds": {
             get: {
-              summary: "Admin: Get All Breeds",
-              description: "Returns all breeds with administrative details",
-              tags: ["Admin & CRUD"],
-              parameters: [
-                {
-                  name: "x-admin-key",
-                  in: "header",
-                  description: "Admin authentication key",
-                  required: true,
-                  schema: { type: "string" },
-                },
-              ],
+              summary: "Get All Breeds",
+              description: "Returns all breeds with details",
+              tags: ["CRUD Operations"],
+              parameters: [],
               responses: {
                 200: {
                   description: "All breeds with admin details",
                 },
-                401: {
-                  description: "Unauthorized - Invalid admin key",
-                },
               },
             },
             post: {
-              summary: "Admin: Add New Breed",
+              summary: "Add New Breed",
               description: "Adds a new breed to the database",
-              tags: ["Admin & CRUD"],
-              parameters: [
-                {
-                  name: "x-admin-key",
-                  in: "header",
-                  description: "Admin authentication key",
-                  required: true,
-                  schema: { type: "string" },
-                },
-              ],
+              tags: ["CRUD Operations"],
+              parameters: [],
               requestBody: {
                 required: true,
                 content: {
@@ -549,27 +530,17 @@ exports.handler = async (event, context) => {
                 400: {
                   description: "Invalid breed data",
                 },
-                401: {
-                  description: "Unauthorized - Invalid admin key",
-                },
+
                 409: {
                   description: "Breed already exists",
                 },
               },
             },
             put: {
-              summary: "Admin: Update Breed",
+              summary: "Update Breed",
               description: "Updates an existing breed in the database",
-              tags: ["Admin & CRUD"],
-              parameters: [
-                {
-                  name: "x-admin-key",
-                  in: "header",
-                  description: "Admin authentication key",
-                  required: true,
-                  schema: { type: "string" },
-                },
-              ],
+              tags: ["CRUD Operations"],
+              parameters: [],
               requestBody: {
                 required: true,
                 content: {
@@ -598,26 +569,17 @@ exports.handler = async (event, context) => {
                 400: {
                   description: "Invalid breed data",
                 },
-                401: {
-                  description: "Unauthorized - Invalid admin key",
-                },
+
                 404: {
                   description: "Breed not found",
                 },
               },
             },
             delete: {
-              summary: "Admin: Delete Breed",
+              summary: "Delete Breed",
               description: "Removes a breed from the database",
-              tags: ["Admin & CRUD"],
+              tags: ["CRUD Operations"],
               parameters: [
-                {
-                  name: "x-admin-key",
-                  in: "header",
-                  description: "Admin authentication key",
-                  required: true,
-                  schema: { type: "string" },
-                },
                 {
                   name: "breed",
                   in: "query",
@@ -630,9 +592,7 @@ exports.handler = async (event, context) => {
                 200: {
                   description: "Breed deleted successfully",
                 },
-                401: {
-                  description: "Unauthorized - Invalid admin key",
-                },
+
                 404: {
                   description: "Breed not found",
                 },
@@ -743,8 +703,9 @@ exports.handler = async (event, context) => {
             description: "Breed analytics and performance metrics",
           },
           {
-            name: "Admin & CRUD",
-            description: "Administrative endpoints for full CRUD operations",
+            name: "CRUD Operations",
+            description:
+              "Create, Read, Update, Delete operations for breed management",
           },
         ],
       };

@@ -225,7 +225,7 @@ npm run monitor:health
 #### 🐕 Breed Management Service
 - `GET /api/v1/breeds` - Paginated breed listing with filtering and sorting
 - `GET /api/v1/breeds/:breed` - Detailed breed information with caching
-- `POST /api/v1/breeds` - Create new breed (admin authentication required)
+- `POST /api/v1/breeds` - Create new breed
 - `PUT /api/v1/breeds/:breed` - Update breed information with validation
 - `DELETE /api/v1/breeds/:breed` - Soft delete with audit logging
 - `GET /api/v1/breeds/search` - Advanced search with fuzzy matching

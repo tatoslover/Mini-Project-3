@@ -1115,7 +1115,8 @@
                 event.target.classList.add("active");
 
                 // Load content for specific tabs
-                if (tabName === "documentation" && !swaggerUI) {
+                if (tabName === "documentation") {
+                    // Always reload documentation to reflect current connection state
                     loadSwaggerUI();
                 } else if (tabName === "demo") {
                     console.log("Demo tab selected, loading data...");
@@ -1206,12 +1207,16 @@
             }
 
             function refreshCurrentTab() {
-                const activeTab = document.querySelector(".nav-tab.active");
-                if (activeTab) {
-                    const tabName = activeTab.textContent.trim().toLowerCase();
-                    if (tabName.includes("documentation")) {
+                const activeTabContent = document.querySelector(
+                    ".tab-content.active",
+                );
+                if (activeTabContent) {
+                    const tabId = activeTabContent.id;
+                    console.log("Refreshing current tab:", tabId);
+
+                    if (tabId === "documentation") {
                         loadSwaggerUI();
-                    } else if (tabName.includes("demo")) {
+                    } else if (tabId === "demo") {
                         loadDemoData();
                     }
                 }
@@ -1219,6 +1224,17 @@
 
             async function loadSwaggerUI() {
                 const swaggerContainer = document.getElementById("swagger-ui");
+
+                // Clean up existing SwaggerUI instance if it exists
+                if (swaggerUI) {
+                    try {
+                        // Clear the container completely
+                        swaggerContainer.innerHTML = "";
+                        swaggerUI = null;
+                    } catch (e) {
+                        console.log("SwaggerUI cleanup completed");
+                    }
+                }
 
                 // Show loading state
                 swaggerContainer.innerHTML = `
@@ -1287,9 +1303,6 @@
                         <div class="documentation-status offline">
                             <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
                             ${isManualDisconnect ? "API connection disabled to demonstrate fallback system." : "API is currently offline. Showing demo documentation with sample data."}
-                            <span onclick="loadSwaggerUI()" class="retry-btn-isolated-unique">
-                                🔄 Retry Connection
-                            </span>
                             <div class="api-status-info">
                                 Note: "Try it out" buttons are disabled in offline mode
                             </div>
@@ -1603,9 +1616,6 @@
                         <div class="offline-notice">
                             <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
                             ${isManualDisconnect ? "API connection disabled to demonstrate fallback system. Showing demo dog breeds." : "API is currently offline. Showing demo dog breeds."}
-                            <span onclick="loadDemoData()" class="retry-btn-isolated-unique">
-                                🔄 Retry
-                            </span>
                         </div>
                     `;
 
