@@ -1,0 +1,855 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PupHub API",
+    "version": "1.0.0",
+    "description": "A comprehensive RESTful API for dog breed information and images",
+    "contact": {
+      "name": "PupHub Team",
+      "email": "support@puphub.com"
+    },
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health Check",
+        "description": "Returns the health status of the API server",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Server is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/breeds": {
+      "get": {
+        "summary": "Get All Breeds",
+        "description": "Retrieves all available dog breeds with sub-breeds",
+        "tags": ["Breeds"],
+        "responses": {
+          "200": {
+            "description": "List of all dog breeds",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BreedsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/random": {
+      "get": {
+        "summary": "Get Random Dog Images",
+        "description": "Returns random dog images from various breeds",
+        "tags": ["Images"],
+        "parameters": [
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of images to return (max 50)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Random dog images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImagesResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/breeds/{breed}/images": {
+      "get": {
+        "summary": "Get Breed Images",
+        "description": "Returns images for a specific breed",
+        "tags": ["Images"],
+        "parameters": [
+          {
+            "name": "breed",
+            "in": "path",
+            "description": "Breed name (use hyphen for sub-breeds, e.g., 'golden-retriever')",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of images to return (max 50)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Breed images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BreedImagesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Breed not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/breeds/{breed}/random": {
+      "get": {
+        "summary": "Get Random Breed Images",
+        "description": "Returns random images for a specific breed",
+        "tags": ["Images"],
+        "parameters": [
+          {
+            "name": "breed",
+            "in": "path",
+            "description": "Breed name (use hyphen for sub-breeds, e.g., 'golden-retriever')",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "count",
+            "in": "query",
+            "description": "Number of images to return (max 10)",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10,
+              "default": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Random breed images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BreedImagesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Breed not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favorites": {
+      "get": {
+        "summary": "Get Favorites",
+        "description": "Returns all favorite dog images",
+        "tags": ["Favorites"],
+        "responses": {
+          "200": {
+            "description": "List of favorite images",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FavoritesResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Add Favorite",
+        "description": "Adds a dog image to favorites",
+        "tags": ["Favorites"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFavoriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Favorite added successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddFavoriteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/favorites/{id}": {
+      "delete": {
+        "summary": "Remove Favorite",
+        "description": "Removes a dog image from favorites",
+        "tags": ["Favorites"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Favorite ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Favorite removed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Favorite not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stats": {
+      "get": {
+        "summary": "Get Statistics",
+        "description": "Returns server statistics and usage metrics",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Server statistics",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StatsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/search": {
+      "get": {
+        "summary": "Search Breeds",
+        "description": "Search for dog breeds by name",
+        "tags": ["Breeds"],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Search query (minimum 2 characters)",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Search results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid search query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/test-connection": {
+      "get": {
+        "summary": "Test External API Connection",
+        "description": "Tests the connection to the external Dog CEO API",
+        "tags": ["System"],
+        "responses": {
+          "200": {
+            "description": "Connection test results",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConnectionTestResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Connection failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "HealthResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "healthy"
+          },
+          "service": {
+            "type": "string",
+            "example": "PupHub API"
+          },
+          "version": {
+            "type": "string",
+            "example": "1.0.0"
+          },
+          "uptime": {
+            "type": "string",
+            "example": "3600s"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stats": {
+            "type": "object",
+            "properties": {
+              "imagesServed": {
+                "type": "integer"
+              },
+              "breedsViewed": {
+                "type": "integer"
+              },
+              "favoritesCount": {
+                "type": "integer"
+              }
+            }
+          },
+          "endpoints": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Breed": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "affenpinscher"
+          },
+          "name": {
+            "type": "string",
+            "example": "affenpinscher"
+          },
+          "breed": {
+            "type": "string",
+            "example": "affenpinscher"
+          },
+          "subBreed": {
+            "type": "string",
+            "nullable": true,
+            "example": null
+          },
+          "displayName": {
+            "type": "string",
+            "example": "Affenpinscher"
+          }
+        }
+      },
+      "BreedsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "count": {
+            "type": "integer",
+            "example": 98
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Breed"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "DogImage": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/affenpinscher/n02110627_11783.jpg"
+          },
+          "breed": {
+            "type": "string",
+            "example": "affenpinscher"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ImagesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "count": {
+            "type": "integer",
+            "example": 5
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DogImage"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "BreedImagesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "breed": {
+            "type": "string",
+            "example": "golden-retriever"
+          },
+          "count": {
+            "type": "integer",
+            "example": 10
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DogImage"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Favorite": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "fav_12345"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/golden/n02099601_1001.jpg"
+          },
+          "breed": {
+            "type": "string",
+            "example": "golden-retriever"
+          },
+          "name": {
+            "type": "string",
+            "example": "Golden Retriever"
+          },
+          "addedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "FavoritesResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "count": {
+            "type": "integer",
+            "example": 3
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Favorite"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "AddFavoriteRequest": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://images.dog.ceo/breeds/golden/n02099601_1001.jpg"
+          },
+          "breed": {
+            "type": "string",
+            "example": "golden-retriever"
+          },
+          "name": {
+            "type": "string",
+            "example": "Golden Retriever"
+          }
+        }
+      },
+      "AddFavoriteResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Favorite added successfully"
+          },
+          "data": {
+            "$ref": "#/components/schemas/Favorite"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "StatsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "imagesServed": {
+                "type": "integer",
+                "example": 1337
+              },
+              "breedsViewed": {
+                "type": "integer",
+                "example": 42
+              },
+              "favoritesCount": {
+                "type": "integer",
+                "example": 15
+              },
+              "serverStartTime": {
+                "type": "integer",
+                "example": 1641024000000
+              },
+              "uptime": {
+                "type": "object",
+                "properties": {
+                  "milliseconds": {
+                    "type": "integer",
+                    "example": 3600000
+                  },
+                  "minutes": {
+                    "type": "integer",
+                    "example": 60
+                  },
+                  "seconds": {
+                    "type": "integer",
+                    "example": 30
+                  }
+                }
+              }
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SearchResult": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "golden-retriever"
+          },
+          "name": {
+            "type": "string",
+            "example": "golden retriever"
+          },
+          "match": {
+            "type": "string",
+            "enum": ["exact", "partial"],
+            "example": "exact"
+          }
+        }
+      },
+      "SearchResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "query": {
+            "type": "string",
+            "example": "golden"
+          },
+          "count": {
+            "type": "integer",
+            "example": 1
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SearchResult"
+            }
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ConnectionTestResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "dogApiStatus": {
+            "type": "string",
+            "example": "connected"
+          },
+          "responseTime": {
+            "type": "string",
+            "example": "123ms"
+          },
+          "breedsAvailable": {
+            "type": "integer",
+            "example": 98
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SuccessResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "example": "Operation completed successfully"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "error": {
+            "type": "string",
+            "example": "An error occurred"
+          },
+          "message": {
+            "type": "string",
+            "example": "Detailed error message"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "System",
+      "description": "System health and monitoring endpoints"
+    },
+    {
+      "name": "Breeds",
+      "description": "Dog breed information and search"
+    },
+    {
+      "name": "Images",
+      "description": "Dog image retrieval endpoints"
+    },
+    {
+      "name": "Favorites",
+      "description": "Favorite dog images management"
+    }
+  ]
+}

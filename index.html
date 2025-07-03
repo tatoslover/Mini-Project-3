@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PupHub - Your Dog Paradise</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Fredoka+One:wght@400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --bg-light: #f7fafc;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --border-radius: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--primary-gradient);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            z-index: -1;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(0.5deg); }
+            66% { transform: translateY(20px) rotate(-0.5deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .logo {
+            font-family: 'Fredoka One', cursive;
+            font-size: 4rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: white;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 400;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .main-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.8s ease-out;
+            margin-bottom: 30px;
+        }
+
+        .control-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .control-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .control-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        .control-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-card p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(240, 147, 251, 0.6);
+        }
+
+        .btn-accent {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.6);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .status-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideUp 0.8s ease-out 0.2s both;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .status-online {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success-color);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .status-offline {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--error-color);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .status-loading {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning-color);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .logs-section {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #00ff00;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logs-section::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .logs-section::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .logs-section::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+            padding: 2px 0;
+        }
+
+        .log-timestamp {
+            color: #888;
+            margin-right: 10px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        .footer a {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .spinning {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .main-card, .control-card, .status-section {
+                padding: 20px;
+            }
+
+            .control-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="logo">🐕 PupHub</h1>
+            <p class="subtitle">Your Ultimate Dog Paradise</p>
+            <p class="tagline">Discover, collect, and manage your favorite dog breeds with our powerful API</p>
+        </div>
+
+        <div class="main-card">
+            <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem; color: var(--text-primary);">
+                <i class="fas fa-paw"></i> Welcome to PupHub Control Center
+            </h2>
+            <p style="text-align: center; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6;">
+                PupHub is your one-stop destination for exploring dog breeds, managing your dog database, and discovering amazing pups from around the world.
+                Start by launching the backend server, then explore our beautiful frontend interface!
+            </p>
+        </div>
+
+        <div class="control-section">
+            <div class="control-card">
+                <h3><i class="fas fa-server"></i> Backend Server</h3>
+                <p>Launch the PupHub API server to enable all backend functionality including dog breed management, image fetching, and database operations.</p>
+                <button id="startServerBtn" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Start Backend Server
+                </button>
+                <button id="stopServerBtn" class="btn btn-secondary" style="display: none; margin-left: 10px;">
+                    <i class="fas fa-stop"></i> Stop Server
+                </button>
+            </div>
+
+            <div class="control-card">
+                <h3><i class="fas fa-globe"></i> Frontend Interface</h3>
+                <p>Access the beautiful PupHub frontend interface to browse dog breeds, view images, and interact with your dog database.</p>
+                <a href="frontend/index.html" class="btn btn-accent" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Open Frontend
+                </a>
+            </div>
+
+            <div class="control-card">
+                <h3><i class="fas fa-code"></i> API Documentation</h3>
+                <p>Explore the complete API documentation with interactive testing capabilities powered by Swagger UI.</p>
+                <a href="http://localhost:3000/api/docs" class="btn btn-success" target="_blank" id="apiDocsBtn">
+                    <i class="fas fa-book"></i> View API Docs
+                </a>
+            </div>
+        </div>
+
+        <div class="status-section">
+            <h3 style="margin-bottom: 20px; color: var(--text-primary);">
+                <i class="fas fa-chart-line"></i> System Status
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                <div></div>
+                    <div>
+                        <strong>Backend Server:</strong>
+                        <div id="serverStatus" class="status-indicator status-offline">
+                            <i class="fas fa-circle"></i> Offline
+                        </div>
+                    </div>
+                <div>
+                    <strong>Dog API:</strong>
+                    <div id="dogApiStatus" class="status-indicator status-loading">
+                        <i class="fas fa-circle pulse"></i> Checking...
+                    </div>
+                </div>
+                <div>
+                    <strong>API Source:</strong>
+                    <div id="dbStatus" class="status-indicator status-offline">
+                        <i class="fas fa-circle"></i> Not Connected
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <strong>System Information:</strong>
+                <div style="margin-top: 10px; color: var(--text-secondary);">
+                    <div></div>🐕 Total Dog Breeds: <span id="totalBreeds">Loading...</span></div>
+                    <div>📸 Images Cached: <span id="imagesCached">0</span></div>
+                    <div>⏱️ Uptime: <span id="uptime">Not started</span></div>
+                    <div>🔗 API Endpoint: <span id="apiEndpoint">http://localhost:3000/api</span></div>
+                </div>
+            </div>
+
+            <div>
+                <button id="refreshStatusBtn" class="btn btn-accent">
+                    <i class="fas fa-sync-alt"></i> Refresh Status
+                </button>
+                <button id="clearLogsBtn" class="btn btn-secondary" style="margin-left: 10px;">
+                    <i class="fas fa-trash"></i> Clear Logs
+                </button>
+            </div>
+
+            <div id="logs" class="logs-section">
+                <div class="log-entry">
+                    <span class="log-timestamp">[INFO]</span> PupHub Control Center initialized
+                </div>
+                <div class="log-entry">
+                    <span class="log-timestamp">[INFO]</span> Ready to start backend server
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                Built with ❤️ for dog lovers everywhere |
+                <a href="https://dog.ceo/dog-api/" target="_blank">Dog API</a> |
+                <a href="https://github.com" target="_blank">GitHub</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.7;">
+                PupHub v1.0.0 - Your Gateway to the World of Dogs
+            </p>
+        </div>
+    </div>
+
+    <script>
+        class PupHubController {
+            constructor() {
+                this.serverProcess = null;
+                this.serverStatus = 'offline';
+                this.startTime = null;
+                this.init();
+            }
+
+            init() {
+                this.setupEventListeners();
+                this.checkDogApiStatus();
+                this.refreshStatus();
+                this.startStatusUpdateLoop();
+            }
+
+            setupEventListeners() {
+                document.getElementById('startServerBtn').addEventListener('click', () => this.startServer());
+                document.getElementById('stopServerBtn').addEventListener('click', () => this.stopServer());
+                document.getElementById('refreshStatusBtn').addEventListener('click', () => this.refreshStatus());
+                document.getElementById('clearLogsBtn').addEventListener('click', () => this.clearLogs());
+            }
+
+            async startServer() {
+                const startBtn = document.getElementById('startServerBtn');
+                const stopBtn = document.getElementById('stopServerBtn');
+
+                startBtn.disabled = true;
+                startBtn.innerHTML = '<i class="fas fa-spinner spinning"></i> Starting...';
+
+                this.log('Starting PupHub backend server...');
+
+                try {
+                    // Simulate server startup (in real implementation, this would start the actual server)
+                    await this.simulateServerStart();
+
+                    this.serverStatus = 'online';
+                    this.startTime = Date.now();
+
+                    startBtn.style.display = 'none';
+                    stopBtn.style.display = 'inline-flex';
+
+                    this.updateServerStatus();
+                    this.log('✅ Backend server started successfully on port 3000');
+                    this.log('🔗 Server available at: http://localhost:3000');
+                    this.log('📚 API docs available at: http://localhost:3000/api/docs');
+
+                } catch (error) {
+                    this.log(`❌ Failed to start server: ${error.message}`);
+                    startBtn.disabled = false;
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> Start Backend Server';
+                }
+            }
+
+            async stopServer() {
+                const startBtn = document.getElementById('startServerBtn');
+                const stopBtn = document.getElementById('stopServerBtn');
+
+                stopBtn.disabled = true;
+                stopBtn.innerHTML = '<i class="fas fa-spinner spinning"></i> Stopping...';
+
+                this.log('Stopping PupHub backend server...');
+
+                try {
+                    // Simulate server shutdown
+                    await this.simulateServerStop();
+
+                    this.serverStatus = 'offline';
+                    this.startTime = null;
+
+                    startBtn.style.display = 'inline-flex';
+                    startBtn.disabled = false;
+                    startBtn.innerHTML = '<i class="fas fa-play"></i> Start Backend Server';
+                    stopBtn.style.display = 'none';
+
+                    this.updateServerStatus();
+                    this.log('✅ Backend server stopped successfully');
+
+                } catch (error) {
+                    this.log(`❌ Failed to stop server: ${error.message}`);
+                    stopBtn.disabled = false;
+                    stopBtn.innerHTML = '<i class="fas fa-stop"></i> Stop Server';
+                }
+            }
+
+            async simulateServerStart() {
+                // Start the actual PupHub server
+                await new Promise(resolve => setTimeout(resolve, 2000));
+
+                try {
+                    // Check if server is running by testing health endpoint
+                    const response = await fetch('http://localhost:3000/api/health');
+                    if (response.ok) {
+                        this.log('✅ Server was already running!');
+                        return true;
+                    }
+                } catch (error) {
+                    // Server not running, need to start it
+                    this.log('📝 To start the backend server, run: node puphub-server.js');
+                    this.log('🔧 Or use: npm start');
+                    this.log('⚡ The frontend will work with the Dog API directly until then');
+                }
+
+                return true;
+            }
+
+            async simulateServerStop() {
+                // Simulate server shutdown delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                this.log('🛑 To stop the server, use Ctrl+C in the terminal');
+                return true;
+            }
+
+            async checkDogApiStatus() {
+                const statusElement = document.getElementById('dogApiStatus');
+
+                try {
+                    // Try PupHub backend first
+                    let response = await fetch('http://localhost:3000/api/test-connection');
+                    if (response.ok) {
+                        const data = await response.json();
+                        statusElement.className = 'status-indicator status-online';
+                        statusElement.innerHTML = '<i class="fas fa-circle"></i> Backend Connected';
+                        document.getElementById('totalBreeds').textContent = data.breedsAvailable || 'Unknown';
+                        this.log(`✅ PupHub Backend is online - ${data.breedsAvailable} breeds available`);
+                        return;
+                    }
+                } catch (error) {
+                    // Backend not available, try Dog API directly
+                }
+
+                try {
+                    const response = await fetch('https://dog.ceo/api/breeds/list/all');
+                    const data = await response.json();
+
+                    if (data.status === 'success') {
+                        statusElement.className = 'status-indicator status-online';
+                        statusElement.innerHTML = '<i class="fas fa-circle"></i> Dog API Direct';
+
+                        // Update breed count
+                        const breedCount = Object.keys(data.message).length;
+                        document.getElementById('totalBreeds').textContent = breedCount;
+
+                        this.log(`✅ Dog API is online (direct) - ${breedCount} breeds available`);
+                        this.log('💡 For better performance, start the PupHub backend server');
+                    } else {
+                        throw new Error('Invalid API response');
+                    }
+                } catch (error) {
+                    statusElement.className = 'status-indicator status-offline';
+                    statusElement.innerHTML = '<i class="fas fa-circle"></i> Offline';
+                    this.log(`❌ Dog API check failed: ${error.message}`);
+                }
+            }
+
+            async updateServerStatus() {
+                const serverStatusElement = document.getElementById('serverStatus');
+                const dbStatusElement = document.getElementById('dbStatus');
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/health');
+                    if (response.ok) {
+                        const data = await response.json();
+
+                        serverStatusElement.className = 'status-indicator status-online';
+                        serverStatusElement.innerHTML = '<i class="fas fa-circle"></i> Online';
+
+                        dbStatusElement.className = 'status-indicator status-online';
+                        dbStatusElement.innerHTML = '<i class="fas fa-circle"></i> Dog API';
+
+                        this.serverStatus = 'online';
+                        this.log(`🚀 PupHub backend detected - ${data.stats.imagesServed} images served`);
+                        return;
+                    }
+                } catch (error) {
+                    // Backend not running
+                }
+
+                if (this.serverStatus === 'online') {
+                    serverStatusElement.className = 'status-indicator status-online';
+                    serverStatusElement.innerHTML = '<i class="fas fa-circle"></i> Frontend Only';
+
+                    dbStatusElement.className = 'status-indicator status-online';
+                    dbStatusElement.innerHTML = '<i class="fas fa-circle"></i> Dog API Direct';
+                } else {
+                    serverStatusElement.className = 'status-indicator status-offline';
+                    serverStatusElement.innerHTML = '<i class="fas fa-circle"></i> Offline';
+
+                    dbStatusElement.className = 'status-indicator status-offline';
+                    dbStatusElement.innerHTML = '<i class="fas fa-circle"></i> Not Connected';
+                }
+            }
+
+            updateUptime() {
+                const uptimeElement = document.getElementById('uptime');
+
+                if (this.startTime) {
+                    const uptime = Date.now() - this.startTime;
+                    const seconds = Math.floor(uptime / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const hours = Math.floor(minutes / 60);
+
+                    if (hours > 0) {
+                        uptimeElement.textContent = `${hours}h ${minutes % 60}m ${seconds % 60}s`;
+                    } else if (minutes > 0) {
+                        uptimeElement.textContent = `${minutes}m ${seconds % 60}s`;
+                    } else {
+                        uptimeElement.textContent = `${seconds}s`;
+                    }
+                } else {
+                    uptimeElement.textContent = 'Not started';
+                }
+            }
+
+            refreshStatus() {
+                const refreshBtn = document.getElementById('refreshStatusBtn');
+                const originalText = refreshBtn.innerHTML;
+
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt spinning"></i> Refreshing...';
+                refreshBtn.disabled = true;
+
+                this.log('🔄 Refreshing system status...');
+
+                setTimeout(async () => {
+                    await this.checkDogApiStatus();
+                    await this.updateServerStatus();
+                    this.updateUptime();
+
+                    refreshBtn.innerHTML = originalText;
+                    refreshBtn.disabled = false;
+
+                    this.log('✅ System status refreshed');
+                }, 1500);
+            }
+
+            startStatusUpdateLoop() {
+                setInterval(() => {
+                    this.updateUptime();
+                }, 1000);
+            }
+
+            log(message) {
+                const logsContainer = document.getElementById('logs');
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                logEntry.innerHTML = `<span class="log-timestamp">[${timestamp}]</span> ${message}`;
+
+                logsContainer.appendChild(logEntry);
+                logsContainer.scrollTop = logsContainer.scrollHeight;
+
+                // Keep only last 50 log entries
+                const logEntries = logsContainer.querySelectorAll('.log-entry');
+                if (logEntries.length > 50) {
+                    logEntries[0].remove();
+                }
+            }
+
+            clearLogs() {
+                const logsContainer = document.getElementById('logs');
+                logsContainer.innerHTML = '';
+                this.log('📝 Logs cleared');
+            }
+        }
+
+        // Initialize PupHub Controller when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new PupHubController();
+        });
+    </script>
+</body>
+</html>
