@@ -240,15 +240,220 @@
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                gap: 0.5rem;
+                gap: 1rem;
                 margin-bottom: 2rem;
-                padding: 1rem;
+                padding: 1rem 1.5rem;
                 background: rgba(255, 255, 255, 0.1);
                 border-radius: 50px;
                 backdrop-filter: blur(10px);
                 border: 1px solid rgba(255, 255, 255, 0.2);
                 color: white;
                 font-weight: 500;
+            }
+
+            .api-status-left {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            /* Ultra-specific selectors to override external CSS */
+            .api-status button.api-toggle-btn,
+            .api-status #apiToggle,
+            button#apiToggle.api-toggle-btn,
+            .api-toggle-btn {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                color: white !important;
+                border: none !important;
+                border-radius: 20px !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+                font-weight: 500 !important;
+                cursor: pointer !important;
+                transition: all 0.3s ease !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                width: auto !important;
+                height: auto !important;
+                min-width: auto !important;
+                min-height: auto !important;
+                max-width: 200px !important;
+                max-height: 50px !important;
+                line-height: 1.2 !important;
+                box-sizing: border-box !important;
+                transform: none !important;
+                position: relative !important;
+                z-index: 1000 !important;
+                outline: none !important;
+                text-decoration: none !important;
+                vertical-align: middle !important;
+                margin: 0 !important;
+            }
+
+            .api-status button.api-toggle-btn.loading,
+            .api-status #apiToggle.loading,
+            button#apiToggle.api-toggle-btn.loading,
+            .api-toggle-btn.loading {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                cursor: not-allowed !important;
+                opacity: 1 !important;
+                transform: none !important;
+                box-shadow: none !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: auto !important;
+                height: auto !important;
+                max-width: 200px !important;
+                max-height: 50px !important;
+            }
+
+            .api-status button.api-toggle-btn:hover,
+            .api-status #apiToggle:hover,
+            button#apiToggle.api-toggle-btn:hover,
+            .api-toggle-btn:hover {
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+            }
+
+            .api-status button.api-toggle-btn.connected,
+            .api-status #apiToggle.connected,
+            button#apiToggle.api-toggle-btn.connected,
+            .api-toggle-btn.connected {
+                background: linear-gradient(
+                    135deg,
+                    #10b981 0%,
+                    #059669 100%
+                ) !important;
+            }
+
+            .api-status button.api-toggle-btn.disconnected,
+            .api-status #apiToggle.disconnected,
+            button#apiToggle.api-toggle-btn.disconnected,
+            .api-toggle-btn.disconnected {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+            }
+
+            /* Ultra-specific targeting by ID to override all external CSS */
+            #apiToggle {
+                all: unset !important;
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                color: white !important;
+                border: none !important;
+                border-radius: 20px !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+                font-weight: 500 !important;
+                cursor: pointer !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
+                transition: all 0.3s ease !important;
+                width: auto !important;
+                height: auto !important;
+                min-width: auto !important;
+                min-height: auto !important;
+                max-width: 200px !important;
+                max-height: 50px !important;
+                line-height: 1.2 !important;
+                text-decoration: none !important;
+                box-sizing: border-box !important;
+                transform: none !important;
+                position: relative !important;
+                z-index: 1000 !important;
+            }
+
+            #apiToggle.connected {
+                background: linear-gradient(
+                    135deg,
+                    #10b981 0%,
+                    #059669 100%
+                ) !important;
+            }
+
+            #apiToggle.disconnected {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+            }
+
+            #apiToggle.loading {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                cursor: not-allowed !important;
+                opacity: 1 !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: auto !important;
+                height: auto !important;
+                max-width: 200px !important;
+                max-height: 50px !important;
+            }
+
+            #apiToggle:disabled {
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                cursor: not-allowed !important;
+                opacity: 1 !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .api-status button.api-toggle-btn:disabled,
+            .api-status #apiToggle:disabled,
+            button#apiToggle.api-toggle-btn:disabled,
+            .api-toggle-btn:disabled {
+                opacity: 0.6 !important;
+                cursor: not-allowed !important;
+                transform: none !important;
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
+                padding: 0.5rem 1rem !important;
+                font-size: 0.8rem !important;
+                width: auto !important;
+                height: auto !important;
+                max-width: 200px !important;
+                max-height: 50px !important;
+            }
+
+            .api-status button.api-toggle-btn:disabled:hover,
+            .api-status #apiToggle:disabled:hover,
+            button#apiToggle.api-toggle-btn:disabled:hover,
+            .api-toggle-btn:disabled:hover {
+                transform: none !important;
+                box-shadow: none !important;
+                background: linear-gradient(
+                    135deg,
+                    #ef4444 0%,
+                    #dc2626 100%
+                ) !important;
             }
 
             /* Subsection Tabs */
@@ -328,8 +533,7 @@
             }
 
             .status-dot.loading {
-                background: var(--warning-color);
-                animation: loadingPulse 1.5s infinite;
+                display: none;
             }
 
             .status-dot.offline {
@@ -512,62 +716,145 @@
                 animation: spin 1s linear infinite;
             }
 
-            /* Completely isolate retry buttons from Swagger UI CSS */
-            .retry-element {
-                all: initial !important;
-                font-family: Arial, sans-serif !important;
-                font-size: 11px !important;
-                font-weight: 500 !important;
-                color: white !important;
-                background: #007bff !important;
+            /* Nuclear option: completely isolated retry button with unique identifier */
+            .retry-btn-isolated-unique {
+                all: unset !important;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, sans-serif !important;
+                font-size: 10px !important;
+                font-weight: 600 !important;
+                color: #ffffff !important;
+                background-color: #007bff !important;
                 border: 1px solid #007bff !important;
-                border-radius: 3px !important;
-                padding: 4px 8px !important;
-                margin-left: 8px !important;
+                border-radius: 2px !important;
+                padding: 3px 6px !important;
+                margin-left: 6px !important;
                 cursor: pointer !important;
                 display: inline-block !important;
                 text-decoration: none !important;
                 user-select: none !important;
-                outline: none !important;
+                outline: 0 !important;
                 box-sizing: border-box !important;
-                line-height: 1.2 !important;
-                vertical-align: baseline !important;
+                line-height: 1 !important;
+                vertical-align: middle !important;
                 white-space: nowrap !important;
-                position: relative !important;
-                z-index: 9999 !important;
+                position: static !important;
+                z-index: 999999 !important;
+                width: auto !important;
+                height: auto !important;
+                min-width: auto !important;
+                min-height: auto !important;
+                max-width: none !important;
+                max-height: none !important;
+                top: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                overflow: visible !important;
+                float: none !important;
+                clear: none !important;
+                text-align: center !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+                word-spacing: normal !important;
+                text-indent: 0 !important;
+                direction: ltr !important;
+                unicode-bidi: normal !important;
+                writing-mode: horizontal-tb !important;
+                content: none !important;
             }
 
-            .retry-element:hover {
-                background: #0056b3 !important;
+            .retry-btn-isolated-unique:hover {
+                background-color: #0056b3 !important;
                 border-color: #0056b3 !important;
             }
 
-            /* Override any possible Swagger UI interference */
-            .swagger-ui .retry-element,
-            .swagger-ui * .retry-element,
-            .documentation-status .retry-element,
-            div .retry-element {
-                all: initial !important;
-                font-family: Arial, sans-serif !important;
-                font-size: 11px !important;
-                font-weight: 500 !important;
-                color: white !important;
-                background: #007bff !important;
+            .retry-btn-isolated-unique:active {
+                background-color: #004085 !important;
+                border-color: #004085 !important;
+            }
+
+            .retry-btn-isolated-unique:focus {
+                outline: none !important;
+                box-shadow: 0 0 0 1px rgba(0, 123, 255, 0.5) !important;
+            }
+
+            /* Kill any pseudo-elements */
+            .retry-btn-isolated-unique::before,
+            .retry-btn-isolated-unique::after {
+                display: none !important;
+                content: none !important;
+            }
+
+            /* Ultra-specific overrides to kill any external CSS */
+            * .retry-btn-isolated-unique,
+            div .retry-btn-isolated-unique,
+            span .retry-btn-isolated-unique,
+            .swagger-ui .retry-btn-isolated-unique,
+            .swagger-ui * .retry-btn-isolated-unique,
+            .documentation-status .retry-btn-isolated-unique,
+            .documentation-status * .retry-btn-isolated-unique,
+            div[style] .retry-btn-isolated-unique,
+            body .retry-btn-isolated-unique,
+            html .retry-btn-isolated-unique {
+                all: unset !important;
+                font-family:
+                    -apple-system, BlinkMacSystemFont, sans-serif !important;
+                font-size: 10px !important;
+                font-weight: 600 !important;
+                color: #ffffff !important;
+                background-color: #007bff !important;
                 border: 1px solid #007bff !important;
-                border-radius: 3px !important;
-                padding: 4px 8px !important;
-                margin-left: 8px !important;
+                border-radius: 2px !important;
+                padding: 3px 6px !important;
+                margin-left: 6px !important;
                 cursor: pointer !important;
                 display: inline-block !important;
                 text-decoration: none !important;
                 user-select: none !important;
-                outline: none !important;
+                outline: 0 !important;
                 box-sizing: border-box !important;
-                line-height: 1.2 !important;
-                vertical-align: baseline !important;
+                line-height: 1 !important;
+                vertical-align: middle !important;
                 white-space: nowrap !important;
-                position: relative !important;
-                z-index: 9999 !important;
+                position: static !important;
+                z-index: 999999 !important;
+                width: auto !important;
+                height: auto !important;
+                min-width: auto !important;
+                min-height: auto !important;
+                max-width: none !important;
+                max-height: none !important;
+                top: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                left: auto !important;
+                transform: none !important;
+                transition: none !important;
+                animation: none !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                overflow: visible !important;
+                float: none !important;
+                clear: none !important;
+                text-align: center !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+                word-spacing: normal !important;
+                text-indent: 0 !important;
+                direction: ltr !important;
+                unicode-bidi: normal !important;
+                writing-mode: horizontal-tb !important;
+                content: none !important;
             }
 
             @keyframes spin {
@@ -937,8 +1224,18 @@
 
             <div class="subtitle-section">
                 <div class="api-status" id="apiStatus">
-                    <span class="status-dot loading" id="statusDot"></span>
-                    <span id="statusText">Checking API connection...</span>
+                    <div class="api-status-left">
+                        <span class="status-dot offline" id="statusDot"></span>
+                        <span id="statusText">API Offline</span>
+                    </div>
+                    <button
+                        class="api-toggle-btn"
+                        onclick="toggleApiConnection()"
+                        id="apiToggle"
+                    >
+                        <i class="fas fa-plug"></i>
+                        <span id="apiToggleText">Connect API</span>
+                    </button>
                 </div>
             </div>
 
@@ -1528,6 +1825,8 @@
             let filteredBreeds = [];
             let currentPage = 1;
             const breedsPerPage = 12;
+            let apiConnected = false; // Manual API connection toggle - start disconnected
+            let connectionAttempts = 0; // Track connection attempts for alternating behavior
 
             // Offline fallback data
             const offlineDogData = [
@@ -2133,6 +2432,98 @@
             }
 
             // Load Swagger UI
+            async function toggleApiConnection() {
+                const statusElement = document.getElementById("apiToggleText");
+                const toggleButton = document.getElementById("apiToggle");
+                const statusDot = document.getElementById("statusDot");
+                const statusText = document.getElementById("statusText");
+
+                if (apiConnected) {
+                    // Disconnecting API
+                    toggleButton.disabled = true;
+                    toggleButton.classList.add("loading");
+                    toggleButton.style.cssText = "";
+                    statusDot.className = "status-dot loading";
+                    statusText.textContent = "Disconnecting from API...";
+                    statusElement.textContent = "Disconnecting...";
+
+                    // Simulate disconnect delay
+                    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+                    apiConnected = false;
+                    statusElement.textContent = "Connect API";
+                    toggleButton.classList.remove("connected", "loading");
+                    toggleButton.classList.add("disconnected");
+                    toggleButton.style.cssText = "";
+                    statusDot.className = "status-dot offline";
+                    statusText.textContent = "API Manually Disconnected";
+                    toggleButton.disabled = false;
+
+                    // Refresh current tab content to show fallback
+                    refreshCurrentTab();
+                } else {
+                    // Attempting to connect API
+                    toggleButton.disabled = true;
+                    toggleButton.classList.add("loading");
+                    toggleButton.style.cssText = "";
+                    statusDot.className = "status-dot loading";
+                    statusText.textContent = "Connecting to API...";
+                    statusElement.textContent = "Connecting...";
+
+                    try {
+                        // Actually check API connection
+                        const response = await fetch(
+                            "/.netlify/functions/health",
+                        );
+                        if (response.ok) {
+                            const data = await response.json();
+                            // Connection succeeds
+                            apiConnected = true;
+                            statusElement.textContent = "Disconnect API";
+                            toggleButton.classList.remove(
+                                "disconnected",
+                                "loading",
+                            );
+                            toggleButton.classList.add("connected");
+                            toggleButton.style.cssText = "";
+                            statusDot.className = "status-dot online";
+                            statusText.textContent = `${data.service || "Barkend API"} Connected`;
+                            toggleButton.disabled = false;
+
+                            // Refresh current tab content to show live functionality
+                            refreshCurrentTab();
+                        } else {
+                            throw new Error("API health check failed");
+                        }
+                    } catch (error) {
+                        // Connection fails
+                        apiConnected = false;
+                        statusElement.textContent = "Connect API";
+                        toggleButton.classList.remove("connected", "loading");
+                        toggleButton.classList.add("disconnected");
+                        toggleButton.style.cssText = "";
+                        statusDot.className = "status-dot offline";
+                        statusText.textContent = "API Connection Failed";
+                        toggleButton.disabled = false;
+
+                        // Keep showing fallback since connection failed
+                        refreshCurrentTab();
+                    }
+                }
+            }
+
+            function refreshCurrentTab() {
+                const activeTab = document.querySelector(".nav-tab.active");
+                if (activeTab) {
+                    const tabName = activeTab.textContent.trim().toLowerCase();
+                    if (tabName.includes("documentation")) {
+                        loadSwaggerUI();
+                    } else if (tabName.includes("demo")) {
+                        loadDemoData();
+                    }
+                }
+            }
+
             async function loadSwaggerUI() {
                 const swaggerContainer = document.getElementById("swagger-ui");
 
@@ -2145,6 +2536,11 @@
                 `;
 
                 try {
+                    // Check manual API connection toggle first
+                    if (!apiConnected) {
+                        throw new Error("API manually disconnected");
+                    }
+
                     const response = await fetch(
                         "/.netlify/functions/swagger-spec",
                     );
@@ -2186,16 +2582,19 @@
                         },
                     });
                 } catch (error) {
+                    const isManualDisconnect = !apiConnected;
                     console.log(
-                        "API is offline, loading demo documentation...",
+                        isManualDisconnect
+                            ? "API manually disconnected, showing fallback..."
+                            : "API is offline, loading demo documentation...",
                     );
 
                     // Show offline demo with fallback spec
                     swaggerContainer.innerHTML = `
                         <div class="documentation-status offline">
-                            <strong>📡 Offline Demo Mode</strong><br>
-                            API is currently offline. Showing demo documentation with sample data.
-                            <span onclick="loadSwaggerUI()" class="retry-element">
+                            <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
+                            ${isManualDisconnect ? "API connection disabled to demonstrate fallback system." : "API is currently offline. Showing demo documentation with sample data."}
+                            <span onclick="loadSwaggerUI()" class="retry-btn-isolated-unique">
                                 🔄 Retry Connection
                             </span>
                             <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
@@ -2332,6 +2731,11 @@
                 `;
 
                 try {
+                    // Check manual API connection toggle first
+                    if (!apiConnected) {
+                        throw new Error("API manually disconnected");
+                    }
+
                     console.log("Fetching breeds from API...");
                     const response = await fetch("/.netlify/functions/breeds");
                     if (!response.ok) throw new Error("Failed to fetch breeds");
@@ -2485,15 +2889,20 @@
                         dogResults.innerHTML.length,
                     );
                 } catch (error) {
+                    const isManualDisconnect = !apiConnected;
                     console.error("API error:", error);
-                    console.log("Loading offline demo dogs...");
+                    console.log(
+                        isManualDisconnect
+                            ? "API manually disconnected, showing fallback..."
+                            : "Loading offline demo dogs...",
+                    );
 
                     // Show offline demo with fallback data
                     const offlineNotice = `
                         <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
-                            <strong>📡 Offline Demo Mode</strong><br>
-                            API is currently offline. Showing demo dog breeds.
-                            <span onclick="loadDemoData()" class="retry-element">
+                            <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
+                            ${isManualDisconnect ? "API connection disabled to demonstrate fallback system. Showing demo dog breeds." : "API is currently offline. Showing demo dog breeds."}
+                            <span onclick="loadDemoData()" class="retry-btn-isolated-unique">
                                 🔄 Retry
                             </span>
                         </div>
@@ -2857,6 +3266,14 @@
             async function updateApiStatus() {
                 const statusDot = document.getElementById("statusDot");
                 const statusText = document.getElementById("statusText");
+                const toggleButton = document.getElementById("apiToggle");
+
+                // Check if API is manually disconnected
+                if (!apiConnected) {
+                    statusDot.className = "status-dot offline";
+                    statusText.textContent = "API Offline";
+                    return;
+                }
 
                 // Set loading state
                 statusDot.className = "status-dot loading";
@@ -2868,18 +3285,27 @@
                         const data = await response.json();
                         statusDot.className = "status-dot online";
                         statusText.textContent = `${data.service || "Barkend API"} Connected`;
+                        toggleButton.classList.add("connected");
                     } else {
-                        throw new Error("API response not ok");
+                        throw new Error("API health check failed");
                     }
                 } catch (error) {
                     statusDot.className = "status-dot offline";
                     statusText.textContent = "API Offline";
+                    toggleButton.classList.remove("connected");
                 }
             }
 
             // Initialize app
             document.addEventListener("DOMContentLoaded", function () {
                 console.log("Barkend initialized");
+
+                // Initialize API toggle button state - start as disconnected since no backend
+                const toggleButton = document.getElementById("apiToggle");
+                if (toggleButton) {
+                    toggleButton.classList.add("disconnected");
+                }
+
                 updateApiStatus();
                 // Update API status every 30 seconds
                 setInterval(updateApiStatus, 30000);

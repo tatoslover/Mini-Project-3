@@ -130,11 +130,11 @@ class BarkendApp {
                         <div class="dog-name">${breedName}</div>
                         <div class="dog-info">Click to see more images</div>
                         <div class="dog-actions">
-                            <button class="btn btn-primary" onclick="event.stopPropagation(); barkend.showBreedDetails('${breed}')">
+                            <button class="isolated-btn-primary" onclick="event.stopPropagation(); barkend.showBreedDetails('${breed}')" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: white; background: #007bff; border: 1px solid #007bff; border-radius: 4px; padding: 6px 12px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                                 <i class="fas fa-images"></i> Gallery
                             </button>
-                            <button class="btn btn-secondary" onclick="event.stopPropagation(); barkend.toggleFavorite('${breed}')"
-                                    style="${heartColor}">
+                            <button class="isolated-btn-secondary" onclick="event.stopPropagation(); barkend.toggleFavorite('${breed}')"
+                                    style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: white; background: #6c757d; border: 1px solid #6c757d; border-radius: 4px; padding: 6px 12px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle; ${heartColor}">
                                 <i class="${heartIcon}"></i> ${isFavorite ? "Favorited" : "Favorite"}
                             </button>
                         </div>
@@ -208,7 +208,7 @@ class BarkendApp {
                     <div class="dog-name">Random Pup #${index + 1}</div>
                     <div class="dog-info">A surprise doggo just for you!</div>
                     <div class="dog-actions">
-                        <button class="btn btn-accent" onclick="barkend.openImageModal('${dog.message}', 'Random Pup #${index + 1}')">
+                        <button class="isolated-btn-accent" onclick="barkend.openImageModal('${dog.message}', 'Random Pup #${index + 1}')" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: white; background: #20c997; border: 1px solid #20c997; border-radius: 4px; padding: 6px 12px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                             <i class="fas fa-eye"></i> View Full
                         </button>
                     </div>
@@ -241,8 +241,8 @@ class BarkendApp {
                     <div style="margin-bottom: 20px;">
                         <h3>${breedName}</h3>
                         <p>Here are some beautiful ${breedName.toLowerCase()} images from around the world!</p>
-                        <button class="btn ${isFavorite ? "btn-secondary" : "btn-primary"}"
-                                onclick="barkend.toggleFavorite('${breed}'); barkend.showBreedDetails('${breed}')">
+                        <button class="isolated-btn-${isFavorite ? "secondary" : "primary"}"
+                                onclick="barkend.toggleFavorite('${breed}'); barkend.showBreedDetails('${breed}')" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: white; background: ${isFavorite ? "#6c757d" : "#007bff"}; border: 1px solid ${isFavorite ? "#6c757d" : "#007bff"}; border-radius: 4px; padding: 6px 12px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                             <i class="${isFavorite ? "fas fa-heart" : "far fa-heart"}"></i>
                             ${isFavorite ? "Remove from Favorites" : "Add to Favorites"}
                         </button>
@@ -345,7 +345,7 @@ class BarkendApp {
     // Previous button
     if (this.currentPage > 1) {
       paginationHTML += `
-                <button class="page-btn" onclick="barkend.changePage(${this.currentPage - 1})">
+                <button class="isolated-page-btn" onclick="barkend.changePage(${this.currentPage - 1})" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #495057; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                     <i class="fas fa-chevron-left"></i>
                 </button>
             `;
@@ -357,8 +357,8 @@ class BarkendApp {
 
     for (let i = startPage; i <= endPage; i++) {
       paginationHTML += `
-                <button class="page-btn ${i === this.currentPage ? "active" : ""}"
-                        onclick="barkend.changePage(${i})">
+                <button class="isolated-page-btn${i === this.currentPage ? "-active" : ""}"
+                        onclick="barkend.changePage(${i})" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: ${i === this.currentPage ? "white" : "#495057"}; background: ${i === this.currentPage ? "#007bff" : "#f8f9fa"}; border: 1px solid ${i === this.currentPage ? "#007bff" : "#dee2e6"}; border-radius: 4px; padding: 6px 10px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                     ${i}
                 </button>
             `;
@@ -367,7 +367,7 @@ class BarkendApp {
     // Next button
     if (this.currentPage < totalPages) {
       paginationHTML += `
-                <button class="page-btn" onclick="barkend.changePage(${this.currentPage + 1})">
+                <button class="isolated-page-btn" onclick="barkend.changePage(${this.currentPage + 1})" style="all: unset; font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 500; color: #495057; background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 4px; padding: 6px 10px; margin: 2px; cursor: pointer; display: inline-block; text-align: center; text-decoration: none; line-height: 1.2; vertical-align: middle;">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             `;
