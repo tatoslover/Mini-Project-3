@@ -333,15 +333,12 @@
             @keyframes loadingPulse {
                 0% {
                     opacity: 1;
-                    transform: scale(1);
                 }
                 50% {
                     opacity: 0.6;
-                    transform: scale(1.1);
                 }
                 100% {
                     opacity: 1;
-                    transform: scale(1);
                 }
             }
 
@@ -2109,7 +2106,22 @@
                     if (!response.ok) throw new Error("Failed to fetch breeds");
 
                     const data = await response.json();
-                    breedData = data.message || {};
+                    console.log("API Response:", data);
+
+                    // Handle new API format - data.data is array of breed objects
+                    if (data.success && data.data && Array.isArray(data.data)) {
+                        // Convert array to object format for compatibility
+                        breedData = {};
+                        data.data.forEach((breed) => {
+                            breedData[breed.breed] = breed.subBreed
+                                ? [breed.subBreed]
+                                : [];
+                        });
+                    } else {
+                        // Fallback for old format
+                        breedData = data.message || {};
+                    }
+
                     console.log(
                         "Fetched breeds:",
                         Object.keys(breedData).length,
@@ -2121,13 +2133,41 @@
                     const dogCards = await Promise.all(
                         breeds.map(async (breed) => {
                             try {
+                                console.log(
+                                    `Fetching image for breed: ${breed}`,
+                                );
                                 const imageResponse = await fetch(
                                     `/.netlify/functions/random?breed=${breed}`,
                                 );
+
+                                if (!imageResponse.ok) {
+                                    throw new Error(
+                                        `HTTP ${imageResponse.status}`,
+                                    );
+                                }
+
                                 const imageData = await imageResponse.json();
-                                const imageUrl =
-                                    imageData.message ||
+                                console.log(
+                                    `Image data for ${breed}:`,
+                                    imageData,
+                                );
+
+                                // Handle new API format
+                                let imageUrl =
                                     "https://via.placeholder.com/300x250?text=No+Image";
+                                if (imageData.success && imageData.data) {
+                                    imageUrl =
+                                        imageData.data.url ||
+                                        imageData.data.message ||
+                                        imageUrl;
+                                } else {
+                                    // Fallback for old format
+                                    imageUrl = imageData.message || imageUrl;
+                                }
+
+                                console.log(
+                                    `Final image URL for ${breed}: ${imageUrl}`,
+                                );
 
                                 return `
                                 <div class="dog-card" onclick="showBreedModal('${breed}')">
@@ -2138,6 +2178,10 @@
                                 </div>
                             `;
                             } catch (error) {
+                                console.warn(
+                                    `Failed to load image for ${breed}:`,
+                                    error,
+                                );
                                 return `
                                 <div class="dog-card">
                                     <img src="https://via.placeholder.com/300x250?text=No+Image" alt="${breed}" class="dog-image">
@@ -2151,7 +2195,15 @@
                     );
 
                     dogResults.innerHTML = dogCards.join("");
-                    console.log("Demo cards loaded successfully");
+                    console.log(
+                        "Demo cards loaded successfully:",
+                        dogCards.length,
+                        "cards",
+                    );
+                    console.log(
+                        "HTML content length:",
+                        dogResults.innerHTML.length,
+                    );
                 } catch (error) {
                     console.error("API error:", error);
                     console.log("Loading offline demo dogs...");
@@ -2181,14 +2233,22 @@
                         .join("");
 
                     dogResults.innerHTML = offlineNotice + offlineDogCards;
-                    console.log("Offline demo cards loaded");
+                    console.log(
+                        "Offline demo cards loaded:",
+                        offlineDogData.length,
+                        "cards",
+                    );
 
                     // Set up offline breed data for modal
-                    breedData = {
-                        poodle: ["miniature", "standard", "toy"],
-                        labrador: [],
-                        spaniel: ["cocker", "english", "irish"],
-                    };
+                    breedData = {};
+                    offlineDogData.forEach((dog) => {
+                        breedData[dog.name] = [];
+                    });
+
+                    console.log(
+                        "Offline breed data set up:",
+                        Object.keys(breedData),
+                    );
                 }
             }
 
