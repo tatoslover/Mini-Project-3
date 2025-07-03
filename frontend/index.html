@@ -512,42 +512,7 @@
                 animation: spin 1s linear infinite;
             }
 
-            /* Simple API retry button - completely isolated */
-            .api-retry-btn {
-                font-family:
-                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                    sans-serif;
-                font-size: 12px;
-                font-weight: 500;
-                line-height: 1;
-                color: #ffffff;
-                background-color: #007bff;
-                border: 1px solid #007bff;
-                border-radius: 4px;
-                padding: 6px 12px;
-                margin-left: 8px;
-                cursor: pointer;
-                text-decoration: none;
-                display: inline-block;
-                vertical-align: middle;
-                user-select: none;
-                transition: background-color 0.15s ease-in-out;
-            }
-
-            .api-retry-btn:hover {
-                background-color: #0056b3;
-                border-color: #0056b3;
-            }
-
-            .api-retry-btn:active {
-                background-color: #004085;
-                border-color: #004085;
-            }
-
-            .api-retry-btn:focus {
-                outline: none;
-                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-            }
+            /* Remove all retry button styles - using inline styles instead */
 
             @keyframes spin {
                 from {
@@ -2171,9 +2136,9 @@
                         <div class="documentation-status offline">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo documentation with sample data.
-                            <button onclick="loadSwaggerUI()" class="api-retry-btn">
+                            <span onclick="loadSwaggerUI()" style="font-family: Arial, sans-serif; font-size: 11px; font-weight: 500; color: white; background: #007bff; border: 1px solid #007bff; border-radius: 3px; padding: 4px 8px; margin-left: 8px; cursor: pointer; display: inline-block; text-decoration: none; user-select: none; outline: none; box-sizing: border-box; line-height: 1.2; vertical-align: baseline; white-space: nowrap;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
                                 🔄 Retry Connection
-                            </button>
+                            </span>
                             <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
                                 Note: "Try it out" buttons are disabled in offline mode
                             </div>
@@ -2469,9 +2434,9 @@
                         <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo dog breeds.
-                            <button onclick="loadDemoData()" class="api-retry-btn">
+                            <span onclick="loadDemoData()" style="font-family: Arial, sans-serif; font-size: 11px; font-weight: 500; color: white; background: #007bff; border: 1px solid #007bff; border-radius: 3px; padding: 4px 8px; margin-left: 8px; cursor: pointer; display: inline-block; text-decoration: none; user-select: none; outline: none; box-sizing: border-box; line-height: 1.2; vertical-align: baseline; white-space: nowrap;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
                                 🔄 Retry
-                            </button>
+                            </span>
                         </div>
                     `;
 
