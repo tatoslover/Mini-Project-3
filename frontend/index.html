@@ -512,7 +512,63 @@
                 animation: spin 1s linear infinite;
             }
 
-            /* Remove all retry button styles - using inline styles instead */
+            /* Completely isolate retry buttons from Swagger UI CSS */
+            .retry-element {
+                all: initial !important;
+                font-family: Arial, sans-serif !important;
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                color: white !important;
+                background: #007bff !important;
+                border: 1px solid #007bff !important;
+                border-radius: 3px !important;
+                padding: 4px 8px !important;
+                margin-left: 8px !important;
+                cursor: pointer !important;
+                display: inline-block !important;
+                text-decoration: none !important;
+                user-select: none !important;
+                outline: none !important;
+                box-sizing: border-box !important;
+                line-height: 1.2 !important;
+                vertical-align: baseline !important;
+                white-space: nowrap !important;
+                position: relative !important;
+                z-index: 9999 !important;
+            }
+
+            .retry-element:hover {
+                background: #0056b3 !important;
+                border-color: #0056b3 !important;
+            }
+
+            /* Override any possible Swagger UI interference */
+            .swagger-ui .retry-element,
+            .swagger-ui * .retry-element,
+            .documentation-status .retry-element,
+            div .retry-element {
+                all: initial !important;
+                font-family: Arial, sans-serif !important;
+                font-size: 11px !important;
+                font-weight: 500 !important;
+                color: white !important;
+                background: #007bff !important;
+                border: 1px solid #007bff !important;
+                border-radius: 3px !important;
+                padding: 4px 8px !important;
+                margin-left: 8px !important;
+                cursor: pointer !important;
+                display: inline-block !important;
+                text-decoration: none !important;
+                user-select: none !important;
+                outline: none !important;
+                box-sizing: border-box !important;
+                line-height: 1.2 !important;
+                vertical-align: baseline !important;
+                white-space: nowrap !important;
+                position: relative !important;
+                z-index: 9999 !important;
+            }
 
             @keyframes spin {
                 from {
@@ -559,6 +615,7 @@
                 font-size: 0.9rem;
                 color: var(--text-secondary);
                 margin-bottom: 1rem;
+                text-align: center;
             }
 
             .pagination-search {
@@ -568,6 +625,8 @@
                 margin-bottom: 1rem;
                 width: 100%;
                 max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
             }
 
             .search-input {
@@ -2136,7 +2195,7 @@
                         <div class="documentation-status offline">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo documentation with sample data.
-                            <span onclick="loadSwaggerUI()" style="font-family: Arial, sans-serif; font-size: 11px; font-weight: 500; color: white; background: #007bff; border: 1px solid #007bff; border-radius: 3px; padding: 4px 8px; margin-left: 8px; cursor: pointer; display: inline-block; text-decoration: none; user-select: none; outline: none; box-sizing: border-box; line-height: 1.2; vertical-align: baseline; white-space: nowrap;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+                            <span onclick="loadSwaggerUI()" class="retry-element">
                                 🔄 Retry Connection
                             </span>
                             <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
@@ -2434,7 +2493,7 @@
                         <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo dog breeds.
-                            <span onclick="loadDemoData()" style="font-family: Arial, sans-serif; font-size: 11px; font-weight: 500; color: white; background: #007bff; border: 1px solid #007bff; border-radius: 3px; padding: 4px 8px; margin-left: 8px; cursor: pointer; display: inline-block; text-decoration: none; user-select: none; outline: none; box-sizing: border-box; line-height: 1.2; vertical-align: baseline; white-space: nowrap;" onmouseover="this.style.background='#0056b3'" onmouseout="this.style.background='#007bff'">
+                            <span onclick="loadDemoData()" class="retry-element">
                                 🔄 Retry
                             </span>
                         </div>
