@@ -106,19 +106,19 @@
                             class="subsection-tab active"
                             onclick="showSubTab('features', 'project')"
                         >
-                            <i class="fas fa-server"></i> Backend Architecture
+                            <i class="fas fa-server"></i> Core Architecture
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('data', 'project')"
                         >
-                            <i class="fas fa-database"></i> Data Layer
+                            <i class="fas fa-database"></i> Data Operations
                         </button>
                         <button
                             class="subsection-tab"
                             onclick="showSubTab('crud', 'project')"
                         >
-                            <i class="fas fa-edit"></i> Database Operations
+                            <i class="fas fa-edit"></i> CRUD & Security
                         </button>
                         <button
                             class="subsection-tab"
@@ -130,12 +130,11 @@
                             class="subsection-tab"
                             onclick="showSubTab('extensions', 'project')"
                         >
-                            <i class="fas fa-puzzle-piece"></i> Architecture
-                            Benefits
+                            <i class="fas fa-puzzle-piece"></i> Performance
                         </button>
                     </div>
 
-                    <!-- Backend Architecture Tab -->
+                    <!-- Core Architecture Tab -->
                     <div
                         id="project-features"
                         class="subsection-content active"
@@ -163,8 +162,34 @@
                                 </p>
                             </div>
                             <div class="architecture-card">
+                                <i class="fas fa-database"></i>
+                                <h3>MongoDB Atlas Integration</h3>
+                                <p>
+                                    Cloud database with optimized schemas,
+                                    compound indexes, aggregation pipelines, and
+                                    Mongoose ODM for high-performance NoSQL
+                                    operations and scalability.
+                                </p>
+                            </div>
+                            <div class="architecture-card">
+                                <i class="fas fa-file-code"></i>
+                                <h3>Swagger API Documentation</h3>
+                                <p>
+                                    Interactive API documentation with OpenAPI
+                                    specifications, live endpoint testing,
+                                    request/response schemas, and automatic
+                                    documentation generation.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Operations Tab -->
+                    <div id="project-data" class="subsection-content">
+                        <div class="architecture-grid">
+                            <div class="architecture-card">
                                 <i class="fas fa-exchange-alt"></i>
-                                <h3>API Integration</h3>
+                                <h3>External API Integration</h3>
                                 <p>
                                     External API consumption with proper error
                                     handling, rate limiting, data
@@ -173,139 +198,43 @@
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-file-code"></i>
-                                <h3>OpenAPI Documentation</h3>
-                                <p>
-                                    Comprehensive API documentation with Swagger
-                                    UI, interactive endpoints, request/response
-                                    schemas, and automatic specification
-                                    generation following industry standards.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-shield-alt"></i>
-                                <h3>Error Handling & Validation</h3>
-                                <p>
-                                    Comprehensive error handling with proper
-                                    HTTP status codes, input validation, request
-                                    sanitization, and graceful degradation for
-                                    production-ready reliability.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Data Layer Tab -->
-                    <div id="project-data" class="subsection-content">
-                        <div class="architecture-grid">
-                            <div class="architecture-card">
-                                <i class="fas fa-download"></i>
-                                <h3>Data Fetching</h3>
-                                <p>
-                                    External Dog CEO API provides breed
-                                    information, sub-breeds, and image URLs.
-                                    Data is fetched on-demand and cached for
-                                    performance with intelligent rate limiting.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-server"></i>
-                                <h3>Data Processing</h3>
-                                <p>
-                                    Serverless functions process, validate, and
-                                    transform API data before storing in MongoDB
-                                    Atlas with proper indexing and
-                                    relationships.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-database"></i>
-                                <h3>MongoDB Atlas Cloud Database</h3>
-                                <p>
-                                    MongoDB Atlas cloud database stores breed
-                                    data, analytics, and system metrics with
-                                    optimized schemas, compound indexes, and
-                                    aggregation pipelines for high performance
-                                    and scalability.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
                                 <i class="fas fa-memory"></i>
-                                <h3>Caching Layer</h3>
+                                <h3>Intelligent Caching</h3>
                                 <p>
-                                    Intelligent caching with TTL, automatic
+                                    Database caching with TTL, automatic
                                     refresh, and cache warming strategies reduce
-                                    external API dependency by 90%.
+                                    external API dependency by 90% while
+                                    maintaining data freshness.
                                 </p>
                             </div>
                             <div class="architecture-card">
                                 <i class="fas fa-code"></i>
-                                <h3>Data Transformation</h3>
+                                <h3>Data Processing Pipeline</h3>
                                 <p>
-                                    Raw API responses are normalized, validated,
-                                    and enriched with metadata before MongoDB
-                                    Atlas insertion using Mongoose schemas and
-                                    ODM patterns.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-sync"></i>
-                                <h3>Real-time Updates</h3>
-                                <p>
-                                    Background processes maintain data freshness
-                                    with incremental updates, conflict
-                                    resolution, and live statistics tracking.
+                                    Serverless functions process, validate, and
+                                    transform API data with Mongoose schemas
+                                    before MongoDB Atlas storage with proper
+                                    indexing and relationships.
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Database Operations Tab -->
+                    <!-- CRUD & Security Tab -->
                     <div id="project-crud" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
-                                <i class="fas fa-plus-circle"></i>
-                                <h3>Create Operations</h3>
-                                <p>
-                                    Insert breed data, populate collections,
-                                    create API endpoints, and manage data with
-                                    Mongoose validation and duplicate prevention
-                                    using compound indexes.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-search"></i>
-                                <h3>Read Operations</h3>
-                                <p>
-                                    Retrieve breed lists with MongoDB Atlas
-                                    queries, fetch external API data, generate
-                                    analytics, and implement search with
-                                    aggregation pipelines, pagination, and
-                                    sorting.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
                                 <i class="fas fa-edit"></i>
-                                <h3>Update Operations</h3>
+                                <h3>Full CRUD Operations</h3>
                                 <p>
-                                    Modify user preferences, update breed
-                                    information, refresh cached data, and
-                                    maintain data consistency across
-                                    collections.
+                                    Complete Create, Read, Update, Delete
+                                    operations with MongoDB Atlas, Mongoose
+                                    validation, error handling, and proper HTTP
+                                    status codes for all endpoints.
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-trash-alt"></i>
-                                <h3>Delete Operations</h3>
-                                <p>
-                                    Clean expired cache entries, remove outdated
-                                    data, implement database cleanup jobs, and
-                                    maintain referential integrity with MongoDB
-                                    Atlas transactions and cascade operations.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-check-circle"></i>
+                                <i class="fas fa-shield-alt"></i>
                                 <h3>Validation & Security</h3>
                                 <p>
                                     Input sanitization, Mongoose schema
@@ -319,7 +248,7 @@
                                 <h3>Performance Optimization</h3>
                                 <p>
                                     MongoDB Atlas compound indexes, query
-                                    optimization, bulk operations, and
+                                    optimization, aggregation pipelines, and
                                     connection pooling maximize cloud database
                                     performance.
                                 </p>
@@ -327,65 +256,37 @@
                         </div>
                     </div>
 
-                    <!-- Architecture Benefits Tab -->
+                    <!-- Performance Tab -->
                     <div id="project-extensions" class="subsection-content">
                         <div class="architecture-grid">
                             <div class="architecture-card">
                                 <i class="fas fa-tachometer-alt"></i>
-                                <h3>Performance Benefits</h3>
+                                <h3>High Performance</h3>
                                 <p>
-                                    Cached data reduces API calls by 90%, faster
-                                    response times, offline capability, and
-                                    reduced bandwidth usage for optimal user
-                                    experience.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-shield-alt"></i>
-                                <h3>Reliability & Control</h3>
-                                <p>
-                                    Independence from external API availability,
-                                    data consistency, backup capabilities, and
-                                    custom data validation rules.
+                                    Intelligent caching reduces API calls by
+                                    90%, optimized database queries, and
+                                    serverless auto-scaling deliver fast
+                                    response times under any load.
                                 </p>
                             </div>
                             <div class="architecture-card">
                                 <i class="fas fa-chart-area"></i>
-                                <h3>Scalability Architecture</h3>
+                                <h3>Cloud-Native Scalability</h3>
                                 <p>
-                                    Horizontal scaling with MongoDB Atlas
-                                    sharding, cloud load balancing, and
-                                    auto-scaling serverless functions handle
-                                    traffic spikes seamlessly.
+                                    Serverless functions auto-scale with demand,
+                                    MongoDB Atlas handles database scaling, and
+                                    cloud architecture ensures seamless traffic
+                                    spike handling.
                                 </p>
                             </div>
                             <div class="architecture-card">
-                                <i class="fas fa-lock"></i>
-                                <h3>Security Measures</h3>
+                                <i class="fas fa-shield-alt"></i>
+                                <h3>Production-Ready Reliability</h3>
                                 <p>
-                                    End-to-end encryption, secure
-                                    authentication, rate limiting, and data
-                                    privacy compliance protect user information.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-users"></i>
-                                <h3>User Features</h3>
-                                <p>
-                                    Backend API powering breed exploration,
-                                    search functionality, data retrieval, and
-                                    serving structured JSON responses with
-                                    proper HTTP status codes.
-                                </p>
-                            </div>
-                            <div class="architecture-card">
-                                <i class="fas fa-rocket"></i>
-                                <h3>Future Extensions</h3>
-                                <p>
-                                    GraphQL API implementation, advanced
-                                    analytics with time-series data, webhook
-                                    support, and integration with additional
-                                    external APIs for data enrichment.
+                                    Comprehensive error handling, fallback
+                                    mechanisms, data consistency, and robust
+                                    validation ensure enterprise-grade system
+                                    reliability.
                                 </p>
                             </div>
                         </div>
