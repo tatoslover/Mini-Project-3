@@ -1348,6 +1348,14 @@
             // Load live statistics
             async function loadLiveStatistics() {
                 try {
+                    // Check manual API connection toggle first
+                    if (!apiConnected) {
+                        console.log(
+                            "API manually disconnected, showing default statistics",
+                        );
+                        return;
+                    }
+
                     const response = await fetch("/.netlify/functions/stats");
                     if (response.ok) {
                         const data = await response.json();
@@ -1455,8 +1463,8 @@
                         Object.keys(breedData).length,
                     );
 
-                    // If no breeds from our API, fetch directly from Dog CEO API
-                    if (Object.keys(breedData).length === 0) {
+                    // If no breeds from our API, fetch directly from Dog CEO API (only if API is connected)
+                    if (Object.keys(breedData).length === 0 && apiConnected) {
                         console.log(
                             "No breeds from our API, fetching from Dog CEO API directly...",
                         );
@@ -1655,6 +1663,11 @@
                 modal.style.display = "block";
 
                 try {
+                    // Check manual API connection toggle first
+                    if (!apiConnected) {
+                        throw new Error("API manually disconnected");
+                    }
+
                     const response = await fetch(
                         `/.netlify/functions/random?breed=${breed}&count=8`,
                     );
@@ -1682,8 +1695,8 @@
                         images = [data.message];
                     }
 
-                    // If still no images, try Dog CEO API directly
-                    if (images.length === 0) {
+                    // If still no images, try Dog CEO API directly (only if API is connected)
+                    if (images.length === 0 && apiConnected) {
                         console.log(
                             "No images from our API, trying Dog CEO API directly...",
                         );
@@ -1864,7 +1877,7 @@
                                         imageUrl;
                                 } else if (imageData.message) {
                                     imageUrl = imageData.message;
-                                } else {
+                                } else if (apiConnected) {
                                     const directResponse = await fetch(
                                         `https://dog.ceo/api/breed/${breed}/images/random`,
                                     );
