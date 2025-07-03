@@ -438,7 +438,7 @@
             <div class="control-card">
                 <h3><i class="fas fa-code"></i> API Documentation</h3>
                 <p>Explore the complete API documentation with interactive testing capabilities powered by Swagger UI.</p>
-                <a href="http://localhost:3000/api/docs" class="btn btn-success" target="_blank" id="apiDocsBtn">
+                <a href="/api-docs" class="btn btn-success" target="_blank" id="apiDocsBtn">
                     <i class="fas fa-book"></i> View API Docs
                 </a>
             </div>
@@ -557,7 +557,7 @@
                     this.updateServerStatus();
                     this.log('✅ Backend server started successfully on port 3000');
                     this.log('🔗 Server available at: http://localhost:3000');
-                    this.log('📚 API docs available at: http://localhost:3000/api/docs');
+                    this.log('📚 API docs available at: /api-docs');
 
                 } catch (error) {
                     this.log(`❌ Failed to start server: ${error.message}`);

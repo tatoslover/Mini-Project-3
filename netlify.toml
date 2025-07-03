@@ -14,12 +14,17 @@
 
 [[redirects]]
   from = "/api-docs"
-  to = "/frontend/api-docs.html"
+  to = "/api-docs.html"
   status = 200
 
 [[redirects]]
   from = "/api-docs.json"
   to = "/.netlify/functions/swagger-spec"
+  status = 200
+
+[[redirects]]
+  from = "/docs"
+  to = "/api-docs.html"
   status = 200
 
 [[redirects]]

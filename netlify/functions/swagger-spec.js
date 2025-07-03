@@ -1,62 +1,64 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
 exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type',
-    'Access-Control-Allow-Methods': 'GET, OPTIONS',
-    'Content-Type': 'application/json'
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
+    "Content-Type": "application/json",
   };
 
   // Handle preflight OPTIONS request
-  if (event.httpMethod === 'OPTIONS') {
+  if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 200,
       headers,
-      body: ''
+      body: "",
     };
   }
 
   // Only allow GET requests
-  if (event.httpMethod !== 'GET') {
+  if (event.httpMethod !== "GET") {
     return {
       statusCode: 405,
       headers,
       body: JSON.stringify({
         success: false,
-        error: 'Method not allowed',
-        timestamp: new Date().toISOString()
-      })
+        error: "Method not allowed",
+        timestamp: new Date().toISOString(),
+      }),
     };
   }
 
   try {
     // Load the swagger specification
-    const swaggerPath = path.join(process.cwd(), 'swagger', 'swagger.json');
+    const swaggerPath = path.join(process.cwd(), "swagger", "swagger.json");
     let swaggerSpec;
 
     try {
-      const swaggerContent = fs.readFileSync(swaggerPath, 'utf8');
+      const swaggerContent = fs.readFileSync(swaggerPath, "utf8");
       swaggerSpec = JSON.parse(swaggerContent);
     } catch (fileError) {
       // If file doesn't exist, return a basic spec
       swaggerSpec = {
         openapi: "3.0.0",
         info: {
-          title: "PupHub API",
+          title: "Barkend API",
           version: "1.0.0",
-          description: "A comprehensive RESTful API for dog breed information and images",
+          description:
+            "A comprehensive RESTful API for dog breed information and images",
           contact: {
-            name: "PupHub Team"
-          }
+            name: "Barkend Team",
+          },
         },
         servers: [
           {
-            url: event.headers['x-forwarded-proto'] + '://' + event.headers.host,
-            description: "Production server"
-          }
+            url:
+              event.headers["x-forwarded-proto"] + "://" + event.headers.host,
+            description: "Production server",
+          },
         ],
         paths: {
           "/.netlify/functions/health": {
@@ -65,7 +67,7 @@ exports.handler = async (event, context) => {
               description: "Returns the health status of the API server",
               tags: ["System"],
               responses: {
-                "200": {
+                200: {
                   description: "Server is healthy",
                   content: {
                     "application/json": {
@@ -73,22 +75,25 @@ exports.handler = async (event, context) => {
                         type: "object",
                         properties: {
                           status: { type: "string", example: "healthy" },
-                          service: { type: "string", example: "PupHub API" },
+                          service: { type: "string", example: "Barkend API" },
                           version: { type: "string", example: "1.0.0" },
                           database: {
                             type: "object",
                             properties: {
                               status: { type: "string", example: "connected" },
-                              type: { type: "string", example: "MongoDB Atlas" }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+                              type: {
+                                type: "string",
+                                example: "MongoDB Atlas",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
           "/.netlify/functions/breeds": {
             get: {
@@ -96,7 +101,7 @@ exports.handler = async (event, context) => {
               description: "Retrieves all available dog breeds with sub-breeds",
               tags: ["Breeds"],
               responses: {
-                "200": {
+                200: {
                   description: "List of all dog breeds",
                   content: {
                     "application/json": {
@@ -110,21 +115,33 @@ exports.handler = async (event, context) => {
                             items: {
                               type: "object",
                               properties: {
-                                id: { type: "string", example: "affenpinscher" },
-                                name: { type: "string", example: "affenpinscher" },
-                                breed: { type: "string", example: "affenpinscher" },
+                                id: {
+                                  type: "string",
+                                  example: "affenpinscher",
+                                },
+                                name: {
+                                  type: "string",
+                                  example: "affenpinscher",
+                                },
+                                breed: {
+                                  type: "string",
+                                  example: "affenpinscher",
+                                },
                                 subBreed: { type: "string", nullable: true },
-                                displayName: { type: "string", example: "Affenpinscher" }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+                                displayName: {
+                                  type: "string",
+                                  example: "Affenpinscher",
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
           "/.netlify/functions/random": {
             get: {
@@ -141,8 +158,8 @@ exports.handler = async (event, context) => {
                     type: "integer",
                     minimum: 1,
                     maximum: 50,
-                    default: 1
-                  }
+                    default: 1,
+                  },
                 },
                 {
                   name: "breed",
@@ -150,12 +167,12 @@ exports.handler = async (event, context) => {
                   description: "Specific breed to get random images from",
                   required: false,
                   schema: {
-                    type: "string"
-                  }
-                }
+                    type: "string",
+                  },
+                },
               ],
               responses: {
-                "200": {
+                200: {
                   description: "Random dog images",
                   content: {
                     "application/json": {
@@ -171,16 +188,19 @@ exports.handler = async (event, context) => {
                               id: { type: "string" },
                               breed: { type: "string" },
                               breedDisplayName: { type: "string" },
-                              timestamp: { type: "string", format: "date-time" }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
+                              timestamp: {
+                                type: "string",
+                                format: "date-time",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
           },
           "/.netlify/functions/favorites": {
             get: {
@@ -193,14 +213,14 @@ exports.handler = async (event, context) => {
                   in: "header",
                   description: "User identifier",
                   required: false,
-                  schema: { type: "string" }
-                }
+                  schema: { type: "string" },
+                },
               ],
               responses: {
-                "200": {
-                  description: "List of favorite images"
-                }
-              }
+                200: {
+                  description: "List of favorite images",
+                },
+              },
             },
             post: {
               summary: "Add Favorite",
@@ -219,18 +239,18 @@ exports.handler = async (event, context) => {
                         name: { type: "string" },
                         subBreed: { type: "string" },
                         tags: { type: "array", items: { type: "string" } },
-                        notes: { type: "string" }
-                      }
-                    }
-                  }
-                }
+                        notes: { type: "string" },
+                      },
+                    },
+                  },
+                },
               },
               responses: {
-                "201": {
-                  description: "Favorite added successfully"
-                }
-              }
-            }
+                201: {
+                  description: "Favorite added successfully",
+                },
+              },
+            },
           },
           "/.netlify/functions/stats": {
             get: {
@@ -246,8 +266,8 @@ exports.handler = async (event, context) => {
                   schema: {
                     type: "string",
                     enum: ["today", "week", "month", "all"],
-                    default: "today"
-                  }
+                    default: "today",
+                  },
                 },
                 {
                   name: "detailed",
@@ -256,12 +276,12 @@ exports.handler = async (event, context) => {
                   required: false,
                   schema: {
                     type: "boolean",
-                    default: false
-                  }
-                }
+                    default: false,
+                  },
+                },
               ],
               responses: {
-                "200": {
+                200: {
                   description: "Server statistics",
                   content: {
                     "application/json": {
@@ -281,8 +301,8 @@ exports.handler = async (event, context) => {
                                   imagesServed: { type: "integer" },
                                   breedsViewed: { type: "integer" },
                                   favoritesAdded: { type: "integer" },
-                                  totalBreeds: { type: "integer" }
-                                }
+                                  totalBreeds: { type: "integer" },
+                                },
                               },
                               performance: {
                                 type: "object",
@@ -294,68 +314,68 @@ exports.handler = async (event, context) => {
                                       display: { type: "string" },
                                       hours: { type: "integer" },
                                       minutes: { type: "integer" },
-                                      seconds: { type: "integer" }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+                                      seconds: { type: "integer" },
+                                    },
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
         tags: [
           {
             name: "System",
-            description: "System health and monitoring endpoints"
+            description: "System health and monitoring endpoints",
           },
           {
             name: "Breeds",
-            description: "Dog breed information and search"
+            description: "Dog breed information and search",
           },
           {
             name: "Images",
-            description: "Dog image retrieval endpoints"
+            description: "Dog image retrieval endpoints",
           },
           {
             name: "Favorites",
-            description: "Favorite dog images management"
-          }
-        ]
+            description: "Favorite dog images management",
+          },
+        ],
       };
     }
 
     // Update server URL to match current environment
     if (swaggerSpec.servers) {
-      swaggerSpec.servers[0].url = event.headers['x-forwarded-proto'] + '://' + event.headers.host;
+      swaggerSpec.servers[0].url =
+        event.headers["x-forwarded-proto"] + "://" + event.headers.host;
     }
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(swaggerSpec, null, 2)
+      body: JSON.stringify(swaggerSpec, null, 2),
     };
-
   } catch (error) {
-    console.error('Error in swagger-spec function:', error);
+    console.error("Error in swagger-spec function:", error);
 
     const errorResponse = {
       success: false,
-      error: 'Failed to retrieve API specification',
+      error: "Failed to retrieve API specification",
       message: error.message,
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
     };
 
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify(errorResponse)
+      body: JSON.stringify(errorResponse),
     };
   }
 };
