@@ -307,12 +307,19 @@
             }
 
             .status-dot {
-                width: 12px;
-                height: 12px;
+                width: 12px !important;
+                height: 12px !important;
+                min-width: 12px;
+                min-height: 12px;
+                max-width: 12px;
+                max-height: 12px;
                 border-radius: 50%;
                 background: var(--error-color);
-                transition: all 0.3s ease;
+                transition: background-color 0.3s ease;
                 flex-shrink: 0;
+                box-sizing: border-box;
+                display: inline-block;
+                position: relative;
             }
 
             .status-dot.online {
@@ -333,12 +340,15 @@
             @keyframes loadingPulse {
                 0% {
                     opacity: 1;
+                    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.4);
                 }
                 50% {
-                    opacity: 0.6;
+                    opacity: 0.8;
+                    box-shadow: 0 0 0 3px rgba(255, 193, 7, 0.1);
                 }
                 100% {
                     opacity: 1;
+                    box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
                 }
             }
 
@@ -2127,6 +2137,27 @@
                         Object.keys(breedData).length,
                     );
 
+                    // If no breeds from our API, fetch directly from Dog CEO API
+                    if (Object.keys(breedData).length === 0) {
+                        console.log(
+                            "No breeds from our API, fetching from Dog CEO API directly...",
+                        );
+                        const dogApiResponse = await fetch(
+                            "https://dog.ceo/api/breeds/list/all",
+                        );
+                        if (dogApiResponse.ok) {
+                            const dogApiData = await dogApiResponse.json();
+                            if (dogApiData.status === "success") {
+                                breedData = dogApiData.message;
+                                console.log(
+                                    "Fetched from Dog CEO API:",
+                                    Object.keys(breedData).length,
+                                    "breeds",
+                                );
+                            }
+                        }
+                    }
+
                     // Get first 12 breeds for demo
                     const breeds = Object.keys(breedData).slice(0, 12);
                     console.log("Selected breeds for demo:", breeds);
@@ -2160,9 +2191,24 @@
                                         imageData.data.url ||
                                         imageData.data.message ||
                                         imageUrl;
+                                } else if (imageData.message) {
+                                    // Fallback for Dog CEO API direct format
+                                    imageUrl = imageData.message;
                                 } else {
-                                    // Fallback for old format
-                                    imageUrl = imageData.message || imageUrl;
+                                    // Final fallback - try Dog CEO API directly
+                                    console.log(
+                                        `Trying Dog CEO API directly for ${breed}`,
+                                    );
+                                    const directResponse = await fetch(
+                                        `https://dog.ceo/api/breed/${breed}/images/random`,
+                                    );
+                                    if (directResponse.ok) {
+                                        const directData =
+                                            await directResponse.json();
+                                        if (directData.status === "success") {
+                                            imageUrl = directData.message;
+                                        }
+                                    }
                                 }
 
                                 console.log(
