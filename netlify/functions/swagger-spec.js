@@ -202,44 +202,341 @@ exports.handler = async (event, context) => {
               },
             },
           },
-          "/.netlify/functions/favorites": {
+          "/.netlify/functions/cache/status": {
             get: {
-              summary: "Get Favorites",
-              description: "Returns all favorite dog images for the user",
-              tags: ["Favorites"],
+              summary: "Get Cache Status",
+              description:
+                "Returns cache health, statistics, and performance metrics",
+              tags: ["Cache Management"],
+              responses: {
+                200: {
+                  description: "Cache status and statistics",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        properties: {
+                          success: { type: "boolean", example: true },
+                          status: { type: "string", example: "healthy" },
+                          data: {
+                            type: "object",
+                            properties: {
+                              totalBreeds: { type: "integer", example: 98 },
+                              cachedImages: { type: "integer", example: 1247 },
+                              cacheHitRate: { type: "number", example: 95.2 },
+                              lastSync: { type: "string", format: "date-time" },
+                              storage: {
+                                type: "object",
+                                properties: {
+                                  size: { type: "string", example: "45.2 MB" },
+                                  usage: { type: "number", example: 78.5 },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "/.netlify/functions/search": {
+            get: {
+              summary: "Search Breeds",
+              description:
+                "Search dog breeds by name, characteristics, or popularity",
+              tags: ["Search & Discovery"],
               parameters: [
                 {
-                  name: "x-user-id",
-                  in: "header",
-                  description: "User identifier",
+                  name: "q",
+                  in: "query",
+                  description: "Search query",
+                  required: true,
+                  schema: { type: "string" },
+                },
+                {
+                  name: "limit",
+                  in: "query",
+                  description: "Maximum number of results",
                   required: false,
+                  schema: {
+                    type: "integer",
+                    minimum: 1,
+                    maximum: 50,
+                    default: 10,
+                  },
+                },
+                {
+                  name: "sortBy",
+                  in: "query",
+                  description: "Sort results by field",
+                  required: false,
+                  schema: {
+                    type: "string",
+                    enum: ["name", "popularity", "relevance"],
+                    default: "relevance",
+                  },
+                },
+              ],
+              responses: {
+                200: {
+                  description: "Search results",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        properties: {
+                          success: { type: "boolean", example: true },
+                          query: { type: "string", example: "labrador" },
+                          count: { type: "integer", example: 3 },
+                          results: {
+                            type: "array",
+                            items: {
+                              type: "object",
+                              properties: {
+                                breed: { type: "string", example: "labrador" },
+                                displayName: {
+                                  type: "string",
+                                  example: "Labrador",
+                                },
+                                subBreeds: {
+                                  type: "array",
+                                  items: { type: "string" },
+                                },
+                                popularity: { type: "integer", example: 85 },
+                                imageCount: { type: "integer", example: 42 },
+                                relevanceScore: {
+                                  type: "number",
+                                  example: 0.95,
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "/.netlify/functions/breeds/popular": {
+            get: {
+              summary: "Get Popular Breeds",
+              description: "Returns the most viewed and requested dog breeds",
+              tags: ["Search & Discovery"],
+              parameters: [
+                {
+                  name: "limit",
+                  in: "query",
+                  description: "Number of breeds to return",
+                  required: false,
+                  schema: {
+                    type: "integer",
+                    minimum: 1,
+                    maximum: 20,
+                    default: 10,
+                  },
+                },
+                {
+                  name: "timeframe",
+                  in: "query",
+                  description: "Time period for popularity metrics",
+                  required: false,
+                  schema: {
+                    type: "string",
+                    enum: ["today", "week", "month", "all"],
+                    default: "week",
+                  },
+                },
+              ],
+              responses: {
+                200: {
+                  description: "Popular breeds list",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        properties: {
+                          success: { type: "boolean", example: true },
+                          timeframe: { type: "string", example: "week" },
+                          data: {
+                            type: "array",
+                            items: {
+                              type: "object",
+                              properties: {
+                                rank: { type: "integer", example: 1 },
+                                breed: { type: "string", example: "labrador" },
+                                displayName: {
+                                  type: "string",
+                                  example: "Labrador",
+                                },
+                                viewCount: { type: "integer", example: 1247 },
+                                searchCount: { type: "integer", example: 456 },
+                                popularityScore: {
+                                  type: "number",
+                                  example: 92.5,
+                                },
+                                trendingUp: { type: "boolean", example: true },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+          "/.netlify/functions/breeds/{breed}/analytics": {
+            get: {
+              summary: "Get Breed Analytics",
+              description:
+                "Returns detailed analytics and metrics for a specific breed",
+              tags: ["Analytics"],
+              parameters: [
+                {
+                  name: "breed",
+                  in: "path",
+                  description: "Breed name",
+                  required: true,
+                  schema: { type: "string" },
+                },
+                {
+                  name: "detailed",
+                  in: "query",
+                  description: "Include detailed analytics",
+                  required: false,
+                  schema: { type: "boolean", default: false },
+                },
+              ],
+              responses: {
+                200: {
+                  description: "Breed analytics data",
+                  content: {
+                    "application/json": {
+                      schema: {
+                        type: "object",
+                        properties: {
+                          success: { type: "boolean", example: true },
+                          breed: { type: "string", example: "labrador" },
+                          data: {
+                            type: "object",
+                            properties: {
+                              overview: {
+                                type: "object",
+                                properties: {
+                                  totalViews: {
+                                    type: "integer",
+                                    example: 1247,
+                                  },
+                                  totalSearches: {
+                                    type: "integer",
+                                    example: 456,
+                                  },
+                                  imagesAvailable: {
+                                    type: "integer",
+                                    example: 42,
+                                  },
+                                  lastViewed: {
+                                    type: "string",
+                                    format: "date-time",
+                                  },
+                                  popularityRank: {
+                                    type: "integer",
+                                    example: 3,
+                                  },
+                                },
+                              },
+                              trends: {
+                                type: "object",
+                                properties: {
+                                  dailyViews: {
+                                    type: "array",
+                                    items: { type: "integer" },
+                                  },
+                                  weeklyGrowth: {
+                                    type: "number",
+                                    example: 15.5,
+                                  },
+                                  peakHour: { type: "integer", example: 14 },
+                                },
+                              },
+                            },
+                          },
+                        },
+                      },
+                    },
+                  },
+                },
+                404: {
+                  description: "Breed not found",
+                },
+              },
+            },
+          },
+          "/.netlify/functions/admin/breeds": {
+            get: {
+              summary: "Admin: Get All Breeds",
+              description: "Returns all breeds with administrative details",
+              tags: ["Admin & CRUD"],
+              parameters: [
+                {
+                  name: "x-admin-key",
+                  in: "header",
+                  description: "Admin authentication key",
+                  required: true,
                   schema: { type: "string" },
                 },
               ],
               responses: {
                 200: {
-                  description: "List of favorite images",
+                  description: "All breeds with admin details",
+                },
+                401: {
+                  description: "Unauthorized - Invalid admin key",
                 },
               },
             },
             post: {
-              summary: "Add Favorite",
-              description: "Adds a dog image to favorites",
-              tags: ["Favorites"],
+              summary: "Admin: Add New Breed",
+              description: "Adds a new breed to the database",
+              tags: ["Admin & CRUD"],
+              parameters: [
+                {
+                  name: "x-admin-key",
+                  in: "header",
+                  description: "Admin authentication key",
+                  required: true,
+                  schema: { type: "string" },
+                },
+              ],
               requestBody: {
                 required: true,
                 content: {
                   "application/json": {
                     schema: {
                       type: "object",
-                      required: ["url"],
+                      required: ["breed", "displayName"],
                       properties: {
-                        url: { type: "string", format: "uri" },
-                        breed: { type: "string" },
-                        name: { type: "string" },
-                        subBreed: { type: "string" },
-                        tags: { type: "array", items: { type: "string" } },
-                        notes: { type: "string" },
+                        breed: { type: "string", example: "newfoundland" },
+                        displayName: {
+                          type: "string",
+                          example: "Newfoundland",
+                        },
+                        subBreeds: { type: "array", items: { type: "string" } },
+                        description: { type: "string" },
+                        characteristics: {
+                          type: "object",
+                          properties: {
+                            size: { type: "string", example: "large" },
+                            energy: { type: "string", example: "moderate" },
+                            temperament: { type: "string", example: "gentle" },
+                          },
+                        },
                       },
                     },
                   },
@@ -247,7 +544,97 @@ exports.handler = async (event, context) => {
               },
               responses: {
                 201: {
-                  description: "Favorite added successfully",
+                  description: "Breed created successfully",
+                },
+                400: {
+                  description: "Invalid breed data",
+                },
+                401: {
+                  description: "Unauthorized - Invalid admin key",
+                },
+                409: {
+                  description: "Breed already exists",
+                },
+              },
+            },
+            put: {
+              summary: "Admin: Update Breed",
+              description: "Updates an existing breed in the database",
+              tags: ["Admin & CRUD"],
+              parameters: [
+                {
+                  name: "x-admin-key",
+                  in: "header",
+                  description: "Admin authentication key",
+                  required: true,
+                  schema: { type: "string" },
+                },
+              ],
+              requestBody: {
+                required: true,
+                content: {
+                  "application/json": {
+                    schema: {
+                      type: "object",
+                      required: ["breed"],
+                      properties: {
+                        breed: { type: "string", example: "labrador" },
+                        displayName: {
+                          type: "string",
+                          example: "Labrador Retriever",
+                        },
+                        subBreeds: { type: "array", items: { type: "string" } },
+                        description: { type: "string" },
+                        isActive: { type: "boolean", example: true },
+                      },
+                    },
+                  },
+                },
+              },
+              responses: {
+                200: {
+                  description: "Breed updated successfully",
+                },
+                400: {
+                  description: "Invalid breed data",
+                },
+                401: {
+                  description: "Unauthorized - Invalid admin key",
+                },
+                404: {
+                  description: "Breed not found",
+                },
+              },
+            },
+            delete: {
+              summary: "Admin: Delete Breed",
+              description: "Removes a breed from the database",
+              tags: ["Admin & CRUD"],
+              parameters: [
+                {
+                  name: "x-admin-key",
+                  in: "header",
+                  description: "Admin authentication key",
+                  required: true,
+                  schema: { type: "string" },
+                },
+                {
+                  name: "breed",
+                  in: "query",
+                  description: "Breed name to delete",
+                  required: true,
+                  schema: { type: "string" },
+                },
+              ],
+              responses: {
+                200: {
+                  description: "Breed deleted successfully",
+                },
+                401: {
+                  description: "Unauthorized - Invalid admin key",
+                },
+                404: {
+                  description: "Breed not found",
                 },
               },
             },
@@ -344,8 +731,20 @@ exports.handler = async (event, context) => {
             description: "Dog image retrieval endpoints",
           },
           {
-            name: "Favorites",
-            description: "Favorite dog images management",
+            name: "Cache Management",
+            description: "Database cache status and management",
+          },
+          {
+            name: "Search & Discovery",
+            description: "Search and discovery endpoints for breeds",
+          },
+          {
+            name: "Analytics",
+            description: "Breed analytics and performance metrics",
+          },
+          {
+            name: "Admin & CRUD",
+            description: "Administrative endpoints for full CRUD operations",
           },
         ],
       };
