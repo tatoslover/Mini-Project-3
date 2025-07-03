@@ -540,6 +540,101 @@
                 font-size: 1.1rem;
             }
 
+            /* Pagination Styles */
+            .pagination-controls {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+                margin: 2rem 0;
+                padding: 1.5rem;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: var(--border-radius);
+                backdrop-filter: blur(10px);
+            }
+
+            .pagination-info {
+                font-size: 0.9rem;
+                color: var(--text-secondary);
+                font-weight: 500;
+            }
+
+            .pagination-buttons {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .pagination-buttons button {
+                padding: 0.6rem 1.2rem;
+                background: var(--card-bg);
+                border: none;
+                border-radius: 8px;
+                color: var(--text-primary);
+                cursor: pointer;
+                font-weight: 500;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .pagination-buttons button:hover:not(:disabled) {
+                background: var(--primary-gradient);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .pagination-buttons button:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none;
+            }
+
+            .page-numbers {
+                display: flex;
+                gap: 0.5rem;
+                align-items: center;
+            }
+
+            .page-number {
+                padding: 0.4rem 0.8rem;
+                background: rgba(255, 255, 255, 0.1);
+                border: none;
+                border-radius: 6px;
+                color: var(--text-primary);
+                cursor: pointer;
+                transition: all 0.2s ease;
+                font-size: 0.9rem;
+                min-width: 35px;
+            }
+
+            .page-number:hover {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .page-number.active {
+                background: var(--primary-gradient);
+                color: white;
+                font-weight: 600;
+            }
+
+            @media (max-width: 768px) {
+                .pagination-controls {
+                    padding: 1rem;
+                }
+
+                .pagination-buttons {
+                    flex-direction: column;
+                    gap: 0.8rem;
+                }
+
+                .pagination-buttons button {
+                    width: 100%;
+                    justify-content: center;
+                }
+            }
+
             .dog-grid {
                 display: grid;
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -1282,6 +1377,32 @@
                     </p>
                 </div>
 
+                <!-- Pagination Controls -->
+                <div
+                    id="paginationControls"
+                    class="pagination-controls"
+                    style="display: none"
+                >
+                    <div class="pagination-info">
+                        <span id="paginationInfo"
+                            >Showing breeds 1-12 of 0</span
+                        >
+                    </div>
+                    <div class="pagination-buttons">
+                        <button
+                            id="prevButton"
+                            onclick="changePage(-1)"
+                            disabled
+                        >
+                            <i class="fas fa-chevron-left"></i> Previous
+                        </button>
+                        <span id="pageNumbers" class="page-numbers"></span>
+                        <button id="nextButton" onclick="changePage(1)">
+                            Next <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
                 <div id="dogResults" class="dog-grid">
                     <div class="loading">
                         <i class="fas fa-spinner"></i>
@@ -1307,6 +1428,9 @@
         <script>
             let swaggerUI = null;
             let breedData = {};
+            let allBreeds = [];
+            let currentPage = 1;
+            const breedsPerPage = 12;
 
             // Offline fallback data
             const offlineDogData = [
@@ -2158,8 +2282,20 @@
                         }
                     }
 
-                    // Get first 12 breeds for demo
-                    const breeds = Object.keys(breedData).slice(0, 12);
+                    // Store all breeds for pagination
+                    allBreeds = Object.keys(breedData);
+                    console.log("Total breeds available:", allBreeds.length);
+
+                    // Show pagination controls if we have more than 12 breeds
+                    if (allBreeds.length > breedsPerPage) {
+                        document.getElementById(
+                            "paginationControls",
+                        ).style.display = "block";
+                        updatePaginationInfo();
+                    }
+
+                    // Get first page of breeds
+                    const breeds = getCurrentPageBreeds();
                     console.log("Selected breeds for demo:", breeds);
                     const dogCards = await Promise.all(
                         breeds.map(async (breed) => {
@@ -2291,6 +2427,9 @@
                         breedData[dog.name] = [];
                     });
 
+                    allBreeds = Object.keys(breedData);
+                    currentPage = 1;
+
                     console.log(
                         "Offline breed data set up:",
                         Object.keys(breedData),
@@ -2319,17 +2458,53 @@
                         `/.netlify/functions/random?breed=${breed}&count=8`,
                     );
                     const data = await response.json();
+                    console.log("Modal API response:", data);
 
                     let images = [];
-                    if (Array.isArray(data.message)) {
+
+                    // Handle new API format
+                    if (data.success && data.data) {
+                        if (Array.isArray(data.data)) {
+                            // Multiple images
+                            images = data.data.map(
+                                (img) => img.url || img.message || img,
+                            );
+                        } else if (data.data.url) {
+                            // Single image object
+                            images = [data.data.url];
+                        }
+                    } else if (Array.isArray(data.message)) {
+                        // Fallback for old format - multiple images
                         images = data.message;
                     } else if (data.message) {
+                        // Fallback for old format - single image
                         images = [data.message];
+                    }
+
+                    // If still no images, try Dog CEO API directly
+                    if (images.length === 0) {
+                        console.log(
+                            "No images from our API, trying Dog CEO API directly...",
+                        );
+                        const directResponse = await fetch(
+                            `https://dog.ceo/api/breed/${breed}/images`,
+                        );
+                        if (directResponse.ok) {
+                            const directData = await directResponse.json();
+                            if (
+                                directData.status === "success" &&
+                                Array.isArray(directData.message)
+                            ) {
+                                images = directData.message.slice(0, 8); // Limit to 8 images
+                            }
+                        }
                     }
 
                     if (images.length === 0) {
                         throw new Error("No images found");
                     }
+
+                    console.log("Modal images found:", images.length);
 
                     const imageGrid = images
                         .map(
@@ -2407,7 +2582,158 @@
                 return offlineImageSets[breed] || [];
             }
 
-            // Close Modal
+            // Pagination Functions
+            function getCurrentPageBreeds() {
+                const startIndex = (currentPage - 1) * breedsPerPage;
+                const endIndex = startIndex + breedsPerPage;
+                return allBreeds.slice(startIndex, endIndex);
+            }
+
+            function changePage(direction) {
+                const totalPages = Math.ceil(allBreeds.length / breedsPerPage);
+                const newPage = currentPage + direction;
+
+                if (newPage >= 1 && newPage <= totalPages) {
+                    currentPage = newPage;
+                    loadCurrentPage();
+                    updatePaginationInfo();
+                }
+            }
+
+            function goToPage(pageNumber) {
+                const totalPages = Math.ceil(allBreeds.length / breedsPerPage);
+                if (pageNumber >= 1 && pageNumber <= totalPages) {
+                    currentPage = pageNumber;
+                    loadCurrentPage();
+                    updatePaginationInfo();
+                }
+            }
+
+            async function loadCurrentPage() {
+                const dogResults = document.getElementById("dogResults");
+                const breeds = getCurrentPageBreeds();
+
+                // Show loading
+                dogResults.innerHTML = `
+                    <div class="loading">
+                        <i class="fas fa-spinner"></i>
+                        <p>Loading page ${currentPage}...</p>
+                    </div>
+                `;
+
+                try {
+                    const dogCards = await Promise.all(
+                        breeds.map(async (breed) => {
+                            try {
+                                const imageResponse = await fetch(
+                                    `/.netlify/functions/random?breed=${breed}`,
+                                );
+
+                                if (!imageResponse.ok) {
+                                    throw new Error(
+                                        `HTTP ${imageResponse.status}`,
+                                    );
+                                }
+
+                                const imageData = await imageResponse.json();
+
+                                let imageUrl =
+                                    "https://via.placeholder.com/300x250?text=No+Image";
+                                if (imageData.success && imageData.data) {
+                                    imageUrl =
+                                        imageData.data.url ||
+                                        imageData.data.message ||
+                                        imageUrl;
+                                } else if (imageData.message) {
+                                    imageUrl = imageData.message;
+                                } else {
+                                    const directResponse = await fetch(
+                                        `https://dog.ceo/api/breed/${breed}/images/random`,
+                                    );
+                                    if (directResponse.ok) {
+                                        const directData =
+                                            await directResponse.json();
+                                        if (directData.status === "success") {
+                                            imageUrl = directData.message;
+                                        }
+                                    }
+                                }
+
+                                return `
+                                    <div class="dog-card" onclick="showBreedModal('${breed}')">
+                                        <img src="${imageUrl}" alt="${breed}" class="dog-image" onerror="this.src='https://via.placeholder.com/300x250?text=No+Image'">
+                                        <div class="dog-info">
+                                            <h3 class="dog-name">${breed}</h3>
+                                        </div>
+                                    </div>
+                                `;
+                            } catch (error) {
+                                return `
+                                    <div class="dog-card">
+                                        <img src="https://via.placeholder.com/300x250?text=No+Image" alt="${breed}" class="dog-image">
+                                        <div class="dog-info">
+                                            <h3 class="dog-name">${breed}</h3>
+                                        </div>
+                                    </div>
+                                `;
+                            }
+                        }),
+                    );
+
+                    dogResults.innerHTML = dogCards.join("");
+                } catch (error) {
+                    console.error("Error loading page:", error);
+                    dogResults.innerHTML = `
+                        <div class="error-message">
+                            <h3>⚠️ Error Loading Page</h3>
+                            <p>Failed to load breeds for page ${currentPage}.</p>
+                        </div>
+                    `;
+                }
+            }
+
+            function updatePaginationInfo() {
+                const totalBreeds = allBreeds.length;
+                const totalPages = Math.ceil(totalBreeds / breedsPerPage);
+                const startIndex = (currentPage - 1) * breedsPerPage + 1;
+                const endIndex = Math.min(
+                    currentPage * breedsPerPage,
+                    totalBreeds,
+                );
+
+                // Update info text
+                document.getElementById("paginationInfo").textContent =
+                    `Showing breeds ${startIndex}-${endIndex} of ${totalBreeds}`;
+
+                // Update buttons
+                document.getElementById("prevButton").disabled =
+                    currentPage === 1;
+                document.getElementById("nextButton").disabled =
+                    currentPage === totalPages;
+
+                // Update page numbers
+                const pageNumbers = document.getElementById("pageNumbers");
+                let pageNumbersHTML = "";
+
+                // Show max 5 page numbers
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, startPage + 4);
+
+                if (endPage - startPage < 4) {
+                    startPage = Math.max(1, endPage - 4);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    pageNumbersHTML += `
+                        <button class="page-number ${i === currentPage ? "active" : ""}"
+                                onclick="goToPage(${i})">${i}</button>
+                    `;
+                }
+
+                pageNumbers.innerHTML = pageNumbersHTML;
+            }
+
+            // Close modal
             function closeModal() {
                 document.getElementById("dogModal").style.display = "none";
             }
