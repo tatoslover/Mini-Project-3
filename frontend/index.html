@@ -512,174 +512,41 @@
                 animation: spin 1s linear infinite;
             }
 
-            .retry-button {
-                margin-left: 1rem !important;
-                padding: 0.25rem 0.5rem !important;
-                border: none !important;
-                border-radius: 3px !important;
-                background: #007bff !important;
-                color: white !important;
-                cursor: pointer !important;
-                font-size: 0.8rem !important;
-                text-transform: none !important;
-                letter-spacing: normal !important;
-                font-weight: normal !important;
-                transition: none !important;
-                position: static !important;
-                overflow: visible !important;
-                transform: none !important;
-                box-shadow: none !important;
-                display: inline-block !important;
-                width: auto !important;
-                height: auto !important;
-                min-width: auto !important;
-                min-height: auto !important;
-                max-width: none !important;
-                max-height: none !important;
-                line-height: 1.2 !important;
-                vertical-align: baseline !important;
-                white-space: nowrap !important;
-                text-align: center !important;
-                outline: none !important;
-                border-width: 0 !important;
-                border-style: none !important;
-                margin-top: 0 !important;
-                margin-bottom: 0 !important;
-                margin-right: 0 !important;
-                opacity: 1 !important;
-                z-index: auto !important;
+            /* Simple API retry button - completely isolated */
+            .api-retry-btn {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                line-height: 1;
+                color: #ffffff;
+                background-color: #007bff;
+                border: 1px solid #007bff;
+                border-radius: 4px;
+                padding: 6px 12px;
+                margin-left: 8px;
+                cursor: pointer;
+                text-decoration: none;
+                display: inline-block;
+                vertical-align: middle;
+                user-select: none;
+                transition: background-color 0.15s ease-in-out;
             }
 
-            .retry-button:hover {
-                background: #0056b3 !important;
-                transform: none !important;
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0.25rem 0.5rem !important;
-                font-size: 0.8rem !important;
-                width: auto !important;
-                height: auto !important;
-                opacity: 1 !important;
+            .api-retry-btn:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
             }
 
-            .retry-button::before,
-            .retry-button::after {
-                display: none !important;
-                content: none !important;
+            .api-retry-btn:active {
+                background-color: #004085;
+                border-color: #004085;
             }
 
-            /* Override any Swagger UI button styles specifically */
-            .swagger-ui button.retry-button,
-            button.retry-button,
-            .retry-button.btn,
-            .btn.retry-button,
-            .documentation-status .retry-button,
-            .documentation-status.offline .retry-button,
-            div[style*="background: #fff3cd"] .retry-button,
-            div[style*="color: #856404"] .retry-button {
-                margin-left: 1rem !important;
-                padding: 0.25rem 0.5rem !important;
-                border: none !important;
-                border-radius: 3px !important;
-                background: #007bff !important;
-                color: white !important;
-                cursor: pointer !important;
-                font-size: 0.8rem !important;
-                text-transform: none !important;
-                letter-spacing: normal !important;
-                font-weight: normal !important;
-                display: inline-block !important;
-                width: auto !important;
-                height: auto !important;
-                min-width: auto !important;
-                min-height: auto !important;
-                line-height: 1.2 !important;
-                vertical-align: baseline !important;
-                white-space: nowrap !important;
-                text-align: center !important;
-                transform: none !important;
-                box-shadow: none !important;
-                transition: none !important;
-                position: static !important;
-                overflow: visible !important;
-                outline: none !important;
-                opacity: 1 !important;
-                z-index: auto !important;
-                font-family: inherit !important;
-                text-decoration: none !important;
-                border-width: 0 !important;
-                border-style: none !important;
-                margin-top: 0 !important;
-                margin-bottom: 0 !important;
-                margin-right: 0 !important;
-                padding-top: 0.25rem !important;
-                padding-bottom: 0.25rem !important;
-                padding-left: 0.5rem !important;
-                padding-right: 0.5rem !important;
-            }
-
-            /* Hover state with same specificity */
-            .swagger-ui button.retry-button:hover,
-            button.retry-button:hover,
-            .retry-button.btn:hover,
-            .btn.retry-button:hover,
-            .documentation-status .retry-button:hover,
-            .documentation-status.offline .retry-button:hover,
-            div[style*="background: #fff3cd"] .retry-button:hover,
-            div[style*="color: #856404"] .retry-button:hover {
-                background: #0056b3 !important;
-                color: white !important;
-                transform: none !important;
-                box-shadow: none !important;
-                border: none !important;
-                padding: 0.25rem 0.5rem !important;
-                font-size: 0.8rem !important;
-                width: auto !important;
-                height: auto !important;
-                opacity: 1 !important;
-            }
-
-            /* Force remove any pseudo-elements */
-            .retry-button::before,
-            .retry-button::after,
-            .swagger-ui button.retry-button::before,
-            .swagger-ui button.retry-button::after,
-            .documentation-status .retry-button::before,
-            .documentation-status .retry-button::after {
-                display: none !important;
-                content: none !important;
-            }
-
-            /* Complete CSS reset for retry buttons */
-            .retry-button {
-                all: unset !important;
-                display: inline-block !important;
-                margin-left: 1rem !important;
-                padding: 0.25rem 0.5rem !important;
-                border: none !important;
-                border-radius: 3px !important;
-                background: #007bff !important;
-                color: white !important;
-                cursor: pointer !important;
-                font-size: 0.8rem !important;
-                font-family: inherit !important;
-                text-align: center !important;
-                text-decoration: none !important;
-                box-sizing: border-box !important;
-                width: auto !important;
-                height: auto !important;
-                min-width: auto !important;
-                min-height: auto !important;
-                max-width: none !important;
-                max-height: none !important;
-                line-height: normal !important;
-                vertical-align: baseline !important;
-                white-space: nowrap !important;
-            }
-
-            .retry-button:hover {
-                background: #0056b3 !important;
-                color: white !important;
+            .api-retry-btn:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
             }
 
             @keyframes spin {
@@ -2304,7 +2171,7 @@
                         <div class="documentation-status offline">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo documentation with sample data.
-                            <button onclick="loadSwaggerUI()" class="retry-button">
+                            <button onclick="loadSwaggerUI()" class="api-retry-btn">
                                 🔄 Retry Connection
                             </button>
                             <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
@@ -2602,7 +2469,7 @@
                         <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo dog breeds.
-                            <button onclick="loadDemoData()" class="retry-button">
+                            <button onclick="loadDemoData()" class="api-retry-btn">
                                 🔄 Retry
                             </button>
                         </div>
