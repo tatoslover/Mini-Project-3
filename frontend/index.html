@@ -512,6 +512,35 @@
                 animation: spin 1s linear infinite;
             }
 
+            .retry-button {
+                margin-left: 1rem !important;
+                padding: 0.25rem 0.5rem !important;
+                border: none !important;
+                border-radius: 3px !important;
+                background: #007bff !important;
+                color: white !important;
+                cursor: pointer !important;
+                font-size: 0.8rem !important;
+                text-transform: none !important;
+                letter-spacing: normal !important;
+                font-weight: normal !important;
+                transition: none !important;
+                position: static !important;
+                overflow: visible !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .retry-button:hover {
+                background: #0056b3 !important;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+            .retry-button::before {
+                display: none !important;
+            }
+
             @keyframes spin {
                 from {
                     transform: rotate(0deg);
@@ -2098,7 +2127,7 @@
                         <div class="documentation-status offline">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo documentation with sample data.
-                            <button onclick="loadSwaggerUI()" style="margin-left: 1rem; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; background: #007bff; color: white; cursor: pointer; font-size: 0.8rem;">
+                            <button onclick="loadSwaggerUI()" class="retry-button">
                                 🔄 Retry Connection
                             </button>
                             <div style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.8;">
@@ -2395,7 +2424,7 @@
                         <div style="background: #fff3cd; border: 1px solid #ffeeba; color: #856404; padding: 1rem; margin-bottom: 1rem; border-radius: 5px; text-align: center; grid-column: 1 / -1;">
                             <strong>📡 Offline Demo Mode</strong><br>
                             API is currently offline. Showing demo dog breeds.
-                            <button onclick="loadDemoData()" style="margin-left: 1rem; padding: 0.25rem 0.5rem; border: none; border-radius: 3px; background: #007bff; color: white; cursor: pointer; font-size: 0.8rem;">
+                            <button onclick="loadDemoData()" class="retry-button">
                                 🔄 Retry
                             </button>
                         </div>
