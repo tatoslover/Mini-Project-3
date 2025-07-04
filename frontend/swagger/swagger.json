@@ -371,26 +371,17 @@
     },
     "/dogs/{id}": {
       "get": {
-        "summary": "Get Dog by ID or Name",
-        "description": "Retrieve a specific individual dog record from internal database by ID or name.",
+        "summary": "Get Dog by ID",
+        "description": "Retrieve a specific individual dog record from internal database by its unique ID.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID (integer) or Dog Name (string)",
+            "description": "Dog ID",
             "required": true,
             "schema": {
-              "oneOf": [
-                {
-                  "type": "integer",
-                  "example": 1
-                },
-                {
-                  "type": "string",
-                  "example": "Maple"
-                }
-              ]
+              "type": "integer"
             }
           }
         ],
@@ -419,25 +410,16 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "Update an existing individual dog record in internal database by ID or name. Modify personal information like name, age, description, etc.",
+        "description": "Update an existing individual dog record in internal database. Modify personal information like name, age, description, etc.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID (integer) or Dog Name (string)",
+            "description": "Dog ID",
             "required": true,
             "schema": {
-              "oneOf": [
-                {
-                  "type": "integer",
-                  "example": 1
-                },
-                {
-                  "type": "string",
-                  "example": "Maple"
-                }
-              ]
+              "type": "integer"
             }
           }
         ],
@@ -486,25 +468,16 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "Remove an individual dog record from internal database by ID or name. Deletes personal dog profiles, not breed information.",
+        "description": "Remove an individual dog record from internal database. Deletes personal dog profiles, not breed information.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID (integer) or Dog Name (string)",
+            "description": "Dog ID",
             "required": true,
             "schema": {
-              "oneOf": [
-                {
-                  "type": "integer",
-                  "example": 1
-                },
-                {
-                  "type": "string",
-                  "example": "Maple"
-                }
-              ]
+              "type": "integer"
             }
           }
         ],
