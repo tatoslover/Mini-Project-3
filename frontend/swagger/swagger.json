@@ -503,52 +503,6 @@
           }
         }
       },
-      "BreedsResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "count": {
-            "type": "integer",
-            "example": 172
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "example": "affenpinscher"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "affenpinscher"
-                },
-                "breed": {
-                  "type": "string",
-                  "example": "affenpinscher"
-                },
-                "displayName": {
-                  "type": "string",
-                  "example": "Affenpinscher"
-                },
-                "subBreed": {
-                  "type": "string",
-                  "nullable": true,
-                  "example": null
-                },
-                "imageCount": {
-                  "type": "integer",
-                  "example": 15
-                }
-              }
-            }
-          }
-        }
-      },
       "SimpleBreedsResponse": {
         "type": "object",
         "properties": {
