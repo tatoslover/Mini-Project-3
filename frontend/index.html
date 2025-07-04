@@ -445,765 +445,6 @@
                 },
             ];
 
-            const offlineSwaggerSpec = {
-                openapi: "3.0.0",
-                info: {
-                    title: "Barkend API - Offline Demo",
-                    version: "1.0.0",
-                    description:
-                        "🐕 **Offline Demo Mode** - This is a demonstration of the Barkend API documentation. The actual API is currently offline, but you can explore the interface and see what endpoints are available when the system is running.\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration\n- Real-time caching\n- Full CRUD operations\n- Analytics and statistics\n\n[View raw JSON](swagger/swagger.json)",
-                },
-                servers: [
-                    {
-                        url: "/.netlify/functions",
-                        description: "Netlify Functions",
-                    },
-                ],
-                paths: {
-                    "/health": {
-                        get: {
-                            summary: "Health Check",
-                            description:
-                                "Returns the health status of the API server",
-                            tags: ["System"],
-                            responses: {
-                                200: {
-                                    description: "Server is healthy",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/HealthResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/breeds": {
-                        get: {
-                            summary: "Get All Breeds",
-                            description:
-                                "Retrieves all available dog breeds with sub-breeds",
-                            tags: ["Breed Info"],
-                            responses: {
-                                200: {
-                                    description: "List of all dog breeds",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/BreedsResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                500: {
-                                    description: "Server error",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/random": {
-                        get: {
-                            summary: "Get Random Dog Images",
-                            description:
-                                "Returns random dog images from all breeds",
-                            tags: ["Breed Info"],
-                            parameters: [
-                                {
-                                    name: "count",
-                                    in: "query",
-                                    description:
-                                        "Number of random images to return",
-                                    required: false,
-                                    schema: {
-                                        type: "integer",
-                                        minimum: 1,
-                                        maximum: 50,
-                                        default: 1,
-                                    },
-                                },
-                            ],
-                            responses: {
-                                200: {
-                                    description: "Random dog images",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ImagesResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                500: {
-                                    description: "Server error",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/breeds/{breed}/images": {
-                        get: {
-                            summary: "Get Images by Breed",
-                            description: "Returns images for a specific breed",
-                            tags: ["Breed Info"],
-                            parameters: [
-                                {
-                                    name: "breed",
-                                    in: "path",
-                                    description: "The breed name",
-                                    required: true,
-                                    schema: {
-                                        type: "string",
-                                    },
-                                },
-                                {
-                                    name: "count",
-                                    in: "query",
-                                    description: "Number of images to return",
-                                    required: false,
-                                    schema: {
-                                        type: "integer",
-                                        minimum: 1,
-                                        maximum: 50,
-                                        default: 10,
-                                    },
-                                },
-                            ],
-                            responses: {
-                                200: {
-                                    description: "Breed images",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/BreedImagesResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                404: {
-                                    description: "Breed not found",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                500: {
-                                    description: "Server error",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/dogs": {
-                        get: {
-                            summary: "Get All Dogs",
-                            description: "Retrieves all dogs in the database",
-                            tags: ["CRUD"],
-                            responses: {
-                                200: {
-                                    description: "List of all dogs",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/DogsResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        post: {
-                            summary: "Create Dog",
-                            description: "Creates a new dog record",
-                            tags: ["CRUD"],
-                            requestBody: {
-                                required: true,
-                                content: {
-                                    "application/json": {
-                                        schema: {
-                                            $ref: "#/components/schemas/CreateDogRequest",
-                                        },
-                                    },
-                                },
-                            },
-                            responses: {
-                                201: {
-                                    description: "Dog created successfully",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/DogResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                400: {
-                                    description: "Invalid request",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/dogs/{id}": {
-                        get: {
-                            summary: "Get Dog by ID",
-                            description: "Retrieves a specific dog by ID",
-                            tags: ["CRUD"],
-                            parameters: [
-                                {
-                                    name: "id",
-                                    in: "path",
-                                    description: "Dog ID",
-                                    required: true,
-                                    schema: {
-                                        type: "string",
-                                    },
-                                },
-                            ],
-                            responses: {
-                                200: {
-                                    description: "Dog details",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/DogResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                404: {
-                                    description: "Dog not found",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        put: {
-                            summary: "Update Dog",
-                            description: "Updates an existing dog record",
-                            tags: ["CRUD"],
-                            parameters: [
-                                {
-                                    name: "id",
-                                    in: "path",
-                                    description: "Dog ID",
-                                    required: true,
-                                    schema: {
-                                        type: "string",
-                                    },
-                                },
-                            ],
-                            requestBody: {
-                                required: true,
-                                content: {
-                                    "application/json": {
-                                        schema: {
-                                            $ref: "#/components/schemas/UpdateDogRequest",
-                                        },
-                                    },
-                                },
-                            },
-                            responses: {
-                                200: {
-                                    description: "Dog updated successfully",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/DogResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                400: {
-                                    description: "Invalid request",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                404: {
-                                    description: "Dog not found",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                        delete: {
-                            summary: "Delete Dog",
-                            description: "Deletes a dog record",
-                            tags: ["CRUD"],
-                            parameters: [
-                                {
-                                    name: "id",
-                                    in: "path",
-                                    description: "Dog ID",
-                                    required: true,
-                                    schema: {
-                                        type: "string",
-                                    },
-                                },
-                            ],
-                            responses: {
-                                200: {
-                                    description: "Dog deleted successfully",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/SuccessResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                                404: {
-                                    description: "Dog not found",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/ErrorResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                    "/stats": {
-                        get: {
-                            summary: "Get API Statistics",
-                            description: "Returns usage statistics for the API",
-                            tags: ["System"],
-                            responses: {
-                                200: {
-                                    description: "API statistics",
-                                    content: {
-                                        "application/json": {
-                                            schema: {
-                                                $ref: "#/components/schemas/StatsResponse",
-                                            },
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                components: {
-                    schemas: {
-                        HealthResponse: {
-                            type: "object",
-                            properties: {
-                                status: {
-                                    type: "string",
-                                    example: "healthy",
-                                },
-                                service: {
-                                    type: "string",
-                                    example: "Barkend API",
-                                },
-                                version: {
-                                    type: "string",
-                                    example: "1.0.0",
-                                },
-                                uptime: {
-                                    type: "number",
-                                    example: 12345,
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        BreedsResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                count: {
-                                    type: "integer",
-                                    example: 195,
-                                },
-                                data: {
-                                    type: "object",
-                                    additionalProperties: {
-                                        type: "array",
-                                        items: {
-                                            type: "string",
-                                        },
-                                    },
-                                    example: {
-                                        poodle: [
-                                            "miniature",
-                                            "standard",
-                                            "toy",
-                                        ],
-                                        labrador: [],
-                                        spaniel: ["cocker", "english", "irish"],
-                                    },
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        ImagesResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                count: {
-                                    type: "integer",
-                                    example: 3,
-                                },
-                                data: {
-                                    type: "array",
-                                    items: {
-                                        type: "string",
-                                    },
-                                    example: [
-                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
-                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
-                                        "https://images.dog.ceo/breeds/spaniel-cocker/n02102318_4582.jpg",
-                                    ],
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        BreedImagesResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                breed: {
-                                    type: "string",
-                                    example: "poodle",
-                                },
-                                count: {
-                                    type: "integer",
-                                    example: 10,
-                                },
-                                data: {
-                                    type: "array",
-                                    items: {
-                                        type: "string",
-                                    },
-                                    example: [
-                                        "https://images.dog.ceo/breeds/poodle-standard/n02113799_1050.jpg",
-                                        "https://images.dog.ceo/breeds/poodle-miniature/n02113712_4913.jpg",
-                                    ],
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        DogsResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                count: {
-                                    type: "integer",
-                                    example: 12,
-                                },
-                                data: {
-                                    type: "array",
-                                    items: {
-                                        $ref: "#/components/schemas/Dog",
-                                    },
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        Dog: {
-                            type: "object",
-                            properties: {
-                                id: {
-                                    type: "string",
-                                    example: "dog_123",
-                                },
-                                name: {
-                                    type: "string",
-                                    example: "Buddy",
-                                },
-                                breed: {
-                                    type: "string",
-                                    example: "labrador",
-                                },
-                                age: {
-                                    type: "integer",
-                                    example: 3,
-                                },
-                                color: {
-                                    type: "string",
-                                    example: "golden",
-                                },
-                                description: {
-                                    type: "string",
-                                    example: "A friendly and energetic dog",
-                                },
-                                imageUrl: {
-                                    type: "string",
-                                    format: "uri",
-                                    example:
-                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
-                                },
-                                createdAt: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                                updatedAt: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        CreateDogRequest: {
-                            type: "object",
-                            required: ["name", "breed"],
-                            properties: {
-                                name: {
-                                    type: "string",
-                                    example: "Buddy",
-                                },
-                                breed: {
-                                    type: "string",
-                                    example: "labrador",
-                                },
-                                age: {
-                                    type: "integer",
-                                    example: 3,
-                                },
-                                color: {
-                                    type: "string",
-                                    example: "golden",
-                                },
-                                description: {
-                                    type: "string",
-                                    example: "A friendly and energetic dog",
-                                },
-                                imageUrl: {
-                                    type: "string",
-                                    format: "uri",
-                                    example:
-                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
-                                },
-                            },
-                        },
-                        UpdateDogRequest: {
-                            type: "object",
-                            properties: {
-                                name: {
-                                    type: "string",
-                                    example: "Buddy",
-                                },
-                                breed: {
-                                    type: "string",
-                                    example: "labrador",
-                                },
-                                age: {
-                                    type: "integer",
-                                    example: 4,
-                                },
-                                color: {
-                                    type: "string",
-                                    example: "golden",
-                                },
-                                description: {
-                                    type: "string",
-                                    example: "A friendly and energetic dog",
-                                },
-                                imageUrl: {
-                                    type: "string",
-                                    format: "uri",
-                                    example:
-                                        "https://images.dog.ceo/breeds/labrador/n02099712_2252.jpg",
-                                },
-                            },
-                        },
-                        DogResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                data: {
-                                    $ref: "#/components/schemas/Dog",
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        SuccessResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                message: {
-                                    type: "string",
-                                    example: "Operation completed successfully",
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        StatsResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: true,
-                                },
-                                data: {
-                                    type: "object",
-                                    properties: {
-                                        imagesServed: {
-                                            type: "integer",
-                                            example: 15342,
-                                        },
-                                        breedsViewed: {
-                                            type: "integer",
-                                            example: 195,
-                                        },
-                                        apiRequests: {
-                                            type: "integer",
-                                            example: 847,
-                                        },
-                                        serverStartTime: {
-                                            type: "string",
-                                            example: "2025-01-01T00:00:00Z",
-                                        },
-                                        uptime: {
-                                            type: "object",
-                                            properties: {
-                                                milliseconds: {
-                                                    type: "integer",
-                                                    example: 86400000,
-                                                },
-                                                minutes: {
-                                                    type: "number",
-                                                    example: 1440,
-                                                },
-                                                seconds: {
-                                                    type: "number",
-                                                    example: 86400,
-                                                },
-                                            },
-                                        },
-                                    },
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                        ErrorResponse: {
-                            type: "object",
-                            properties: {
-                                success: {
-                                    type: "boolean",
-                                    example: false,
-                                },
-                                error: {
-                                    type: "string",
-                                    example: "ValidationError",
-                                },
-                                message: {
-                                    type: "string",
-                                    example: "Invalid breed name provided",
-                                },
-                                timestamp: {
-                                    type: "string",
-                                    format: "date-time",
-                                },
-                            },
-                        },
-                    },
-                },
-                tags: [
-                    {
-                        name: "System",
-                        description: "System health and status operations",
-                    },
-                    {
-                        name: "Breed Info",
-                        description:
-                            "Dog breed information and image retrieval",
-                    },
-                    {
-                        name: "CRUD",
-                        description:
-                            "Dog data management operations (Create, Read, Update, Delete)",
-                    },
-                ],
-            };
-
             // Tab Management
             function showTab(tabName) {
                 // Hide all tabs
@@ -1346,39 +587,129 @@
                 swaggerContainer.innerHTML = `
                     <div class="documentation-status">
                         <strong>🔄 Loading API Documentation...</strong><br>
-                        Connecting to API server...
+                        Loading static documentation...
                     </div>
                 `;
 
+                let spec;
                 try {
-                    // Check manual API connection toggle first
-                    if (!apiConnected) {
-                        throw new Error("API manually disconnected");
-                    }
-
-                    const response = await fetch(
-                        "/.netlify/functions/swagger-spec",
-                    );
+                    // Try to load the static swagger.json file
+                    const response = await fetch("swagger/swagger.json");
                     if (!response.ok)
-                        throw new Error("Failed to load API spec");
+                        throw new Error("Failed to load static swagger spec");
 
-                    const spec = await response.json();
+                    spec = await response.json();
+                } catch (fetchError) {
+                    // Fallback: Use a minimal inline spec for file:// protocol or server issues
+                    console.warn(
+                        "Could not load swagger.json, using fallback spec:",
+                        fetchError.message,
+                    );
+                    spec = {
+                        openapi: "3.0.0",
+                        info: {
+                            title: "Barkend API",
+                            version: "1.0.0",
+                            description:
+                                "🐕 **Barkend API Documentation** - Comprehensive backend system for dog breed management.\n\n**Note**: Full documentation requires serving this project with `netlify dev` or deploying to Netlify.",
+                        },
+                        servers: [
+                            {
+                                url: "/.netlify/functions",
+                                description: "Netlify Functions",
+                            },
+                        ],
+                        paths: {
+                            "/health": {
+                                get: {
+                                    summary: "Health Check",
+                                    description:
+                                        "Returns the health status of the API server",
+                                    tags: ["System"],
+                                    responses: {
+                                        200: {
+                                            description: "Server is healthy",
+                                        },
+                                    },
+                                },
+                            },
+                            "/breeds": {
+                                get: {
+                                    summary: "Get All Breeds",
+                                    description:
+                                        "Retrieves all available dog breeds",
+                                    tags: ["Breed Info"],
+                                    responses: {
+                                        200: {
+                                            description:
+                                                "List of all dog breeds",
+                                        },
+                                    },
+                                },
+                            },
+                            "/dogs": {
+                                get: {
+                                    summary: "Get All Dogs",
+                                    description:
+                                        "Retrieves all dogs in the database",
+                                    tags: ["CRUD Operations"],
+                                    responses: {
+                                        200: {
+                                            description: "List of all dogs",
+                                        },
+                                    },
+                                },
+                                post: {
+                                    summary: "Create New Dog",
+                                    description:
+                                        "Creates a new dog in the database",
+                                    tags: ["CRUD Operations"],
+                                    responses: {
+                                        201: {
+                                            description:
+                                                "Dog created successfully",
+                                        },
+                                    },
+                                },
+                            },
+                        },
+                        components: {
+                            schemas: {},
+                        },
+                    };
+                }
 
-                    // Show online status
-                    swaggerContainer.innerHTML = `
-                        <div class="documentation-status online">
-                            <strong>✅ Live API Documentation</strong><br>
-                            Connected to live API server - all endpoints are functional
-                            <div class="api-status-info">
-                                Last updated: ${new Date().toLocaleString()}
+                try {
+                    // Show status based on API connection
+                    if (apiConnected) {
+                        swaggerContainer.innerHTML = `
+                            <div class="documentation-status online">
+                                <strong>✅ Live API Documentation</strong><br>
+                                Connected to live API server - all endpoints are functional
+                                <div class="api-status-info">
+                                    Documentation loaded from static file
+                                </div>
                             </div>
-                        </div>
-                        <div id="swagger-ui-live"></div>
-                    `;
+                            <div id="swagger-ui-live"></div>
+                        `;
+                    } else {
+                        swaggerContainer.innerHTML = `
+                            <div class="documentation-status offline">
+                                <strong>📡 API Manually Disconnected</strong><br>
+                                API connection disabled to demonstrate fallback system.
+                                <div class="api-status-info">
+                                    Note: "Try it out" buttons are disabled in offline mode
+                                </div>
+                            </div>
+                            <div id="swagger-ui-offline"></div>
+                        `;
+                    }
 
                     swaggerUI = SwaggerUIBundle({
                         spec: spec,
-                        dom_id: "#swagger-ui-live",
+                        dom_id: apiConnected
+                            ? "#swagger-ui-live"
+                            : "#swagger-ui-offline",
                         deepLinking: true,
                         presets: [
                             SwaggerUIBundle.presets.apis,
@@ -1387,7 +718,7 @@
                         plugins: [SwaggerUIBundle.plugins.DownloadUrl],
                         layout: "BaseLayout",
                         validatorUrl: null,
-                        tryItOutEnabled: true,
+                        tryItOutEnabled: apiConnected, // Enable try-it-out only when connected
                         docExpansion: "none",
                         defaultModelsExpandDepth: 1,
                         defaultModelExpandDepth: 1,
@@ -1398,56 +729,29 @@
                         displayRequestDuration: true,
                         onComplete: function () {
                             console.log(
-                                "Live API documentation loaded successfully",
+                                apiConnected
+                                    ? "Live API documentation loaded successfully"
+                                    : "Offline API documentation loaded successfully",
                             );
                         },
                     });
                 } catch (error) {
-                    const isManualDisconnect = !apiConnected;
-                    console.log(
-                        isManualDisconnect
-                            ? "API manually disconnected, showing fallback..."
-                            : "API is offline, loading demo documentation...",
+                    console.error(
+                        "Failed to initialize swagger documentation:",
+                        error,
                     );
 
-                    // Show offline demo with fallback spec
+                    // Show error state
                     swaggerContainer.innerHTML = `
                         <div class="documentation-status offline">
-                            <strong>📡 ${isManualDisconnect ? "API Manually Disconnected" : "Offline Demo Mode"}</strong><br>
-                            ${isManualDisconnect ? "API connection disabled to demonstrate fallback system." : "API is currently offline. Showing demo documentation with sample data."}
+                            <strong>❌ Documentation Initialization Error</strong><br>
+                            Failed to initialize API documentation interface.
                             <div class="api-status-info">
-                                Note: "Try it out" buttons are disabled in offline mode
+                                Error: ${error.message}<br>
+                                <small>Try running with: <code>netlify dev</code></small>
                             </div>
                         </div>
-                        <div id="swagger-ui-offline"></div>
                     `;
-
-                    swaggerUI = SwaggerUIBundle({
-                        spec: offlineSwaggerSpec,
-                        dom_id: "#swagger-ui-offline",
-                        deepLinking: true,
-                        presets: [
-                            SwaggerUIBundle.presets.apis,
-                            SwaggerUIStandalonePreset,
-                        ],
-                        plugins: [SwaggerUIBundle.plugins.DownloadUrl],
-                        layout: "BaseLayout",
-                        validatorUrl: null,
-                        tryItOutEnabled: false, // Disable try-it-out for offline mode
-                        docExpansion: "none",
-                        defaultModelsExpandDepth: 1,
-                        defaultModelExpandDepth: 1,
-                        filter: true,
-                        showExtensions: true,
-                        showCommonExtensions: true,
-                        displayOperationId: false,
-                        displayRequestDuration: true,
-                        onComplete: function () {
-                            console.log(
-                                "Offline API documentation loaded successfully",
-                            );
-                        },
-                    });
                 }
             }
 
