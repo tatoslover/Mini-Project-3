@@ -82,11 +82,11 @@
     "/all": {
       "get": {
         "summary": "Get All Breed Data",
-        "description": "Retrieves comprehensive breed data from Dog CEO API.",
+        "description": "Retrieves comprehensive breed data from Dog CEO API",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
-            "description": "Complete breed data with all information.",
+            "description": "Complete breed data with all information",
             "content": {
               "application/json": {
                 "schema": {
@@ -111,7 +111,7 @@
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
-        "description": "Get simple list of all breed names.",
+        "description": "Get simple list of all breed names",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
@@ -141,7 +141,7 @@
     "/random": {
       "get": {
         "summary": "Get Breed Images",
-        "description": "Get images for a specific breed.",
+        "description": "Get images for a specific breed",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -204,7 +204,7 @@
     "/search": {
       "get": {
         "summary": "Search Breeds",
-        "description": "Search for dog breeds.",
+        "description": "Search for dog breeds",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -350,7 +350,7 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "Update a specific dog's information.",
+        "description": "Update a specific dog's information",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -408,7 +408,7 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "Delete a specific dog's information.",
+        "description": "Delete a specific dog's information",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
