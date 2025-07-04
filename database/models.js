@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
 
-// Counter Schema for auto-incrementing IDs
-const counterSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
-  seq: { type: Number, default: 0 },
-});
-
-const Counter = mongoose.model("Counter", counterSchema);
-
 // User Schema for tracking user preferences and stats
 const userSchema = new mongoose.Schema({
   userId: {
@@ -389,16 +381,30 @@ const dogSchema = new mongoose.Schema({
   },
 });
 
-// Auto-increment the ID field
+// Auto-increment the ID field to find next available sequential ID
 dogSchema.pre("save", async function (next) {
   if (this.isNew) {
     try {
-      const counter = await Counter.findByIdAndUpdate(
-        "dogId",
-        { $inc: { seq: 1 } },
-        { new: true, upsert: true },
-      );
-      this.id = counter.seq;
+      const DogModel = mongoose.model("Dog");
+      const existingDogs = await DogModel.find({}, { id: 1 })
+        .sort({ id: 1 })
+        .lean();
+
+      if (existingDogs.length === 0) {
+        // Database is empty, start with ID 1
+        this.id = 1;
+      } else {
+        // Find the next available sequential ID
+        let nextId = 1;
+        for (const dog of existingDogs) {
+          if (dog.id === nextId) {
+            nextId++;
+          } else {
+            break;
+          }
+        }
+        this.id = nextId;
+      }
     } catch (error) {
       return next(error);
     }
@@ -428,5 +434,4 @@ module.exports = {
   ServerStats,
   ErrorLog,
   Dog,
-  Counter,
 };
