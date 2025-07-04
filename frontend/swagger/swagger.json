@@ -1169,15 +1169,53 @@
           },
           "error": {
             "type": "string",
-            "example": "An error occurred"
+            "example": "Search query (q) parameter is required"
           },
           "message": {
             "type": "string",
-            "example": "Detailed error message"
+            "example": "Search query (q) parameter is required"
           },
           "timestamp": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "example": "2025-01-27T10:30:00.000Z"
+          }
+        },
+        "examples": {
+          "validation_error": {
+            "summary": "Validation Error",
+            "value": {
+              "success": false,
+              "error": "Search query (q) parameter is required",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "method_not_allowed": {
+            "summary": "Method Not Allowed",
+            "value": {
+              "success": false,
+              "error": "Method not allowed",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "database_error": {
+            "summary": "Database Error",
+            "value": {
+              "success": false,
+              "error": "Failed to retrieve breed data",
+              "message": "Connection to database failed",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "search_failed": {
+            "summary": "Search Failed",
+            "value": {
+              "success": false,
+              "error": "Search failed",
+              "message": "Unable to process search query",
+              "query": "invalid-query",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
           }
         }
       }
