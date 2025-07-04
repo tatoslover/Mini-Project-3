@@ -332,18 +332,8 @@ const errorLogSchema = new mongoose.Schema({
 errorLogSchema.index({ level: 1, timestamp: -1 });
 errorLogSchema.index({ resolved: 1, timestamp: -1 });
 
-// Counter Schema for sequential IDs
-const counterSchema = new mongoose.Schema({
-  _id: { type: String, required: true },
-  sequence_value: { type: Number, default: 0 },
-});
-
 // Dog Schema for CRUD operations
 const dogSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    unique: true,
-  },
   name: {
     type: String,
     required: true,
@@ -386,22 +376,8 @@ const dogSchema = new mongoose.Schema({
   },
 });
 
-// Auto-increment function for sequential IDs
-async function getNextSequenceValue(sequenceName) {
-  const Counter = mongoose.model("Counter", counterSchema);
-  const sequenceDocument = await Counter.findByIdAndUpdate(
-    sequenceName,
-    { $inc: { sequence_value: 1 } },
-    { new: true, upsert: true },
-  );
-  return sequenceDocument.sequence_value;
-}
-
-// Pre-save hook to assign sequential ID
-dogSchema.pre("save", async function (next) {
-  if (this.isNew) {
-    this.id = await getNextSequenceValue("dogId");
-  }
+// Update the updatedAt field before saving
+dogSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
 });
@@ -417,7 +393,6 @@ const ApiUsage = mongoose.model("ApiUsage", apiUsageSchema);
 const BreedCache = mongoose.model("BreedCache", breedCacheSchema);
 const ServerStats = mongoose.model("ServerStats", serverStatsSchema);
 const ErrorLog = mongoose.model("ErrorLog", errorLogSchema);
-const Counter = mongoose.model("Counter", counterSchema);
 const Dog = mongoose.model("Dog", dogSchema);
 
 module.exports = {
@@ -427,6 +402,5 @@ module.exports = {
   BreedCache,
   ServerStats,
   ErrorLog,
-  Counter,
   Dog,
 };

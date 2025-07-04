@@ -59,7 +59,12 @@ exports.handler = async (event, context) => {
       // Use cached data
       breeds = cachedBreeds.map((breed) => ({
         id: breed.breedId,
+        name: breed.name,
         breed: breed.breed,
+        subBreed: breed.subBreed,
+        displayName: breed.displayName,
+        popularity: breed.popularity,
+        imageCount: breed.metadata.imageCount,
       }));
 
       console.log(`Using cached breed data: ${breeds.length} breeds`);
@@ -80,7 +85,10 @@ exports.handler = async (event, context) => {
 
               breeds.push({
                 id: breedId,
+                name: `${breed} ${subBreed}`,
                 breed: breed,
+                subBreed: subBreed,
+                displayName: displayName,
               });
 
               // Cache in database
@@ -106,7 +114,10 @@ exports.handler = async (event, context) => {
 
             breeds.push({
               id: breedId,
+              name: breed,
               breed: breed,
+              subBreed: null,
+              displayName: displayName,
             });
 
             // Cache in database
