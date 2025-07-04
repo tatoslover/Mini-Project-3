@@ -569,7 +569,7 @@
           },
           "count": {
             "type": "integer",
-            "example": 172
+            "example": 162
           },
           "breeds": {
             "type": "array",
@@ -614,7 +614,7 @@
           },
           "count": {
             "type": "integer",
-            "example": 172
+            "example": 162
           },
           "data": {
             "type": "array",
@@ -907,7 +907,21 @@
                   "example": true
                 }
               }
-            }
+            },
+            "example": [
+              {
+                "url": "https://images.dog.ceo/breeds/labrador/n02099712_1234.jpg",
+                "verified": true
+              },
+              {
+                "url": "https://images.dog.ceo/breeds/labrador/n02099712_5678.jpg",
+                "verified": true
+              },
+              {
+                "url": "https://images.dog.ceo/breeds/labrador/n02099712_9012.jpg",
+                "verified": true
+              }
+            ]
           }
         }
       },
