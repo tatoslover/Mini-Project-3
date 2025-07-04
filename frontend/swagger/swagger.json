@@ -1122,17 +1122,14 @@
             "example": false
           },
           "error": {
-            "type": "string",
-            "example": "Failed to retrieve breed data"
+            "type": "string"
           },
           "message": {
-            "type": "string",
-            "example": "Connection to database failed"
+            "type": "string"
           },
           "timestamp": {
             "type": "string",
-            "format": "date-time",
-            "example": "2025-01-27T10:30:00.000Z"
+            "format": "date-time"
           }
         },
         "examples": {
@@ -1161,12 +1158,21 @@
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
-          "internal_database_crud_error": {
-            "summary": "Internal Database CRUD Error",
+          "get_all_records_failed": {
+            "summary": "Get All Records Failed",
             "value": {
               "success": false,
               "error": "Failed to retrieve data",
               "message": "Unable to fetch records from internal database",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "get_single_record_failed": {
+            "summary": "Get Single Record Failed",
+            "value": {
+              "success": false,
+              "error": "Failed to retrieve record",
+              "message": "Unable to fetch the requested record from database",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
@@ -1185,6 +1191,33 @@
               "success": false,
               "error": "Validation failed",
               "message": "Required fields are missing or invalid",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "invalid_id_format": {
+            "summary": "Invalid ID Format",
+            "value": {
+              "success": false,
+              "error": "Validation failed",
+              "message": "Invalid resource ID format",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "missing_required_fields": {
+            "summary": "Missing Required Fields",
+            "value": {
+              "success": false,
+              "error": "Validation failed",
+              "message": "Name and breed are required",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "invalid_json": {
+            "summary": "Invalid JSON",
+            "value": {
+              "success": false,
+              "error": "Validation failed",
+              "message": "Invalid JSON in request body",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
@@ -1233,12 +1266,30 @@
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
-          "crud_read_single_failed": {
-            "summary": "CRUD Read Single Record Failed",
+          "update_validation_error": {
+            "summary": "Update Validation Error",
             "value": {
               "success": false,
-              "error": "Failed to retrieve record",
-              "message": "Unable to fetch the requested record",
+              "error": "Failed to update record",
+              "message": "Age must be a number between 0 and 30",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "no_fields_to_update": {
+            "summary": "No Fields To Update",
+            "value": {
+              "success": false,
+              "error": "Validation failed",
+              "message": "No valid fields provided for update",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "create_validation_error": {
+            "summary": "Create Validation Error",
+            "value": {
+              "success": false,
+              "error": "Failed to create record",
+              "message": "Image URL must be a valid HTTP/HTTPS URL",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
