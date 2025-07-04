@@ -204,7 +204,7 @@
     "/search": {
       "get": {
         "summary": "Search Breeds",
-        "description": "Search for dog breeds",
+        "description": "Search for dog breeds.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -224,8 +224,8 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 50,
-              "default": 10
+              "maximum": 10,
+              "default": 3
             }
           }
         ],
@@ -988,7 +988,7 @@
           },
           "query": {
             "type": "string",
-            "example": "labrador"
+            "example": "poodle"
           },
           "count": {
             "type": "integer",
@@ -1001,55 +1001,48 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "poodle-medium"
                 },
                 "name": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "poodle medium"
                 },
                 "breed": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "poodle"
                 },
                 "subBreed": {
                   "type": "string",
                   "nullable": true,
-                  "example": null
+                  "example": "medium"
                 },
                 "displayName": {
                   "type": "string",
-                  "example": "Labrador"
-                },
-                "imageCount": {
-                  "type": "integer",
-                  "example": 8
+                  "example": "Poodle Medium"
                 }
               }
             },
             "example": [
               {
-                "id": "labrador",
-                "name": "labrador",
-                "breed": "labrador",
-                "subBreed": null,
-                "displayName": "Labrador",
-                "imageCount": 8
+                "id": "poodle-medium",
+                "name": "poodle medium",
+                "breed": "poodle",
+                "subBreed": "medium",
+                "displayName": "Poodle Medium"
               },
               {
-                "id": "retriever-labrador",
-                "name": "retriever labrador",
-                "breed": "retriever",
-                "subBreed": "labrador",
-                "displayName": "Retriever Labrador",
-                "imageCount": 5
+                "id": "poodle-miniature",
+                "name": "poodle miniature",
+                "breed": "poodle",
+                "subBreed": "miniature",
+                "displayName": "Poodle Miniature"
               },
               {
-                "id": "labradoodle",
-                "name": "labradoodle",
-                "breed": "labradoodle",
-                "subBreed": null,
-                "displayName": "Labradoodle",
-                "imageCount": 12
+                "id": "poodle-standard",
+                "name": "poodle standard",
+                "breed": "poodle",
+                "subBreed": "standard",
+                "displayName": "Poodle Standard"
               }
             ]
           }

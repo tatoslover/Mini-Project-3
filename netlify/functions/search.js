@@ -36,7 +36,7 @@ exports.handler = async (event, context) => {
     // Parse query parameters
     const queryParams = event.queryStringParameters || {};
     const searchQuery = queryParams.q;
-    const limit = Math.min(parseInt(queryParams.limit) || 10, 50);
+    const limit = Math.min(parseInt(queryParams.limit) || 3, 10);
 
     // Validate required parameters
     if (!searchQuery || searchQuery.trim().length === 0) {
@@ -97,7 +97,7 @@ exports.handler = async (event, context) => {
         breed: 1,
         subBreed: 1,
         displayName: 1,
-        imageCount: "$metadata.imageCount",
+
         lastUpdated: "$updatedAt",
       },
     });
@@ -124,7 +124,6 @@ exports.handler = async (event, context) => {
         breed: result.breed,
         subBreed: result.subBreed,
         displayName: result.displayName,
-        imageCount: result.imageCount || 0,
       })),
       timestamp: new Date().toISOString(),
     };
