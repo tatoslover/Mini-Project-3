@@ -101,6 +101,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Failed to retrieve data",
+                  "message": "Unable to fetch records from internal database",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
@@ -302,6 +308,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Failed to create record",
+                  "message": "Name and breed are required",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
@@ -342,6 +354,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Failed to retrieve record",
+                  "message": "Unable to fetch the requested record from database",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
@@ -390,6 +408,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Failed to update record",
+                  "message": "Unable to update existing record",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
@@ -400,6 +424,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Validation failed",
+                  "message": "Invalid dog ID format",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
@@ -438,6 +468,12 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "example": {
+                  "success": false,
+                  "error": "Failed to delete record",
+                  "message": "Unable to delete record from database",
+                  "timestamp": "2025-01-27T10:30:00.000Z"
                 }
               }
             }
