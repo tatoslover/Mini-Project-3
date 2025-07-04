@@ -734,7 +734,7 @@
             "type": "integer",
             "example": 2
           },
-          "color": {
+          "colour": {
             "type": "string",
             "example": "copper"
           },
@@ -774,7 +774,7 @@
             "maximum": 30,
             "example": 2
           },
-          "color": {
+          "colour": {
             "type": "string",
             "example": "copper"
           },
@@ -807,7 +807,7 @@
             "maximum": 30,
             "example": 2
           },
-          "color": {
+          "colour": {
             "type": "string",
             "example": "copper"
           },

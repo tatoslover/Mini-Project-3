@@ -362,7 +362,7 @@ const dogSchema = new mongoose.Schema({
     min: 0,
     max: 30,
   },
-  color: {
+  colour: {
     type: String,
     trim: true,
   },

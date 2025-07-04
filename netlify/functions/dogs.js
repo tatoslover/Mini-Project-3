@@ -285,7 +285,7 @@ async function handleCreateDog(
 ) {
   try {
     const body = JSON.parse(event.body || "{}");
-    const { name, breed, age, color, description, imageUrl } = body;
+    const { name, breed, age, colour, description, imageUrl } = body;
 
     // Validate required fields
     if (!name || !breed) {
@@ -305,7 +305,7 @@ async function handleCreateDog(
       name: name.trim(),
       breed: breed.trim(),
       age: age || undefined,
-      color: color ? color.trim() : undefined,
+      colour: colour ? colour.trim() : undefined,
       description: description ? description.trim() : undefined,
       imageUrl: imageUrl ? imageUrl.trim() : undefined,
     });
@@ -382,14 +382,14 @@ async function handleUpdateDog(
 ) {
   try {
     const body = JSON.parse(event.body || "{}");
-    const { name, breed, age, color, description, imageUrl } = body;
+    const { name, breed, age, colour, description, imageUrl } = body;
 
     // Build update object with only provided fields
     const updateData = {};
     if (name) updateData.name = name.trim();
     if (breed) updateData.breed = breed.trim();
     if (age !== undefined) updateData.age = age;
-    if (color) updateData.color = color.trim();
+    if (colour) updateData.colour = colour.trim();
     if (description) updateData.description = description.trim();
     if (imageUrl) updateData.imageUrl = imageUrl.trim();
 
@@ -576,7 +576,7 @@ function formatDogResponse(dog) {
     name: dog.name,
     breed: dog.breed,
     age: dog.age,
-    color: dog.color,
+    colour: dog.colour,
     description: dog.description,
     imageUrl: dog.imageUrl,
     createdAt: dog.createdAt,
