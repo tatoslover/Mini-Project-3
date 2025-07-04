@@ -103,33 +103,13 @@ exports.handler = async (event, context) => {
       const maxViews = popularityData[0]?.viewCount || 1;
       const popularityScore = Math.round((pop.viewCount / maxViews) * 100);
 
-      // Calculate if trending up (simplified - compare recent activity)
-      const recentViews = await ApiUsage.countDocuments({
-        "metadata.breed": pop._id,
-        timestamp: { $gte: new Date(now.getTime() - 24 * 60 * 60 * 1000) },
-      });
-
-      const olderViews = await ApiUsage.countDocuments({
-        "metadata.breed": pop._id,
-        timestamp: {
-          $gte: new Date(now.getTime() - 48 * 60 * 60 * 1000),
-          $lt: new Date(now.getTime() - 24 * 60 * 60 * 1000),
-        },
-      });
-
-      const trendingUp = recentViews > olderViews;
-
       return {
         rank: index + 1,
         breed: breedData.breed,
-        displayName: breedData.displayName,
         viewCount: pop.viewCount,
         searchCount: pop.searchCount,
         popularityScore,
-        trendingUp,
         lastViewed: pop.lastViewed,
-        imageCount: breedData.metadata?.imageCount || 0,
-        subBreeds: breedData.subBreed ? [breedData.subBreed] : [],
       };
     });
 

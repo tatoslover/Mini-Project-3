@@ -52,40 +52,66 @@ exports.handler = async (event, context) => {
     const queryParams = event.queryStringParameters || {};
     const count = Math.min(parseInt(queryParams.count) || 1, 50); // Limit to 50 images max
     const breed = queryParams.breed; // Optional breed filter
+    const simple = queryParams.simple === "true"; // Simple response with URLs only
 
-    let apiUrl;
     let images = [];
 
     if (breed) {
-      // Get random images for specific breed
-      const breedPath = breed.includes("-") ? breed.replace("-", "/") : breed;
+      // Normalize breed name for Dog CEO API
+      const normalizedBreed = breed.toLowerCase();
 
-      const promises = Array.from({ length: count }, () =>
-        axios.get(`${DOG_API_BASE}/breed/${breedPath}/images/random`),
-      );
+      // Try different breed name formats
+      const breedVariants = [
+        normalizedBreed,
+        normalizedBreed.replace("-", "/"),
+        normalizedBreed.replace(" ", "-"),
+        normalizedBreed.replace(/\s+/g, "-"),
+      ];
 
-      try {
-        const results = await Promise.all(promises);
-        images = results
-          .filter((result) => result.data.status === "success")
-          .map((result, index) => ({
-            url: result.data.message,
-            id: `${Date.now()}_${index}`,
-            breed: breed,
-            breedDisplayName: formatBreedName(breed),
-            timestamp: new Date().toISOString(),
-          }));
-      } catch (error) {
-        // If breed-specific request fails, fall back to general random
-        console.warn(
-          `Failed to get random images for breed ${breed}, falling back to general random`,
-        );
-        apiUrl = `${DOG_API_BASE}/breeds/image/random`;
+      let breedFound = false;
+
+      for (const breedVariant of breedVariants) {
+        try {
+          const promises = Array.from({ length: count }, () =>
+            axios.get(`${DOG_API_BASE}/breed/${breedVariant}/images/random`),
+          );
+
+          const results = await Promise.all(promises);
+          images = results
+            .filter((result) => result.data.status === "success")
+            .map((result, index) => ({
+              url: result.data.message,
+              id: `${Date.now()}_${index}`,
+              breed: breedVariant,
+              breedDisplayName: formatBreedName(breedVariant),
+              timestamp: new Date().toISOString(),
+            }));
+
+          if (images.length > 0) {
+            breedFound = true;
+            break;
+          }
+        } catch (error) {
+          // Continue to next variant
+          continue;
+        }
       }
-    }
 
-    // If no breed specified or breed-specific request failed
-    if (!breed || images.length === 0) {
+      if (!breedFound) {
+        console.warn(`No images found for breed: ${breed}`);
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({
+            success: false,
+            error: `Breed '${breed}' not found`,
+            message: `No images available for breed '${breed}'. Please check the breed name and try again.`,
+            timestamp: new Date().toISOString(),
+          }),
+        };
+      }
+    } else {
+      // Get random images from all breeds
       const promises = Array.from({ length: count }, () =>
         axios.get(`${DOG_API_BASE}/breeds/image/random`),
       );
@@ -162,6 +188,20 @@ exports.handler = async (event, context) => {
       },
       { upsert: true, new: true },
     );
+
+    // Return simple URLs-only response if requested
+    if (simple) {
+      const urls = images.map((img) => img.url);
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({
+          success: true,
+          count: urls.length,
+          data: urls,
+        }),
+      };
+    }
 
     const response = {
       success: true,

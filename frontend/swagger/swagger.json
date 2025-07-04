@@ -743,7 +743,7 @@
           },
           "count": {
             "type": "integer",
-            "example": 172
+            "example": 162
           },
           "data": {
             "type": "array",
@@ -754,26 +754,9 @@
                   "type": "string",
                   "example": "labrador"
                 },
-                "name": {
-                  "type": "string",
-                  "example": "labrador"
-                },
                 "breed": {
                   "type": "string",
                   "example": "labrador"
-                },
-                "displayName": {
-                  "type": "string",
-                  "example": "Labrador"
-                },
-                "subBreed": {
-                  "type": "string",
-                  "nullable": true,
-                  "example": null
-                },
-                "imageCount": {
-                  "type": "integer",
-                  "example": 25
                 }
               }
             }
@@ -1108,10 +1091,7 @@
                   "type": "string",
                   "example": "labrador"
                 },
-                "displayName": {
-                  "type": "string",
-                  "example": "Labrador"
-                },
+
                 "viewCount": {
                   "type": "integer",
                   "example": 125
@@ -1120,9 +1100,14 @@
                   "type": "number",
                   "example": 95.2
                 },
-                "trendingUp": {
-                  "type": "boolean",
-                  "example": true
+                "searchCount": {
+                  "type": "integer",
+                  "example": 15
+                },
+                "lastViewed": {
+                  "type": "string",
+                  "format": "date-time",
+                  "example": "2025-01-04T00:21:24.926Z"
                 }
               }
             }
