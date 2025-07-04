@@ -458,171 +458,6 @@
           }
         }
       }
-    },
-    "/admin-breeds": {
-      "get": {
-        "summary": "Get All Breeds (Admin)",
-        "description": "Administrative endpoint to retrieve all breeds including inactive ones",
-        "tags": ["CRUD Operations"],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of breeds to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 100,
-              "default": 50
-            }
-          },
-          {
-            "name": "includeInactive",
-            "in": "query",
-            "description": "Include inactive breeds",
-            "required": false,
-            "schema": {
-              "type": "boolean",
-              "default": false
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Admin breeds list",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AdminBreedsResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "summary": "Create New Breed",
-        "description": "Add a new breed to the database",
-        "tags": ["CRUD Operations"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CreateBreedRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Breed created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BreedResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Validation error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Breed already exists",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update Breed",
-        "description": "Update an existing breed's information",
-        "tags": ["CRUD Operations"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateBreedRequest"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Breed updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BreedResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Breed not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "summary": "Delete Breed",
-        "description": "Soft delete a breed (mark as inactive)",
-        "tags": ["CRUD Operations"],
-        "parameters": [
-          {
-            "name": "breed",
-            "in": "query",
-            "description": "Breed name to delete",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Breed deactivated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/SuccessResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Breed not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
@@ -647,8 +482,8 @@
             "example": "connected"
           },
           "uptime": {
-            "type": "string",
-            "example": "1h 23m 45s"
+            "type": "number",
+            "example": 3600
           }
         }
       },
@@ -664,19 +499,19 @@
             "properties": {
               "imagesServed": {
                 "type": "integer",
-                "example": 15342
+                "example": 15427
               },
               "breedsViewed": {
                 "type": "integer",
-                "example": 195
+                "example": 172
               },
               "apiRequests": {
                 "type": "integer",
-                "example": 847
+                "example": 8945
               },
               "averageResponseTime": {
                 "type": "number",
-                "example": 125.5
+                "example": 245.6
               }
             }
           }
@@ -700,19 +535,19 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "affenpinscher"
                 },
                 "name": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "affenpinscher"
                 },
                 "breed": {
                   "type": "string",
-                  "example": "labrador"
+                  "example": "affenpinscher"
                 },
                 "displayName": {
                   "type": "string",
-                  "example": "Labrador"
+                  "example": "Affenpinscher"
                 },
                 "subBreed": {
                   "type": "string",
@@ -721,7 +556,7 @@
                 },
                 "imageCount": {
                   "type": "integer",
-                  "example": 25
+                  "example": 15
                 }
               }
             }
@@ -764,7 +599,7 @@
         "properties": {
           "id": {
             "type": "string",
-            "example": "60f7b1b9b9b9b9b9b9b9b9b9"
+            "example": "507f1f77bcf86cd799439011"
           },
           "name": {
             "type": "string",
@@ -772,7 +607,7 @@
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "golden retriever"
           },
           "age": {
             "type": "integer",
@@ -784,7 +619,7 @@
           },
           "description": {
             "type": "string",
-            "example": "Friendly and energetic dog"
+            "example": "A friendly and energetic golden retriever"
           },
           "imageUrl": {
             "type": "string",
@@ -810,7 +645,7 @@
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "golden retriever"
           },
           "age": {
             "type": "integer",
@@ -825,7 +660,7 @@
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "Friendly and energetic dog"
+            "example": "A friendly and energetic golden retriever"
           },
           "imageUrl": {
             "type": "string",
@@ -843,7 +678,7 @@
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "golden retriever"
           },
           "age": {
             "type": "integer",
@@ -858,132 +693,12 @@
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "Friendly and energetic dog"
+            "example": "A friendly and energetic golden retriever"
           },
           "imageUrl": {
             "type": "string",
             "format": "uri",
             "example": "https://example.com/buddy.jpg"
-          }
-        }
-      },
-      "CreateBreedRequest": {
-        "type": "object",
-        "required": ["breed", "displayName"],
-        "properties": {
-          "breed": {
-            "type": "string",
-            "example": "newbreed"
-          },
-          "displayName": {
-            "type": "string",
-            "example": "New Breed"
-          },
-          "subBreed": {
-            "type": "string",
-            "example": "variety"
-          },
-          "isActive": {
-            "type": "boolean",
-            "default": true
-          }
-        }
-      },
-      "UpdateBreedRequest": {
-        "type": "object",
-        "required": ["breed"],
-        "properties": {
-          "breed": {
-            "type": "string",
-            "example": "existingbreed"
-          },
-          "displayName": {
-            "type": "string",
-            "example": "Updated Breed Name"
-          },
-          "subBreed": {
-            "type": "string",
-            "example": "variety"
-          },
-          "isActive": {
-            "type": "boolean",
-            "example": true
-          }
-        }
-      },
-      "BreedResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "data": {
-            "type": "object",
-            "properties": {
-              "breed": {
-                "type": "string",
-                "example": "labrador"
-              },
-              "displayName": {
-                "type": "string",
-                "example": "Labrador"
-              },
-              "subBreed": {
-                "type": "string",
-                "nullable": true,
-                "example": null
-              },
-              "isActive": {
-                "type": "boolean",
-                "example": true
-              }
-            }
-          }
-        }
-      },
-      "AdminBreedsResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "count": {
-            "type": "integer",
-            "example": 50
-          },
-          "totalCount": {
-            "type": "integer",
-            "example": 172
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "breedId": {
-                  "type": "string",
-                  "example": "labrador"
-                },
-                "breed": {
-                  "type": "string",
-                  "example": "labrador"
-                },
-                "displayName": {
-                  "type": "string",
-                  "example": "Labrador"
-                },
-                "isActive": {
-                  "type": "boolean",
-                  "example": true
-                },
-                "viewCount": {
-                  "type": "integer",
-                  "example": 125
-                }
-              }
-            }
           }
         }
       },
@@ -1021,7 +736,7 @@
                 },
                 "popularity": {
                   "type": "integer",
-                  "example": 125
+                  "example": 142
                 }
               }
             }
@@ -1062,11 +777,11 @@
                 },
                 "viewCount": {
                   "type": "integer",
-                  "example": 125
+                  "example": 142
                 },
                 "popularityScore": {
                   "type": "number",
-                  "example": 95.2
+                  "example": 0.95
                 },
                 "trendingUp": {
                   "type": "boolean",
@@ -1090,7 +805,7 @@
           },
           "count": {
             "type": "integer",
-            "example": 5
+            "example": 3
           },
           "data": {
             "type": "array",
@@ -1099,7 +814,7 @@
               "properties": {
                 "url": {
                   "type": "string",
-                  "example": "https://images.dog.ceo/breeds/labrador/n02099712_123.jpg"
+                  "example": "https://images.dog.ceo/breeds/labrador/n02099712_1234.jpg"
                 },
                 "verified": {
                   "type": "boolean",
@@ -1130,22 +845,22 @@
               },
               "cachedImages": {
                 "type": "integer",
-                "example": 1250
+                "example": 8943
               },
               "hitRate": {
                 "type": "number",
-                "example": 95.2
+                "example": 0.89
               },
               "storage": {
                 "type": "object",
                 "properties": {
                   "size": {
                     "type": "string",
-                    "example": "45.6 MB"
+                    "example": "45.2 MB"
                   },
                   "usage": {
-                    "type": "number",
-                    "example": 45.6
+                    "type": "string",
+                    "example": "12.3%"
                   }
                 }
               }
@@ -1179,11 +894,11 @@
           },
           "error": {
             "type": "string",
-            "example": "Error message"
+            "example": "An error occurred"
           },
           "message": {
             "type": "string",
-            "example": "Detailed error description"
+            "example": "Detailed error message"
           },
           "timestamp": {
             "type": "string",
@@ -1196,15 +911,15 @@
   "tags": [
     {
       "name": "System",
-      "description": "System health, monitoring, and performance endpoints"
+      "description": "System health and monitoring endpoints"
     },
     {
       "name": "Breed Info",
-      "description": "Dog breed information, search, and discovery endpoints"
+      "description": "Dog breed information and search endpoints"
     },
     {
       "name": "CRUD Operations",
-      "description": "Create, Read, Update, Delete operations for data management"
+      "description": "Create, Read, Update, Delete operations for dogs"
     }
   ]
 }
