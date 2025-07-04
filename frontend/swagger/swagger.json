@@ -5,6 +5,12 @@
     "version": "1.0.0",
     "description": "🐕 **REST API Documentation** - Complete backend system with dual data sources: external breed information and internal CRUD operations.\n\n**📊 Two Distinct Data Systems:**\n\n**1. Breed Info API (External Data):**\n- Sources data from Dog CEO API (https://dog.ceo/api)\n- Cached in MongoDB Atlas for performance\n- Read-only operations\n- Provides breed lists, images, and breed information\n- Endpoints: `/breeds`, `/breeds-popular`, `/random`, `/search`\n\n**2. CRUD Operations (Internal Database):**\n- Your own MongoDB Atlas database\n- Full Create, Read, Update, Delete operations\n- Sequential IDs (1, 2, 3, etc.)\n- Manage your own dog records\n- Endpoints: `/dogs`, `/dogs/{id}`\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration with caching\n- Real-time analytics and statistics\n\n[View raw JSON](swagger/swagger.json)"
   },
+  "servers": [
+    {
+      "url": "/.netlify/functions",
+      "description": "Netlify Functions"
+    }
+  ],
   "paths": {
     "/health": {
       "get": {
