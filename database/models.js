@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
 
+// Counter Schema for auto-incrementing IDs
+const counterSchema = new mongoose.Schema({
+  _id: { type: String, required: true },
+  seq: { type: Number, default: 0 },
+});
+
+const Counter = mongoose.model("Counter", counterSchema);
+
 // User Schema for tracking user preferences and stats
 const userSchema = new mongoose.Schema({
   userId: {
@@ -334,6 +342,10 @@ errorLogSchema.index({ resolved: 1, timestamp: -1 });
 
 // Dog Schema for CRUD operations
 const dogSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -376,8 +388,20 @@ const dogSchema = new mongoose.Schema({
   },
 });
 
-// Update the updatedAt field before saving
-dogSchema.pre("save", function (next) {
+// Auto-increment the ID field
+dogSchema.pre("save", async function (next) {
+  if (this.isNew) {
+    try {
+      const counter = await Counter.findByIdAndUpdate(
+        "dogId",
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true },
+      );
+      this.id = counter.seq;
+    } catch (error) {
+      return next(error);
+    }
+  }
   this.updatedAt = Date.now();
   next();
 });
@@ -403,4 +427,5 @@ module.exports = {
   ServerStats,
   ErrorLog,
   Dog,
+  Counter,
 };

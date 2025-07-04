@@ -603,27 +603,27 @@
           },
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "golden retriever"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "copper"
           },
           "description": {
             "type": "string",
-            "example": "A friendly and energetic golden retriever"
+            "example": "cuddly"
           },
           "imageUrl": {
             "type": "string",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/maple.jpg"
           },
           "createdAt": {
             "type": "string",
@@ -641,31 +641,31 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "golden retriever"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
             "minimum": 0,
             "maximum": 30,
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "copper"
           },
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "A friendly and energetic golden retriever"
+            "example": "cuddly"
           },
           "imageUrl": {
             "type": "string",
             "format": "uri",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/maple.jpg"
           }
         }
       },
@@ -674,31 +674,31 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "golden retriever"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
             "minimum": 0,
             "maximum": 30,
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "copper"
           },
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "A friendly and energetic golden retriever"
+            "example": "yappy"
           },
           "imageUrl": {
             "type": "string",
             "format": "uri",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/maple.jpg"
           }
         }
       },
