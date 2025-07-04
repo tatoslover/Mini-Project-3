@@ -5,12 +5,6 @@
     "version": "1.0.0",
     "description": "🐕 **REST API Documentation** - Comprehensive backend system for dog breed management demonstrating MongoDB Atlas integration, serverless architecture, and full CRUD operations.\n\n**Data Sources:**\n- **Breed Info**: External Dog CEO API data (cached) - breed types, images, and information\n- **CRUD Operations**: Internal database records - user-managed individual dog profiles\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External Dog CEO API integration\n- Intelligent caching layer\n- RESTful CRUD operations\n- Real-time analytics\n\n[View raw JSON](swagger/swagger.json)"
   },
-  "servers": [
-    {
-      "url": "/.netlify/functions",
-      "description": "Netlify Functions"
-    }
-  ],
   "paths": {
     "/health": {
       "get": {
@@ -377,17 +371,26 @@
     },
     "/dogs/{id}": {
       "get": {
-        "summary": "Get Dog by ID",
-        "description": "Retrieve a specific individual dog record from internal database by its unique ID.",
+        "summary": "Get Dog by ID or Name",
+        "description": "Retrieve a specific individual dog record from internal database by ID or name.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID",
+            "description": "Dog ID (integer) or Dog Name (string)",
             "required": true,
             "schema": {
-              "type": "integer"
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "example": 1
+                },
+                {
+                  "type": "string",
+                  "example": "Maple"
+                }
+              ]
             }
           }
         ],
@@ -416,16 +419,25 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "Update an existing individual dog record in internal database. Modify personal information like name, age, description, etc.",
+        "description": "Update an existing individual dog record in internal database by ID or name. Modify personal information like name, age, description, etc.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID",
+            "description": "Dog ID (integer) or Dog Name (string)",
             "required": true,
             "schema": {
-              "type": "integer"
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "example": 1
+                },
+                {
+                  "type": "string",
+                  "example": "Maple"
+                }
+              ]
             }
           }
         ],
@@ -474,16 +486,25 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "Remove an individual dog record from internal database. Deletes personal dog profiles, not breed information.",
+        "description": "Remove an individual dog record from internal database by ID or name. Deletes personal dog profiles, not breed information.",
         "tags": ["CRUD"],
         "parameters": [
           {
             "name": "id",
             "in": "path",
-            "description": "Dog ID",
+            "description": "Dog ID (integer) or Dog Name (string)",
             "required": true,
             "schema": {
-              "type": "integer"
+              "oneOf": [
+                {
+                  "type": "integer",
+                  "example": 1
+                },
+                {
+                  "type": "string",
+                  "example": "Maple"
+                }
+              ]
             }
           }
         ],

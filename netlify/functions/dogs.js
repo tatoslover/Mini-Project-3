@@ -216,7 +216,16 @@ async function handleGetDogById(
   event,
 ) {
   try {
-    const dog = await Dog.findOne({ id: parseInt(dogId) }).lean();
+    let query = {};
+
+    // Check if dogId is a number (ID) or string (name)
+    if (!isNaN(parseInt(dogId))) {
+      query = { id: parseInt(dogId) };
+    } else {
+      query = { name: dogId };
+    }
+
+    const dog = await Dog.findOne(query).lean();
 
     if (!dog) {
       return {
@@ -260,17 +269,6 @@ async function handleGetDogById(
       body: JSON.stringify(response),
     };
   } catch (error) {
-    if (isNaN(parseInt(dogId))) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          success: false,
-          error: "Invalid dog ID format",
-          timestamp: new Date().toISOString(),
-        }),
-      };
-    }
     throw error;
   }
 }
@@ -405,14 +403,19 @@ async function handleUpdateDog(
       };
     }
 
-    const dog = await Dog.findOneAndUpdate(
-      { id: parseInt(dogId) },
-      updateData,
-      {
-        new: true,
-        runValidators: true,
-      },
-    ).lean();
+    let query = {};
+
+    // Check if dogId is a number (ID) or string (name)
+    if (!isNaN(parseInt(dogId))) {
+      query = { id: parseInt(dogId) };
+    } else {
+      query = { name: dogId };
+    }
+
+    const dog = await Dog.findOneAndUpdate(query, updateData, {
+      new: true,
+      runValidators: true,
+    }).lean();
 
     if (!dog) {
       return {
@@ -483,17 +486,6 @@ async function handleUpdateDog(
         }),
       };
     }
-    if (isNaN(parseInt(dogId))) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          success: false,
-          error: "Invalid dog ID format",
-          timestamp: new Date().toISOString(),
-        }),
-      };
-    }
     throw error;
   }
 }
@@ -508,7 +500,16 @@ async function handleDeleteDog(
   event,
 ) {
   try {
-    const dog = await Dog.findOneAndDelete({ id: parseInt(dogId) }).lean();
+    let query = {};
+
+    // Check if dogId is a number (ID) or string (name)
+    if (!isNaN(parseInt(dogId))) {
+      query = { id: parseInt(dogId) };
+    } else {
+      query = { name: dogId };
+    }
+
+    const dog = await Dog.findOneAndDelete(query).lean();
 
     if (!dog) {
       return {
@@ -557,17 +558,6 @@ async function handleDeleteDog(
       body: JSON.stringify(response),
     };
   } catch (error) {
-    if (isNaN(parseInt(dogId))) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
-          success: false,
-          error: "Invalid dog ID format",
-          timestamp: new Date().toISOString(),
-        }),
-      };
-    }
     throw error;
   }
 }
