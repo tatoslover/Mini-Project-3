@@ -10,8 +10,8 @@ exports.handler = async (event, context) => {
   // Set CORS headers
   const headers = {
     "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Headers": "Content-Type",
-    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, x-user-id, x-session-id",
+    "Access-Control-Allow-Methods": "GET, OPTIONS",
     "Content-Type": "application/json",
   };
 
@@ -50,24 +50,15 @@ exports.handler = async (event, context) => {
 
     // Check if we have cached breed data
     const cachedBreeds = await BreedCache.find({ "metadata.isActive": true })
-      .sort({ breed: 1, subBreed: 1 })
+      .sort({ displayName: 1 })
       .lean();
 
-    let breeds = [];
+    let breedNames = [];
 
     if (cachedBreeds.length > 0) {
-      // Use cached data
-      breeds = cachedBreeds.map((breed) => ({
-        id: breed.breedId,
-        name: breed.name,
-        breed: breed.breed,
-        subBreed: breed.subBreed,
-        displayName: breed.displayName,
-        popularity: breed.popularity,
-        imageCount: breed.metadata.imageCount,
-      }));
-
-      console.log(`Using cached breed data: ${breeds.length} breeds`);
+      // Use cached data and extract just the display names
+      breedNames = cachedBreeds.map((breed) => breed.displayName);
+      console.log(`Using cached breed data: ${breedNames.length} breeds`);
     } else {
       // Fetch from external API and cache
       console.log("Fetching breeds from Dog CEO API...");
@@ -76,20 +67,14 @@ exports.handler = async (event, context) => {
       if (response.data.status === "success") {
         const breedData = response.data.message;
 
-        // Transform and cache breeds
+        // Transform breeds and extract names
         for (const [breed, subBreeds] of Object.entries(breedData)) {
           if (subBreeds.length > 0) {
             for (const subBreed of subBreeds) {
               const breedId = `${breed}-${subBreed}`;
               const displayName = `${breed.charAt(0).toUpperCase() + breed.slice(1)} ${subBreed.charAt(0).toUpperCase() + subBreed.slice(1)}`;
 
-              breeds.push({
-                id: breedId,
-                name: `${breed} ${subBreed}`,
-                breed: breed,
-                subBreed: subBreed,
-                displayName: displayName,
-              });
+              breedNames.push(displayName);
 
               // Cache in database
               await BreedCache.findOneAndUpdate(
@@ -100,8 +85,14 @@ exports.handler = async (event, context) => {
                   breed,
                   subBreed,
                   displayName,
+                  popularity: {
+                    viewCount: 0,
+                    favoriteCount: 0,
+                    searchCount: 0,
+                  },
                   metadata: {
                     externalApiLastSync: new Date(),
+                    imageCount: 0,
                     isActive: true,
                   },
                 },
@@ -112,13 +103,7 @@ exports.handler = async (event, context) => {
             const breedId = breed;
             const displayName = breed.charAt(0).toUpperCase() + breed.slice(1);
 
-            breeds.push({
-              id: breedId,
-              name: breed,
-              breed: breed,
-              subBreed: null,
-              displayName: displayName,
-            });
+            breedNames.push(displayName);
 
             // Cache in database
             await BreedCache.findOneAndUpdate(
@@ -129,8 +114,14 @@ exports.handler = async (event, context) => {
                 breed,
                 subBreed: null,
                 displayName,
+                popularity: {
+                  viewCount: 0,
+                  favoriteCount: 0,
+                  searchCount: 0,
+                },
                 metadata: {
                   externalApiLastSync: new Date(),
+                  imageCount: 0,
                   isActive: true,
                 },
               },
@@ -139,7 +130,9 @@ exports.handler = async (event, context) => {
           }
         }
 
-        console.log(`Cached ${breeds.length} breeds to database`);
+        // Sort alphabetically
+        breedNames.sort();
+        console.log(`Cached ${breedNames.length} breeds to database`);
       } else {
         throw new Error("Failed to fetch breeds from Dog API");
       }
@@ -158,49 +151,25 @@ exports.handler = async (event, context) => {
       userAgent: event.headers["user-agent"],
       timestamp: new Date(),
       metadata: {
-        count: breeds.length,
+        breedCount: breedNames.length,
+        source: cachedBreeds.length > 0 ? "cache" : "external_api",
       },
     });
 
     // Update daily stats
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    await ServerStats.findOneAndUpdate(
-      { date: today },
-      {
-        $inc: {
-          "metrics.totalRequests": 1,
-          "metrics.breedsViewed": 1,
-          "endpoints.breeds": 1,
-        },
-        $set: {
-          "metrics.averageResponseTime": responseTime,
-          updatedAt: new Date(),
-        },
-      },
-      { upsert: true, new: true },
-    );
+    await updateDailyStats(responseTime, "breeds");
 
     const response = {
       success: true,
-      count: breeds.length,
-      data: breeds,
-      metadata: {
-        cached: cachedBreeds.length > 0,
-        responseTime: `${responseTime}ms`,
-        lastUpdated:
-          cachedBreeds.length > 0
-            ? cachedBreeds[0]?.metadata?.externalApiLastSync
-            : new Date(),
-      },
+      count: breedNames.length,
+      breeds: breedNames,
       timestamp: new Date().toISOString(),
     };
 
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify(response),
+      body: JSON.stringify(response, null, 2),
     };
   } catch (error) {
     console.error("Error in breeds function:", error);
@@ -224,7 +193,7 @@ exports.handler = async (event, context) => {
 
     const errorResponse = {
       success: false,
-      error: "Failed to fetch dog breeds",
+      error: "Failed to retrieve breeds",
       message: error.message,
       timestamp: new Date().toISOString(),
     };
@@ -236,3 +205,24 @@ exports.handler = async (event, context) => {
     };
   }
 };
+
+// Helper function to update daily stats
+async function updateDailyStats(responseTime, endpoint) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  await ServerStats.findOneAndUpdate(
+    { date: today },
+    {
+      $inc: {
+        "metrics.totalRequests": 1,
+        [`endpoints.${endpoint}`]: 1,
+      },
+      $set: {
+        "metrics.averageResponseTime": responseTime,
+        updatedAt: new Date(),
+      },
+    },
+    { upsert: true, new: true },
+  );
+}

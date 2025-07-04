@@ -82,7 +82,7 @@
     "/all": {
       "get": {
         "summary": "Get All Breed Data",
-        "description": "🌐 **External API Data** - Retrieves comprehensive breed data including all breeds, sub-breeds, and complete information from Dog CEO API. Data is cached in MongoDB Atlas for performance. This is READ-ONLY breed information from external sources.",
+        "description": "Retrieves comprehensive breed data from Dog CEO API.",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
@@ -111,15 +111,15 @@
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
-        "description": "🌐 **External API Data** - Retrieves all available dog breeds from Dog CEO API. Data is cached in MongoDB Atlas for performance. This is READ-ONLY breed information from external sources.",
+        "description": "Get simple list of all breed names",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
-            "description": "List of all dog breeds",
+            "description": "Simple array of breed names",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BreedsResponse"
+                  "$ref": "#/components/schemas/SimpleBreedsResponse"
                 }
               }
             }
@@ -589,6 +589,47 @@
                 }
               }
             }
+          }
+        }
+      },
+      "SimpleBreedsResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "count": {
+            "type": "integer",
+            "example": 172
+          },
+          "breeds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "Affenpinscher",
+              "African",
+              "Airedale",
+              "Akita",
+              "Appenzeller",
+              "Australian Shepherd",
+              "Basenji",
+              "Beagle",
+              "Bluetick",
+              "Borzoi",
+              "Bouvier",
+              "Boxer",
+              "Brabancon",
+              "Briard",
+              "Buhund Norwegian",
+              "Bulldog Boston",
+              "Bulldog English",
+              "Bulldog French",
+              "Bullterrier Staffordshire",
+              "Cattledog Australian"
+            ]
           }
         }
       },
