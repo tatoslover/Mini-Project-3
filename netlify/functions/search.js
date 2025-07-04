@@ -92,9 +92,12 @@ exports.handler = async (event, context) => {
     // Project final fields
     pipeline.push({
       $project: {
+        breedId: 1,
+        name: 1,
         breed: 1,
+        subBreed: 1,
         displayName: 1,
-        subBreeds: "$subBreedsArray",
+        imageCount: "$metadata.imageCount",
         lastUpdated: "$updatedAt",
       },
     });
@@ -116,8 +119,12 @@ exports.handler = async (event, context) => {
       query: searchQuery,
       count: results.length,
       results: results.map((result) => ({
+        id: result.breedId,
+        name: result.name,
         breed: result.breed,
+        subBreed: result.subBreed,
         displayName: result.displayName,
+        imageCount: result.imageCount || 0,
       })),
       timestamp: new Date().toISOString(),
     };

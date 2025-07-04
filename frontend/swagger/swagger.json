@@ -999,28 +999,57 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "example": "labrador"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "labrador"
+                },
                 "breed": {
                   "type": "string",
                   "example": "labrador"
                 },
+                "subBreed": {
+                  "type": "string",
+                  "nullable": true,
+                  "example": null
+                },
                 "displayName": {
                   "type": "string",
                   "example": "Labrador"
+                },
+                "imageCount": {
+                  "type": "integer",
+                  "example": 8
                 }
               }
             },
             "example": [
               {
+                "id": "labrador",
+                "name": "labrador",
                 "breed": "labrador",
-                "displayName": "Labrador"
+                "subBreed": null,
+                "displayName": "Labrador",
+                "imageCount": 8
               },
               {
-                "breed": "retriever-labrador",
-                "displayName": "Retriever Labrador"
+                "id": "retriever-labrador",
+                "name": "retriever labrador",
+                "breed": "retriever",
+                "subBreed": "labrador",
+                "displayName": "Retriever Labrador",
+                "imageCount": 5
               },
               {
+                "id": "labradoodle",
+                "name": "labradoodle",
                 "breed": "labradoodle",
-                "displayName": "Labradoodle"
+                "subBreed": null,
+                "displayName": "Labradoodle",
+                "imageCount": 12
               }
             ]
           }
