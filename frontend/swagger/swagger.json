@@ -3,7 +3,7 @@
   "info": {
     "title": "Barkend API",
     "version": "1.0.0",
-    "description": "🐕 **REST API Documentation** - Comprehensive backend system for dog breed management demonstrating MongoDB Atlas integration, serverless architecture, and full CRUD operations.\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External Dog CEO API integration\n- Intelligent caching layer\n- RESTful CRUD operations\n- Real-time analytics\n\n[View raw JSON](swagger/swagger.json)"
+    "description": "🐕 **REST API Documentation** - Complete backend system for dog breed management with MongoDB Atlas integration, serverless functions, and comprehensive CRUD operations.\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration\n- Real-time caching\n- Full CRUD operations\n- Analytics and statistics\n\n[View raw JSON](swagger/swagger.json)"
   },
   "servers": [
     {
@@ -267,63 +267,11 @@
         }
       }
     },
-    "/breeds/{breed}/images": {
-      "get": {
-        "summary": "Get Images by Breed",
-        "description": "Returns images for a specific breed",
-        "tags": ["Breed Info"],
-        "parameters": [
-          {
-            "name": "breed",
-            "in": "path",
-            "description": "The breed name",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "count",
-            "in": "query",
-            "description": "Number of images to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 50,
-              "default": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Breed images",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BreedImagesResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Breed not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/dogs": {
       "get": {
         "summary": "Get All Dogs",
         "description": "Retrieve all dogs from the database",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "responses": {
           "200": {
             "description": "List of all dogs",
@@ -340,7 +288,7 @@
       "post": {
         "summary": "Create New Dog",
         "description": "Add a new dog to the database with validation",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "requestBody": {
           "required": true,
           "content": {
@@ -379,7 +327,7 @@
       "get": {
         "summary": "Get Dog by ID",
         "description": "Retrieve a specific dog by its ID",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "parameters": [
           {
             "name": "id",
@@ -417,7 +365,7 @@
       "put": {
         "summary": "Update Dog",
         "description": "Update an existing dog's information",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "parameters": [
           {
             "name": "id",
@@ -475,7 +423,7 @@
       "delete": {
         "summary": "Delete Dog",
         "description": "Remove a dog from the database",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "parameters": [
           {
             "name": "id",
@@ -515,7 +463,7 @@
       "get": {
         "summary": "Get All Breeds (Admin)",
         "description": "Administrative endpoint to retrieve all breeds including inactive ones",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "parameters": [
           {
             "name": "limit",
@@ -556,7 +504,7 @@
       "post": {
         "summary": "Create New Breed",
         "description": "Add a new breed to the database",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "requestBody": {
           "required": true,
           "content": {
@@ -603,7 +551,7 @@
       "put": {
         "summary": "Update Breed",
         "description": "Update an existing breed's information",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "requestBody": {
           "required": true,
           "content": {
@@ -640,7 +588,7 @@
       "delete": {
         "summary": "Delete Breed",
         "description": "Soft delete a breed (mark as inactive)",
-        "tags": ["CRUD"],
+        "tags": ["CRUD Operations"],
         "parameters": [
           {
             "name": "breed",
@@ -1205,33 +1153,6 @@
           }
         }
       },
-      "BreedImagesResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "breed": {
-            "type": "string",
-            "example": "labrador"
-          },
-          "count": {
-            "type": "integer",
-            "example": 10
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "https://images.dog.ceo/breeds/labrador/n02099712_123.jpg",
-              "https://images.dog.ceo/breeds/labrador/n02099712_456.jpg"
-            ]
-          }
-        }
-      },
       "SuccessResponse": {
         "type": "object",
         "properties": {
@@ -1275,15 +1196,15 @@
   "tags": [
     {
       "name": "System",
-      "description": "System health and status operations"
+      "description": "System health, monitoring, and performance endpoints"
     },
     {
       "name": "Breed Info",
-      "description": "Dog breed information and image retrieval"
+      "description": "Dog breed information, search, and discovery endpoints"
     },
     {
-      "name": "CRUD",
-      "description": "Dog data management operations (Create, Read, Update, Delete)"
+      "name": "CRUD Operations",
+      "description": "Create, Read, Update, Delete operations for data management"
     }
   ]
 }
