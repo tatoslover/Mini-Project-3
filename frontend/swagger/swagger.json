@@ -3,7 +3,7 @@
   "info": {
     "title": "Barkend API",
     "version": "1.0.0",
-    "description": "🐕 **REST API Documentation** - Complete backend system for dog breed management with MongoDB Atlas integration, serverless functions, and comprehensive CRUD operations.\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration\n- Real-time caching\n- Full CRUD operations\n- Analytics and statistics\n\n[View raw JSON](swagger/swagger.json)"
+    "description": "🐕 **REST API Documentation** - Complete backend system with dual data sources: external breed information and internal CRUD operations.\n\n**📊 Two Distinct Data Systems:**\n\n**1. Breed Info API (External Data):**\n- Sources data from Dog CEO API (https://dog.ceo/api)\n- Cached in MongoDB Atlas for performance\n- Read-only operations\n- Provides breed lists, images, and breed information\n- Endpoints: `/breeds`, `/breeds-popular`, `/random`, `/search`\n\n**2. CRUD Operations (Internal Database):**\n- Your own MongoDB Atlas database\n- Full Create, Read, Update, Delete operations\n- Sequential IDs (1, 2, 3, etc.)\n- Manage your own dog records\n- Endpoints: `/dogs`, `/dogs/{id}`\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External API integration with caching\n- Real-time analytics and statistics\n\n[View raw JSON](swagger/swagger.json)"
   },
   "servers": [
     {
@@ -15,7 +15,7 @@
     "/health": {
       "get": {
         "summary": "Health Check",
-        "description": "Returns the health status of the API server and database connection",
+        "description": "Returns the health status of the API server and MongoDB Atlas database connection",
         "tags": ["System"],
         "responses": {
           "200": {
@@ -82,7 +82,7 @@
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
-        "description": "Retrieves all available dog breeds with sub-breeds from MongoDB Atlas",
+        "description": "🌐 **External API Data** - Retrieves all available dog breeds from Dog CEO API. Data is cached in MongoDB Atlas for performance. This is READ-ONLY breed information from external sources.",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
@@ -111,7 +111,7 @@
     "/breeds-popular": {
       "get": {
         "summary": "Get Popular Breeds",
-        "description": "Returns the most popular dog breeds based on usage analytics",
+        "description": "🌐 **External API Data** - Returns the most popular dog breeds based on usage analytics from cached external breed data. This is READ-ONLY information from Dog CEO API.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -155,7 +155,7 @@
     "/random": {
       "get": {
         "summary": "Get Random Breed Images",
-        "description": "Returns random images for a specified breed",
+        "description": "🌐 **External API Data** - Returns random images for a specified breed from Dog CEO API. This is READ-ONLY breed image data from external sources.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -207,7 +207,7 @@
     "/search": {
       "get": {
         "summary": "Search Breeds",
-        "description": "Search for dog breeds by name with relevance scoring",
+        "description": "🌐 **External API Data** - Search for dog breeds by name with relevance scoring from cached external breed data. This is READ-ONLY search of Dog CEO API breed information.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -270,7 +270,7 @@
     "/dogs": {
       "get": {
         "summary": "Get All Dogs",
-        "description": "Retrieve all dogs from the database",
+        "description": "🗄️ **Internal Database** - Retrieve all dogs from YOUR MongoDB Atlas database. These are your own dog records with sequential IDs (1, 2, 3, etc.). Full CRUD operations available.",
         "tags": ["CRUD Operations"],
         "responses": {
           "200": {
@@ -287,7 +287,7 @@
       },
       "post": {
         "summary": "Create New Dog",
-        "description": "Add a new dog to the database with validation",
+        "description": "🗄️ **Internal Database** - Add a new dog to YOUR MongoDB Atlas database with validation. Creates a new record with sequential ID. This is your own data, not external breed info.",
         "tags": ["CRUD Operations"],
         "requestBody": {
           "required": true,
@@ -326,7 +326,7 @@
     "/dogs/{id}": {
       "get": {
         "summary": "Get Dog by ID",
-        "description": "Retrieve a specific dog by its ID",
+        "description": "🗄️ **Internal Database** - Retrieve a specific dog by its sequential ID (1, 2, 3, etc.) from YOUR MongoDB Atlas database. This is your own dog record, not external breed data.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -364,7 +364,7 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "Update an existing dog's information",
+        "description": "🗄️ **Internal Database** - Update an existing dog's information in YOUR MongoDB Atlas database using sequential ID. Full control over your own dog records.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -422,7 +422,7 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "Remove a dog from the database",
+        "description": "🗄️ **Internal Database** - Remove a dog from YOUR MongoDB Atlas database using sequential ID. Permanently deletes your own dog record.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -915,11 +915,11 @@
     },
     {
       "name": "Breed Info",
-      "description": "Dog breed information and search endpoints"
+      "description": "🌐 **External API Data** - Dog breed information from Dog CEO API. Data is cached in MongoDB Atlas for performance. Read-only operations that provide breed lists, images, and breed information from external sources."
     },
     {
       "name": "CRUD Operations",
-      "description": "Create, Read, Update, Delete operations for dogs"
+      "description": "🗄️ **Internal Database** - Your own MongoDB Atlas database with full Create, Read, Update, Delete operations. Uses sequential IDs (1, 2, 3, etc.) for managing your personal dog records. Complete control over your data."
     }
   ]
 }
