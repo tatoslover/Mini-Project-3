@@ -86,7 +86,7 @@
         "tags": ["Breed Info"],
         "responses": {
           "200": {
-            "description": "Complete breed data with all information",
+            "description": "Complete breed data with all information.",
             "content": {
               "application/json": {
                 "schema": {
@@ -111,7 +111,7 @@
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
-        "description": "Get simple list of all breed names",
+        "description": "Get simple list of all breed names.",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
@@ -141,7 +141,7 @@
     "/random": {
       "get": {
         "summary": "Get Breed Images",
-        "description": "Get images for a specific breed",
+        "description": "Get images for a specific breed.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -204,7 +204,7 @@
     "/search": {
       "get": {
         "summary": "Search Breeds",
-        "description": "🌐 **External API Data** - Search for dog breeds by name with relevance scoring from cached external breed data. This is READ-ONLY search of Dog CEO API breed information.",
+        "description": "Search for dog breeds",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -745,7 +745,7 @@
           },
           "count": {
             "type": "integer",
-            "example": 162
+            "example": 3
           },
           "data": {
             "type": "array",
@@ -1044,7 +1044,7 @@
           },
           "totalAvailable": {
             "type": "integer",
-            "example": 156
+            "example": 184
           },
           "data": {
             "type": "array",
