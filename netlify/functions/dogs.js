@@ -169,9 +169,7 @@ async function handleGetAllDogs(
   event,
 ) {
   try {
-    const dogs = await Dog.find({})
-      .sort({ createdAt: -1 })
-      .lean();
+    const dogs = await Dog.find({}).sort({ createdAt: -1 }).lean();
 
     // Log API usage
     await ApiUsage.create({
@@ -218,7 +216,7 @@ async function handleGetDogById(
   event,
 ) {
   try {
-    const dog = await Dog.findById(dogId).lean();
+    const dog = await Dog.findOne({ id: parseInt(dogId) }).lean();
 
     if (!dog) {
       return {
@@ -262,7 +260,7 @@ async function handleGetDogById(
       body: JSON.stringify(response),
     };
   } catch (error) {
-    if (error.name === "CastError") {
+    if (isNaN(parseInt(dogId))) {
       return {
         statusCode: 400,
         headers,
@@ -323,7 +321,7 @@ async function handleCreateDog(
       userAgent: event.headers["user-agent"],
       timestamp: new Date(),
       metadata: {
-        dogId: dog._id.toString(),
+        dogId: dog.id.toString(),
         breed: breed,
         action: "create_dog",
       },
@@ -407,10 +405,14 @@ async function handleUpdateDog(
       };
     }
 
-    const dog = await Dog.findByIdAndUpdate(dogId, updateData, {
-      new: true,
-      runValidators: true,
-    }).lean();
+    const dog = await Dog.findOneAndUpdate(
+      { id: parseInt(dogId) },
+      updateData,
+      {
+        new: true,
+        runValidators: true,
+      },
+    ).lean();
 
     if (!dog) {
       return {
@@ -481,7 +483,7 @@ async function handleUpdateDog(
         }),
       };
     }
-    if (error.name === "CastError") {
+    if (isNaN(parseInt(dogId))) {
       return {
         statusCode: 400,
         headers,
@@ -506,7 +508,7 @@ async function handleDeleteDog(
   event,
 ) {
   try {
-    const dog = await Dog.findByIdAndDelete(dogId).lean();
+    const dog = await Dog.findOneAndDelete({ id: parseInt(dogId) }).lean();
 
     if (!dog) {
       return {
@@ -555,7 +557,7 @@ async function handleDeleteDog(
       body: JSON.stringify(response),
     };
   } catch (error) {
-    if (error.name === "CastError") {
+    if (isNaN(parseInt(dogId))) {
       return {
         statusCode: 400,
         headers,
@@ -573,7 +575,7 @@ async function handleDeleteDog(
 // Helper function to format dog response
 function formatDogResponse(dog) {
   return {
-    id: dog._id.toString(),
+    id: dog.id,
     name: dog.name,
     breed: dog.breed,
     age: dog.age,

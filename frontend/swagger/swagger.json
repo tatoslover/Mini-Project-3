@@ -79,6 +79,58 @@
         }
       }
     },
+    "/all": {
+      "get": {
+        "summary": "Get All API Data",
+        "description": "Returns comprehensive dataset including all breeds, popular breeds, sample random images, and system statistics. Single endpoint to access all external API data at once.",
+        "tags": ["Breed Info"],
+        "responses": {
+          "200": {
+            "description": "Complete API dataset",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "breeds": {
+                      "$ref": "#/components/schemas/BreedsResponse"
+                    },
+                    "popularBreeds": {
+                      "$ref": "#/components/schemas/PopularBreedsResponse"
+                    },
+                    "randomImages": {
+                      "$ref": "#/components/schemas/RandomImagesResponse"
+                    },
+                    "systemStats": {
+                      "$ref": "#/components/schemas/StatsResponse"
+                    },
+                    "timestamp": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2025-01-04T00:44:15.753Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
@@ -335,7 +387,7 @@
             "description": "Dog ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -373,7 +425,7 @@
             "description": "Dog ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -431,7 +483,7 @@
             "description": "Dog ID",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer"
             }
           }
         ],
@@ -534,8 +586,8 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string",
-                  "example": "labrador"
+                  "type": "integer",
+                  "example": 1
                 },
                 "breed": {
                   "type": "string",
@@ -581,32 +633,32 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string",
-            "example": "60f7b1b9b9b9b9b9b9b9b9b9"
+            "type": "integer",
+            "example": 1
           },
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "Copper"
           },
           "description": {
             "type": "string",
-            "example": "Friendly and energetic dog"
+            "example": "Yappy"
           },
           "imageUrl": {
             "type": "string",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/Maple.jpg"
           },
           "createdAt": {
             "type": "string",
@@ -624,31 +676,31 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
             "minimum": 0,
             "maximum": 30,
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "Copper"
           },
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "Friendly and energetic dog"
+            "example": "Loving"
           },
           "imageUrl": {
             "type": "string",
             "format": "uri",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/Maple.jpg"
           }
         }
       },
@@ -657,31 +709,31 @@
         "properties": {
           "name": {
             "type": "string",
-            "example": "Buddy"
+            "example": "Maple"
           },
           "breed": {
             "type": "string",
-            "example": "labrador"
+            "example": "Cavoodle"
           },
           "age": {
             "type": "integer",
             "minimum": 0,
             "maximum": 30,
-            "example": 3
+            "example": 2
           },
           "color": {
             "type": "string",
-            "example": "golden"
+            "example": "Copper"
           },
           "description": {
             "type": "string",
             "maxLength": 1000,
-            "example": "Friendly and energetic dog"
+            "example": "Yappy"
           },
           "imageUrl": {
             "type": "string",
             "format": "uri",
-            "example": "https://example.com/buddy.jpg"
+            "example": "https://example.com/Maple.jpg"
           }
         }
       },
