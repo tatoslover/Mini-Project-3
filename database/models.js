@@ -280,6 +280,7 @@ const serverStatsSchema = new mongoose.Schema({
   },
   endpoints: {
     health: { type: Number, default: 0 },
+    all: { type: Number, default: 0 },
     breeds: { type: Number, default: 0 },
     random: { type: Number, default: 0 },
     breedImages: { type: Number, default: 0 },
