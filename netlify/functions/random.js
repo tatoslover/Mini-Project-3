@@ -1,6 +1,6 @@
 const axios = require("axios");
 const { connectToDatabase } = require("../../database/db");
-const { ServerStats, ApiUsage, User } = require("../../database/models");
+const { ServerStats, ApiUsage, BreedCache } = require("../../database/models");
 
 const DOG_API_BASE = "https://dog.ceo/api";
 
@@ -50,137 +50,132 @@ exports.handler = async (event, context) => {
 
     // Parse query parameters
     const queryParams = event.queryStringParameters || {};
-    const count = Math.min(parseInt(queryParams.count) || 1, 50); // Limit to 50 images max
-    const breed = queryParams.breed; // Optional breed filter
+    const breed = queryParams.breed;
+    const count = Math.min(parseInt(queryParams.count) || 3, 20); // Default 3, max 20
 
-    let apiUrl;
-    let images = [];
+    // Validate breed parameter
+    if (!breed) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          success: false,
+          error: "Breed parameter is required",
+          message: "Please provide a breed name in the query parameter",
+          timestamp: new Date().toISOString(),
+        }),
+      };
+    }
 
-    if (breed) {
-      // Get random images for specific breed
-      const breedPath = breed.includes("-") ? breed.replace("-", "/") : breed;
+    // Format breed name for API call
+    const formattedBreed = breed.toLowerCase().replace(/\s+/g, "/");
 
-      const promises = Array.from({ length: count }, () =>
-        axios.get(`${DOG_API_BASE}/breed/${breedPath}/images/random`),
+    try {
+      // Get breed images from Dog CEO API
+      const response = await axios.get(
+        `${DOG_API_BASE}/breed/${formattedBreed}/images`,
       );
 
-      try {
-        const results = await Promise.all(promises);
-        images = results
-          .filter((result) => result.data.status === "success")
-          .map((result, index) => ({
-            url: result.data.message,
-            id: `${Date.now()}_${index}`,
-            breed: breed,
-            breedDisplayName: formatBreedName(breed),
-            timestamp: new Date().toISOString(),
-          }));
-      } catch (error) {
-        // If breed-specific request fails, fall back to general random
-        console.warn(
-          `Failed to get random images for breed ${breed}, falling back to general random`,
-        );
-        apiUrl = `${DOG_API_BASE}/breeds/image/random`;
+      if (response.data.status !== "success") {
+        throw new Error("Failed to fetch breed images");
       }
-    }
 
-    // If no breed specified or breed-specific request failed
-    if (!breed || images.length === 0) {
-      const promises = Array.from({ length: count }, () =>
-        axios.get(`${DOG_API_BASE}/breeds/image/random`),
+      // Get all images for the breed
+      const allImages = response.data.message;
+
+      if (allImages.length === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({
+            success: false,
+            error: "No images found for this breed",
+            breed: breed,
+            timestamp: new Date().toISOString(),
+          }),
+        };
+      }
+
+      // Randomly select the requested number of images
+      const selectedImages = [];
+      const shuffledImages = [...allImages].sort(() => 0.5 - Math.random());
+
+      for (let i = 0; i < Math.min(count, shuffledImages.length); i++) {
+        selectedImages.push({
+          url: shuffledImages[i],
+          verified: true,
+        });
+      }
+
+      const responseTime = Date.now() - startTime;
+
+      // Update breed popularity in cache
+      await BreedCache.findOneAndUpdate(
+        {
+          $or: [
+            { breed: breed.toLowerCase() },
+            { displayName: { $regex: new RegExp(breed, "i") } },
+          ],
+        },
+        {
+          $inc: { "popularity.viewCount": 1 },
+          $set: { "metadata.externalApiLastSync": new Date() },
+        },
       );
 
-      const results = await Promise.all(promises);
-      images = results
-        .filter((result) => result.data.status === "success")
-        .map((result, index) => {
-          const imageUrl = result.data.message;
-          const extractedBreed = extractBreedFromUrl(imageUrl);
+      // Log API usage
+      await ApiUsage.create({
+        endpoint: "/random",
+        method: "GET",
+        userId,
+        sessionId,
+        responseTime,
+        statusCode: 200,
+        userAgent: event.headers["user-agent"],
+        timestamp: new Date(),
+        metadata: {
+          breed: breed,
+          imagesRequested: count,
+          imagesReturned: selectedImages.length,
+          totalAvailable: allImages.length,
+        },
+      });
 
-          return {
-            url: imageUrl,
-            id: `${Date.now()}_${index}`,
-            breed: extractedBreed.breed || "unknown",
-            breedDisplayName: extractedBreed.displayName || "Unknown Breed",
-            subBreed: extractedBreed.subBreed || null,
+      // Update daily stats
+      await updateDailyStats(responseTime, "random");
+
+      const response_data = {
+        success: true,
+        breed: breed,
+        count: selectedImages.length,
+        totalAvailable: allImages.length,
+        data: selectedImages,
+        timestamp: new Date().toISOString(),
+      };
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(response_data, null, 2),
+      };
+    } catch (error) {
+      // Handle breed not found or API errors
+      if (error.response && error.response.status === 404) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({
+            success: false,
+            error: "Breed not found",
+            message: `The breed "${breed}" was not found. Please check the spelling or try a different breed.`,
+            breed: breed,
             timestamp: new Date().toISOString(),
-          };
-        });
+          }),
+        };
+      }
+
+      throw error; // Re-throw other errors to be handled by outer catch
     }
-
-    const responseTime = Date.now() - startTime;
-
-    // Update user stats
-    await User.findOneAndUpdate(
-      { userId },
-      {
-        $inc: {
-          "stats.imagesViewed": images.length,
-        },
-        $set: {
-          sessionId,
-          "stats.lastActive": new Date(),
-          updatedAt: new Date(),
-        },
-      },
-      { upsert: true, new: true },
-    );
-
-    // Log API usage
-    await ApiUsage.create({
-      endpoint: "/random",
-      method: "GET",
-      userId,
-      sessionId,
-      responseTime,
-      statusCode: 200,
-      userAgent: event.headers["user-agent"],
-      timestamp: new Date(),
-      metadata: {
-        count: images.length,
-        requestedCount: count,
-        breed: breed || "any",
-      },
-    });
-
-    // Update daily stats
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    await ServerStats.findOneAndUpdate(
-      { date: today },
-      {
-        $inc: {
-          "metrics.totalRequests": 1,
-          "metrics.imagesServed": images.length,
-          "endpoints.random": 1,
-        },
-        $set: {
-          "metrics.averageResponseTime": responseTime,
-          updatedAt: new Date(),
-        },
-      },
-      { upsert: true, new: true },
-    );
-
-    const response = {
-      success: true,
-      count: images.length,
-      requestedCount: count,
-      data: count === 1 ? images[0] : images,
-      metadata: {
-        responseTime: `${responseTime}ms`,
-        breed: breed || "random",
-        source: "Dog CEO API",
-      },
-      timestamp: new Date().toISOString(),
-    };
-
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify(response),
-    };
   } catch (error) {
     console.error("Error in random function:", error);
 
@@ -198,13 +193,13 @@ exports.handler = async (event, context) => {
       timestamp: new Date(),
       metadata: {
         error: error.message,
-        breed: event.queryStringParameters?.breed,
+        breed: event.queryStringParameters?.breed || "unknown",
       },
     }).catch(console.error);
 
     const errorResponse = {
       success: false,
-      error: "Failed to fetch random dog images",
+      error: "Failed to retrieve breed images",
       message: error.message,
       timestamp: new Date().toISOString(),
     };
@@ -217,51 +212,24 @@ exports.handler = async (event, context) => {
   }
 };
 
-// Helper function to format breed names
-function formatBreedName(breed) {
-  if (!breed) return "Unknown Breed";
+// Helper function to update daily stats
+async function updateDailyStats(responseTime, endpoint) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
 
-  return breed
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-}
-
-// Helper function to extract breed information from image URL
-function extractBreedFromUrl(url) {
-  try {
-    // Dog CEO API URLs follow pattern: https://images.dog.ceo/breeds/[breed]/[subbreed]/image.jpg
-    const urlPath = new URL(url).pathname;
-    const pathParts = urlPath.split("/");
-
-    if (pathParts.length >= 3 && pathParts[1] === "breeds") {
-      const breed = pathParts[2];
-      let subBreed = null;
-      let displayName = formatBreedName(breed);
-
-      // Check if there's a sub-breed
-      if (
-        pathParts.length >= 4 &&
-        pathParts[3] &&
-        !pathParts[3].includes(".")
-      ) {
-        subBreed = pathParts[3];
-        displayName = `${formatBreedName(breed)} ${formatBreedName(subBreed)}`;
-      }
-
-      return {
-        breed: subBreed ? `${breed}-${subBreed}` : breed,
-        subBreed,
-        displayName,
-      };
-    }
-  } catch (error) {
-    console.warn("Failed to extract breed from URL:", url, error);
-  }
-
-  return {
-    breed: "unknown",
-    subBreed: null,
-    displayName: "Unknown Breed",
-  };
+  await ServerStats.findOneAndUpdate(
+    { date: today },
+    {
+      $inc: {
+        "metrics.totalRequests": 1,
+        "metrics.imagesServed": 1,
+        [`endpoints.${endpoint}`]: 1,
+      },
+      $set: {
+        "metrics.averageResponseTime": responseTime,
+        updatedAt: new Date(),
+      },
+    },
+    { upsert: true, new: true },
+  );
 }

@@ -275,8 +275,6 @@ const serverStatsSchema = new mongoose.Schema({
     all: { type: Number, default: 0 },
     breeds: { type: Number, default: 0 },
     random: { type: Number, default: 0 },
-    breedImages: { type: Number, default: 0 },
-    breedRandom: { type: Number, default: 0 },
     dogs: { type: Number, default: 0 },
     search: { type: Number, default: 0 },
     stats: { type: Number, default: 0 },

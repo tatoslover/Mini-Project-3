@@ -137,63 +137,21 @@
         }
       }
     },
-    "/breeds-popular": {
-      "get": {
-        "summary": "Get Popular Breeds",
-        "description": "🌐 **External API Data** - Returns the most popular dog breeds based on usage analytics from cached external breed data. This is READ-ONLY information from Dog CEO API.",
-        "tags": ["Breed Info"],
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "Number of breeds to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 20,
-              "default": 10
-            }
-          },
-          {
-            "name": "timeframe",
-            "in": "query",
-            "description": "Time period for popularity calculation",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": ["today", "week", "month", "all"],
-              "default": "week"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Popular breeds list",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/PopularBreedsResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
     "/random": {
       "get": {
-        "summary": "Get Random Breed Images",
-        "description": "🌐 **External API Data** - Returns random images for a specified breed from Dog CEO API. This is READ-ONLY breed image data from external sources.",
+        "summary": "Get Breed Images",
+        "description": "Get images for a specific breed",
         "tags": ["Breed Info"],
         "parameters": [
           {
             "name": "breed",
             "in": "query",
-            "description": "The breed name",
+            "description": "The breed name (required)",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "example": "labrador"
             }
           },
           {
@@ -204,24 +162,34 @@
             "schema": {
               "type": "integer",
               "minimum": 1,
-              "maximum": 50,
-              "default": 1
+              "maximum": 20,
+              "default": 3
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Random breed images",
+            "description": "Breed images",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/RandomImagesResponse"
+                  "$ref": "#/components/schemas/BreedImagesResponse"
                 }
               }
             }
           },
           "400": {
-            "description": "Invalid breed parameter",
+            "description": "Missing breed parameter",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Breed not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -905,56 +873,8 @@
           }
         }
       },
-      "PopularBreedsResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "timeframe": {
-            "type": "string",
-            "example": "week"
-          },
-          "count": {
-            "type": "integer",
-            "example": 10
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "rank": {
-                  "type": "integer",
-                  "example": 1
-                },
-                "breed": {
-                  "type": "string",
-                  "example": "labrador"
-                },
-                "displayName": {
-                  "type": "string",
-                  "example": "Labrador"
-                },
-                "viewCount": {
-                  "type": "integer",
-                  "example": 142
-                },
-                "popularityScore": {
-                  "type": "number",
-                  "example": 0.95
-                },
-                "trendingUp": {
-                  "type": "boolean",
-                  "example": true
-                }
-              }
-            }
-          }
-        }
-      },
-      "RandomImagesResponse": {
+
+      "BreedImagesResponse": {
         "type": "object",
         "properties": {
           "success": {
@@ -968,6 +888,10 @@
           "count": {
             "type": "integer",
             "example": 3
+          },
+          "totalAvailable": {
+            "type": "integer",
+            "example": 156
           },
           "data": {
             "type": "array",
