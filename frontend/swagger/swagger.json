@@ -299,7 +299,7 @@
     "/dogs": {
       "get": {
         "summary": "Get All Dogs",
-        "description": "🗄️ **Internal Database** - Retrieve all dogs from YOUR MongoDB Atlas database. These are your own dog records with sequential IDs (1, 2, 3, etc.). Full CRUD operations available.",
+        "description": "Retrieve all dogs",
         "tags": ["CRUD Operations"],
         "responses": {
           "200": {
@@ -316,7 +316,7 @@
       },
       "post": {
         "summary": "Create New Dog",
-        "description": "🗄️ **Internal Database** - Add a new dog to YOUR MongoDB Atlas database with validation. Creates a new record with sequential ID. This is your own data, not external breed info.",
+        "description": "Create a new dog",
         "tags": ["CRUD Operations"],
         "requestBody": {
           "required": true,
@@ -355,7 +355,7 @@
     "/dogs/{id}": {
       "get": {
         "summary": "Get Dog by ID",
-        "description": "🗄️ **Internal Database** - Retrieve a specific dog by its sequential ID (1, 2, 3, etc.) from YOUR MongoDB Atlas database. This is your own dog record, not external breed data.",
+        "description": "Retrieve a specific dog by its ID.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -393,7 +393,7 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "🗄️ **Internal Database** - Update an existing dog's information in YOUR MongoDB Atlas database using sequential ID. Full control over your own dog records.",
+        "description": "Update a specific dog's information.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
@@ -451,7 +451,7 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "🗄️ **Internal Database** - Remove a dog from YOUR MongoDB Atlas database using sequential ID. Permanently deletes your own dog record.",
+        "description": "Delete a specific dog's information.",
         "tags": ["CRUD Operations"],
         "parameters": [
           {
