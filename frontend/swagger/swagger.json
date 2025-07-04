@@ -1169,11 +1169,11 @@
           },
           "error": {
             "type": "string",
-            "example": "Search query (q) parameter is required"
+            "example": "Failed to retrieve breed data"
           },
           "message": {
             "type": "string",
-            "example": "Search query (q) parameter is required"
+            "example": "Connection to database failed"
           },
           "timestamp": {
             "type": "string",
