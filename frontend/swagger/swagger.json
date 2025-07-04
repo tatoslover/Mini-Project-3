@@ -1123,11 +1123,11 @@
           },
           "error": {
             "type": "string",
-            "example": "Failed to retrieve breed data"
+            "example": "Failed to process database operation"
           },
           "message": {
             "type": "string",
-            "example": "Connection to database failed"
+            "example": "Database operation failed"
           },
           "timestamp": {
             "type": "string",
@@ -1153,11 +1153,92 @@
             }
           },
           "database_error": {
-            "summary": "Database Error",
+            "summary": "Database Connection Error",
             "value": {
               "success": false,
-              "error": "Failed to retrieve breed data",
+              "error": "Failed to process database operation",
               "message": "Connection to database failed",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "internal_database_crud_error": {
+            "summary": "Internal Database CRUD Error",
+            "value": {
+              "success": false,
+              "error": "Failed to process database operation",
+              "message": "Unable to complete the requested operation",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "record_not_found": {
+            "summary": "Record Not Found",
+            "value": {
+              "success": false,
+              "error": "Record not found",
+              "message": "The requested resource does not exist",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "validation_failed": {
+            "summary": "Validation Failed",
+            "value": {
+              "success": false,
+              "error": "Validation failed",
+              "message": "Required fields are missing or invalid",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "create_failed": {
+            "summary": "Create Operation Failed",
+            "value": {
+              "success": false,
+              "error": "Failed to create record",
+              "message": "Unable to create new record in database",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "update_failed": {
+            "summary": "Update Operation Failed",
+            "value": {
+              "success": false,
+              "error": "Failed to update record",
+              "message": "Unable to update existing record",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "delete_failed": {
+            "summary": "Delete Operation Failed",
+            "value": {
+              "success": false,
+              "error": "Failed to delete record",
+              "message": "Unable to delete record from database",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "external_api_error": {
+            "summary": "External API Error",
+            "value": {
+              "success": false,
+              "error": "Failed to retrieve external API data",
+              "message": "Connection to external service failed",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "duplicate_record": {
+            "summary": "Duplicate Record Error",
+            "value": {
+              "success": false,
+              "error": "Record already exists",
+              "message": "A record with this information already exists",
+              "timestamp": "2025-01-27T10:30:00.000Z"
+            }
+          },
+          "read_operation_failed": {
+            "summary": "Read Operation Failed",
+            "value": {
+              "success": false,
+              "error": "Failed to retrieve data",
+              "message": "Unable to fetch records from database",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },

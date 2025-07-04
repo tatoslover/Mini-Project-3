@@ -147,7 +147,7 @@ exports.handler = async (event, context) => {
 
     const errorResponse = {
       success: false,
-      error: "Internal server error",
+      error: getOperationErrorMessage(event.httpMethod, pathSegments),
       message: error.message,
       timestamp: new Date().toISOString(),
     };
@@ -224,7 +224,8 @@ async function handleGetDogById(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Dog not found",
+          error: "Record not found",
+          message: "The requested dog does not exist",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -266,7 +267,8 @@ async function handleGetDogById(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid dog ID format",
+          error: "Validation failed",
+          message: "Invalid dog ID format",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -294,7 +296,8 @@ async function handleCreateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Name and breed are required",
+          error: "Validation failed",
+          message: "Name and breed are required",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -348,7 +351,8 @@ async function handleCreateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid JSON in request body",
+          error: "Validation failed",
+          message: "Invalid JSON in request body",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -359,7 +363,7 @@ async function handleCreateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Validation error",
+          error: "Failed to create record",
           message: Object.values(error.errors)
             .map((e) => e.message)
             .join(", "),
@@ -399,7 +403,8 @@ async function handleUpdateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "No valid fields provided for update",
+          error: "Validation failed",
+          message: "No valid fields provided for update",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -417,7 +422,8 @@ async function handleUpdateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Dog not found",
+          error: "Record not found",
+          message: "The requested dog does not exist",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -461,7 +467,8 @@ async function handleUpdateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid JSON in request body",
+          error: "Validation failed",
+          message: "Invalid JSON in request body",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -472,7 +479,7 @@ async function handleUpdateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Validation error",
+          error: "Failed to update record",
           message: Object.values(error.errors)
             .map((e) => e.message)
             .join(", "),
@@ -486,7 +493,8 @@ async function handleUpdateDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid dog ID format",
+          error: "Validation failed",
+          message: "Invalid dog ID format",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -513,7 +521,8 @@ async function handleDeleteDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Dog not found",
+          error: "Record not found",
+          message: "The requested dog does not exist",
           timestamp: new Date().toISOString(),
         }),
       };
@@ -560,12 +569,34 @@ async function handleDeleteDog(
         headers,
         body: JSON.stringify({
           success: false,
-          error: "Invalid dog ID format",
+          error: "Validation failed",
+          message: "Invalid dog ID format",
           timestamp: new Date().toISOString(),
         }),
       };
     }
     throw error;
+  }
+}
+
+// Helper function to get operation-specific error messages
+function getOperationErrorMessage(httpMethod, pathSegments) {
+  const dogId = pathSegments[pathSegments.length - 1];
+  const isSpecificDog = dogId !== "dogs" && dogId.length > 0;
+
+  switch (httpMethod) {
+    case "GET":
+      return isSpecificDog
+        ? "Failed to retrieve record"
+        : "Failed to retrieve data";
+    case "POST":
+      return "Failed to create record";
+    case "PUT":
+      return "Failed to update record";
+    case "DELETE":
+      return "Failed to delete record";
+    default:
+      return "Failed to process database operation";
   }
 }
 
