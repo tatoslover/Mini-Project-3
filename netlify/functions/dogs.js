@@ -49,7 +49,7 @@ exports.handler = async (event, context) => {
             sessionId,
             headers,
             responseTime,
-            event
+            event,
           );
         } else {
           return await handleGetAllDogs(
@@ -57,7 +57,7 @@ exports.handler = async (event, context) => {
             sessionId,
             headers,
             responseTime,
-            event
+            event,
           );
         }
 
@@ -67,7 +67,7 @@ exports.handler = async (event, context) => {
           sessionId,
           headers,
           responseTime,
-          event
+          event,
         );
 
       case "PUT":
@@ -78,7 +78,7 @@ exports.handler = async (event, context) => {
             sessionId,
             headers,
             responseTime,
-            event
+            event,
           );
         } else {
           return {
@@ -100,7 +100,7 @@ exports.handler = async (event, context) => {
             sessionId,
             headers,
             responseTime,
-            event
+            event,
           );
         } else {
           return {
@@ -161,7 +161,13 @@ exports.handler = async (event, context) => {
 };
 
 // Get all dogs
-async function handleGetAllDogs(userId, sessionId, headers, responseTime, event) {
+async function handleGetAllDogs(
+  userId,
+  sessionId,
+  headers,
+  responseTime,
+  event,
+) {
   try {
     const dogs = await Dog.find({})
       .sort({ createdAt: -1 })
@@ -203,7 +209,14 @@ async function handleGetAllDogs(userId, sessionId, headers, responseTime, event)
 }
 
 // Get dog by ID
-async function handleGetDogById(dogId, userId, sessionId, headers, responseTime, event) {
+async function handleGetDogById(
+  dogId,
+  userId,
+  sessionId,
+  headers,
+  responseTime,
+  event,
+) {
   try {
     const dog = await Dog.findById(dogId).lean();
 
@@ -265,7 +278,13 @@ async function handleGetDogById(dogId, userId, sessionId, headers, responseTime,
 }
 
 // Create new dog
-async function handleCreateDog(userId, sessionId, headers, responseTime, event) {
+async function handleCreateDog(
+  userId,
+  sessionId,
+  headers,
+  responseTime,
+  event,
+) {
   try {
     const body = JSON.parse(event.body || "{}");
     const { name, breed, age, color, description, imageUrl } = body;
@@ -343,7 +362,9 @@ async function handleCreateDog(userId, sessionId, headers, responseTime, event) 
         body: JSON.stringify({
           success: false,
           error: "Validation error",
-          message: Object.values(error.errors).map(e => e.message).join(", "),
+          message: Object.values(error.errors)
+            .map((e) => e.message)
+            .join(", "),
           timestamp: new Date().toISOString(),
         }),
       };
@@ -353,7 +374,14 @@ async function handleCreateDog(userId, sessionId, headers, responseTime, event) 
 }
 
 // Update dog
-async function handleUpdateDog(dogId, userId, sessionId, headers, responseTime, event) {
+async function handleUpdateDog(
+  dogId,
+  userId,
+  sessionId,
+  headers,
+  responseTime,
+  event,
+) {
   try {
     const body = JSON.parse(event.body || "{}");
     const { name, breed, age, color, description, imageUrl } = body;
@@ -379,11 +407,10 @@ async function handleUpdateDog(dogId, userId, sessionId, headers, responseTime, 
       };
     }
 
-    const dog = await Dog.findByIdAndUpdate(
-      dogId,
-      updateData,
-      { new: true, runValidators: true }
-    ).lean();
+    const dog = await Dog.findByIdAndUpdate(dogId, updateData, {
+      new: true,
+      runValidators: true,
+    }).lean();
 
     if (!dog) {
       return {
@@ -447,7 +474,9 @@ async function handleUpdateDog(dogId, userId, sessionId, headers, responseTime, 
         body: JSON.stringify({
           success: false,
           error: "Validation error",
-          message: Object.values(error.errors).map(e => e.message).join(", "),
+          message: Object.values(error.errors)
+            .map((e) => e.message)
+            .join(", "),
           timestamp: new Date().toISOString(),
         }),
       };
@@ -468,7 +497,14 @@ async function handleUpdateDog(dogId, userId, sessionId, headers, responseTime, 
 }
 
 // Delete dog
-async function handleDeleteDog(dogId, userId, sessionId, headers, responseTime, event) {
+async function handleDeleteDog(
+  dogId,
+  userId,
+  sessionId,
+  headers,
+  responseTime,
+  event,
+) {
   try {
     const dog = await Dog.findByIdAndDelete(dogId).lean();
 
@@ -566,6 +602,6 @@ async function updateDailyStats(responseTime, endpoint) {
         updatedAt: new Date(),
       },
     },
-    { upsert: true, new: true }
+    { upsert: true, new: true },
   );
 }

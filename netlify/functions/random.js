@@ -84,7 +84,6 @@ exports.handler = async (event, context) => {
               id: `${Date.now()}_${index}`,
               breed: breedVariant,
               breedDisplayName: formatBreedName(breedVariant),
-              timestamp: new Date().toISOString(),
             }));
 
           if (images.length > 0) {
@@ -129,7 +128,6 @@ exports.handler = async (event, context) => {
             breed: extractedBreed.breed || "unknown",
             breedDisplayName: extractedBreed.displayName || "Unknown Breed",
             subBreed: extractedBreed.subBreed || null,
-            timestamp: new Date().toISOString(),
           };
         });
     }

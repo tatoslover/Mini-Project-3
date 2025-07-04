@@ -3,7 +3,7 @@
   "info": {
     "title": "Barkend API",
     "version": "1.0.0",
-    "description": "🐕 **REST API Documentation** - Comprehensive backend system for dog breed management demonstrating MongoDB Atlas integration, serverless architecture, and full CRUD operations.\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External Dog CEO API integration\n- Intelligent caching layer\n- RESTful CRUD operations\n- Real-time analytics\n\n[View raw JSON](swagger/swagger.json)"
+    "description": "🐕 **REST API Documentation** - Comprehensive backend system for dog breed management demonstrating MongoDB Atlas integration, serverless architecture, and full CRUD operations.\n\n**Data Sources:**\n- **Breed Info**: External Dog CEO API data (cached) - breed types, images, and information\n- **CRUD Operations**: Internal database records - user-managed individual dog profiles\n\n**Backend Architecture:**\n- MongoDB Atlas cloud database\n- Serverless Netlify Functions\n- External Dog CEO API integration\n- Intelligent caching layer\n- RESTful CRUD operations\n- Real-time analytics\n\n[View raw JSON](swagger/swagger.json)"
   },
   "servers": [
     {
@@ -82,7 +82,7 @@
     "/breeds": {
       "get": {
         "summary": "Get All Breeds",
-        "description": "Retrieves all available dog breeds from MongoDB Atlas",
+        "description": "Retrieves all available dog breeds from external Dog CEO API (cached). Returns breed types and categories, not individual dog records.",
         "tags": ["Breed Info"],
         "responses": {
           "200": {
@@ -111,7 +111,7 @@
     "/breeds-popular": {
       "get": {
         "summary": "Get Popular Breeds",
-        "description": "Returns the most popular dog breeds based on usage analytics",
+        "description": "Returns the most popular dog breeds based on usage analytics from external API data. Shows breed popularity, not individual dogs.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -155,7 +155,7 @@
     "/random": {
       "get": {
         "summary": "Get Random Breed Images",
-        "description": "Returns random images for a specified breed",
+        "description": "Returns random images for a specified breed from external Dog CEO API. Filters by breed type, not individual dog records.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -207,7 +207,7 @@
     "/search": {
       "get": {
         "summary": "Search Breeds",
-        "description": "Search for dog breeds by name with relevance scoring",
+        "description": "Search for dog breeds by name from external API data. Searches breed types and categories, not individual dog profiles.",
         "tags": ["Breed Info"],
         "parameters": [
           {
@@ -234,12 +234,12 @@
           {
             "name": "sortBy",
             "in": "query",
-            "description": "Sort results by",
+            "description": "Sort results by field",
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["relevance", "name", "popularity"],
-              "default": "relevance"
+              "enum": ["name", "popularity", "relevance"],
+              "default": "name"
             }
           }
         ],
@@ -255,59 +255,7 @@
             }
           },
           "400": {
-            "description": "Invalid search query",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/breeds/{breed}/images": {
-      "get": {
-        "summary": "Get Images by Breed",
-        "description": "Returns images for a specific breed",
-        "tags": ["Breed Info"],
-        "parameters": [
-          {
-            "name": "breed",
-            "in": "path",
-            "description": "The breed name",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "count",
-            "in": "query",
-            "description": "Number of images to return",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 1,
-              "maximum": 50,
-              "default": 10
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Breed images",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BreedImagesResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Breed not found",
+            "description": "Invalid search parameters",
             "content": {
               "application/json": {
                 "schema": {
@@ -322,7 +270,7 @@
     "/dogs": {
       "get": {
         "summary": "Get All Dogs",
-        "description": "Retrieve all dogs from the database",
+        "description": "Retrieve all individual dog records from internal database. Returns user-created dog profiles (name, age, description, etc.), separate from breed data.",
         "tags": ["CRUD"],
         "responses": {
           "200": {
@@ -339,7 +287,7 @@
       },
       "post": {
         "summary": "Create New Dog",
-        "description": "Add a new dog to the database with validation",
+        "description": "Add a new individual dog profile to internal database. Creates personal dog records with names, ages, descriptions, etc.",
         "tags": ["CRUD"],
         "requestBody": {
           "required": true,
@@ -378,7 +326,7 @@
     "/dogs/{id}": {
       "get": {
         "summary": "Get Dog by ID",
-        "description": "Retrieve a specific dog by its ID",
+        "description": "Retrieve a specific individual dog record from internal database by its unique ID.",
         "tags": ["CRUD"],
         "parameters": [
           {
@@ -416,7 +364,7 @@
       },
       "put": {
         "summary": "Update Dog",
-        "description": "Update an existing dog's information",
+        "description": "Update an existing individual dog record in internal database. Modify personal information like name, age, description, etc.",
         "tags": ["CRUD"],
         "parameters": [
           {
@@ -474,7 +422,7 @@
       },
       "delete": {
         "summary": "Delete Dog",
-        "description": "Remove a dog from the database",
+        "description": "Remove an individual dog record from internal database. Deletes personal dog profiles, not breed information.",
         "tags": ["CRUD"],
         "parameters": [
           {
@@ -766,13 +714,12 @@
                   "type": "string",
                   "example": "Labrador"
                 },
-                "relevanceScore": {
-                  "type": "number",
-                  "example": 0.95
-                },
-                "popularity": {
-                  "type": "integer",
-                  "example": 125
+                "subBreeds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "example": []
                 }
               }
             }
@@ -852,11 +799,19 @@
               "properties": {
                 "url": {
                   "type": "string",
-                  "example": "https://images.dog.ceo/breeds/labrador/n02099712_123.jpg"
+                  "example": "https://images.dog.ceo/breeds/labrador/n02099712_1234.jpg"
                 },
-                "verified": {
-                  "type": "boolean",
-                  "example": true
+                "id": {
+                  "type": "string",
+                  "example": "1751588484926_0"
+                },
+                "breed": {
+                  "type": "string",
+                  "example": "labrador"
+                },
+                "breedDisplayName": {
+                  "type": "string",
+                  "example": "Labrador"
                 }
               }
             }
@@ -906,33 +861,7 @@
           }
         }
       },
-      "BreedImagesResponse": {
-        "type": "object",
-        "properties": {
-          "success": {
-            "type": "boolean",
-            "example": true
-          },
-          "breed": {
-            "type": "string",
-            "example": "labrador"
-          },
-          "count": {
-            "type": "integer",
-            "example": 10
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "example": [
-              "https://images.dog.ceo/breeds/labrador/n02099712_123.jpg",
-              "https://images.dog.ceo/breeds/labrador/n02099712_456.jpg"
-            ]
-          }
-        }
-      },
+
       "SuccessResponse": {
         "type": "object",
         "properties": {
@@ -980,11 +909,11 @@
     },
     {
       "name": "Breed Info",
-      "description": "Dog breed information and image retrieval"
+      "description": "External Dog CEO API data - breed types, categories, and images (cached from dog.ceo)"
     },
     {
       "name": "CRUD",
-      "description": "Dog data management operations (Create, Read, Update, Delete)"
+      "description": "Internal database records - user-managed individual dog profiles with personal information"
     }
   ]
 }

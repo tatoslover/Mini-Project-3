@@ -37,7 +37,7 @@ exports.handler = async (event, context) => {
     const queryParams = event.queryStringParameters || {};
     const searchQuery = queryParams.q;
     const limit = Math.min(parseInt(queryParams.limit) || 10, 50);
-    const sortBy = queryParams.sortBy || "relevance";
+    const sortBy = queryParams.sortBy || "name";
 
     // Validate required parameters
     if (!searchQuery || searchQuery.trim().length === 0) {
@@ -156,15 +156,15 @@ exports.handler = async (event, context) => {
     // Sort based on sortBy parameter
     let sortStage = {};
     switch (sortBy) {
-      case "name":
-        sortStage = { displayName: 1 };
+      case "relevance":
+        sortStage = { relevanceScore: -1, popularity: -1, displayName: 1 };
         break;
       case "popularity":
         sortStage = { popularity: -1, displayName: 1 };
         break;
-      case "relevance":
+      case "name":
       default:
-        sortStage = { relevanceScore: -1, popularity: -1, displayName: 1 };
+        sortStage = { displayName: 1 };
         break;
     }
     pipeline.push({ $sort: sortStage });
@@ -188,9 +188,6 @@ exports.handler = async (event, context) => {
         breed: result.breed,
         displayName: result.displayName,
         subBreeds: result.subBreeds || [],
-        popularity: result.popularity || 0,
-        imageCount: result.imageCount || 0,
-        relevanceScore: Math.round(result.relevanceScore * 100) / 100,
       })),
       timestamp: new Date().toISOString(),
     };
