@@ -9,12 +9,6 @@
       "breed": "affenpinscher",
       "subBreed": null,
       "displayName": "Affenpinscher",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.714Z",
       "isActive": true
     },
@@ -24,12 +18,6 @@
       "breed": "african",
       "subBreed": null,
       "displayName": "African",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.771Z",
       "isActive": true
     },
@@ -39,12 +27,6 @@
       "breed": "airedale",
       "subBreed": null,
       "displayName": "Airedale",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.824Z",
       "isActive": true
     },
@@ -54,12 +36,6 @@
       "breed": "akita",
       "subBreed": null,
       "displayName": "Akita",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.879Z",
       "isActive": true
     },
@@ -69,12 +45,6 @@
       "breed": "appenzeller",
       "subBreed": null,
       "displayName": "Appenzeller",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.936Z",
       "isActive": true
     },
@@ -84,12 +54,6 @@
       "breed": "australian",
       "subBreed": "kelpie",
       "displayName": "Australian Kelpie",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:50.989Z",
       "isActive": true
     },
@@ -99,13 +63,7 @@
       "breed": "australian",
       "subBreed": "shepherd",
       "displayName": "Australian Shepherd",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.050Z",
+      "lastSync": "2025-07-03T05:19:51.040Z",
       "isActive": true
     },
     {
@@ -114,13 +72,7 @@
       "breed": "bakharwal",
       "subBreed": "indian",
       "displayName": "Bakharwal Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.102Z",
+      "lastSync": "2025-07-03T05:19:51.095Z",
       "isActive": true
     },
     {
@@ -129,13 +81,7 @@
       "breed": "basenji",
       "subBreed": null,
       "displayName": "Basenji",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.160Z",
+      "lastSync": "2025-07-03T05:19:51.148Z",
       "isActive": true
     },
     {
@@ -144,13 +90,7 @@
       "breed": "beagle",
       "subBreed": null,
       "displayName": "Beagle",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.215Z",
+      "lastSync": "2025-07-03T05:19:51.203Z",
       "isActive": true
     },
     {
@@ -159,13 +99,7 @@
       "breed": "bluetick",
       "subBreed": null,
       "displayName": "Bluetick",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.282Z",
+      "lastSync": "2025-07-03T05:19:51.258Z",
       "isActive": true
     },
     {
@@ -174,13 +108,7 @@
       "breed": "borzoi",
       "subBreed": null,
       "displayName": "Borzoi",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.335Z",
+      "lastSync": "2025-07-03T05:19:51.313Z",
       "isActive": true
     },
     {
@@ -189,13 +117,7 @@
       "breed": "bouvier",
       "subBreed": null,
       "displayName": "Bouvier",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.423Z",
+      "lastSync": "2025-07-03T05:19:51.366Z",
       "isActive": true
     },
     {
@@ -204,13 +126,7 @@
       "breed": "boxer",
       "subBreed": null,
       "displayName": "Boxer",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.482Z",
+      "lastSync": "2025-07-03T05:19:51.421Z",
       "isActive": true
     },
     {
@@ -219,13 +135,7 @@
       "breed": "brabancon",
       "subBreed": null,
       "displayName": "Brabancon",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.534Z",
+      "lastSync": "2025-07-03T05:19:51.476Z",
       "isActive": true
     },
     {
@@ -234,13 +144,7 @@
       "breed": "briard",
       "subBreed": null,
       "displayName": "Briard",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.586Z",
+      "lastSync": "2025-07-03T05:19:51.531Z",
       "isActive": true
     },
     {
@@ -249,13 +153,7 @@
       "breed": "buhund",
       "subBreed": "norwegian",
       "displayName": "Buhund Norwegian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.639Z",
+      "lastSync": "2025-07-03T05:19:51.586Z",
       "isActive": true
     },
     {
@@ -264,13 +162,7 @@
       "breed": "bulldog",
       "subBreed": "boston",
       "displayName": "Bulldog Boston",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.692Z",
+      "lastSync": "2025-07-03T05:19:51.641Z",
       "isActive": true
     },
     {
@@ -279,13 +171,7 @@
       "breed": "bulldog",
       "subBreed": "english",
       "displayName": "Bulldog English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.744Z",
+      "lastSync": "2025-07-03T05:19:51.696Z",
       "isActive": true
     },
     {
@@ -294,13 +180,7 @@
       "breed": "bulldog",
       "subBreed": "french",
       "displayName": "Bulldog French",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.796Z",
+      "lastSync": "2025-07-03T05:19:51.751Z",
       "isActive": true
     },
     {
@@ -309,13 +189,7 @@
       "breed": "bullterrier",
       "subBreed": "staffordshire",
       "displayName": "Bullterrier Staffordshire",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.848Z",
+      "lastSync": "2025-07-03T05:19:51.804Z",
       "isActive": true
     },
     {
@@ -324,13 +198,7 @@
       "breed": "cattledog",
       "subBreed": "australian",
       "displayName": "Cattledog Australian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.899Z",
+      "lastSync": "2025-07-03T05:19:51.859Z",
       "isActive": true
     },
     {
@@ -339,13 +207,7 @@
       "breed": "cavapoo",
       "subBreed": null,
       "displayName": "Cavapoo",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:51.951Z",
+      "lastSync": "2025-07-03T05:19:51.912Z",
       "isActive": true
     },
     {
@@ -354,13 +216,7 @@
       "breed": "chihuahua",
       "subBreed": null,
       "displayName": "Chihuahua",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.004Z",
+      "lastSync": "2025-07-03T05:19:51.967Z",
       "isActive": true
     },
     {
@@ -369,13 +225,7 @@
       "breed": "chippiparai",
       "subBreed": "indian",
       "displayName": "Chippiparai Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.057Z",
+      "lastSync": "2025-07-03T05:19:52.022Z",
       "isActive": true
     },
     {
@@ -384,13 +234,7 @@
       "breed": "chow",
       "subBreed": null,
       "displayName": "Chow",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.108Z",
+      "lastSync": "2025-07-03T05:19:52.075Z",
       "isActive": true
     },
     {
@@ -399,13 +243,7 @@
       "breed": "clumber",
       "subBreed": null,
       "displayName": "Clumber",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.160Z",
+      "lastSync": "2025-07-03T05:19:52.130Z",
       "isActive": true
     },
     {
@@ -414,13 +252,7 @@
       "breed": "cockapoo",
       "subBreed": null,
       "displayName": "Cockapoo",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.214Z",
+      "lastSync": "2025-07-03T05:19:52.185Z",
       "isActive": true
     },
     {
@@ -429,13 +261,7 @@
       "breed": "collie",
       "subBreed": "border",
       "displayName": "Collie Border",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.267Z",
+      "lastSync": "2025-07-03T05:19:52.240Z",
       "isActive": true
     },
     {
@@ -444,13 +270,7 @@
       "breed": "coonhound",
       "subBreed": null,
       "displayName": "Coonhound",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.318Z",
+      "lastSync": "2025-07-03T05:19:52.295Z",
       "isActive": true
     },
     {
@@ -459,13 +279,7 @@
       "breed": "corgi",
       "subBreed": "cardigan",
       "displayName": "Corgi Cardigan",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.372Z",
+      "lastSync": "2025-07-03T05:19:52.350Z",
       "isActive": true
     },
     {
@@ -474,13 +288,7 @@
       "breed": "cotondetulear",
       "subBreed": null,
       "displayName": "Cotondetulear",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.426Z",
+      "lastSync": "2025-07-03T05:19:52.405Z",
       "isActive": true
     },
     {
@@ -489,13 +297,7 @@
       "breed": "dachshund",
       "subBreed": null,
       "displayName": "Dachshund",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
-      "lastSync": "2025-07-03T05:19:52.478Z",
+      "lastSync": "2025-07-03T05:19:52.460Z",
       "isActive": true
     },
     {
@@ -504,12 +306,6 @@
       "breed": "dalmatian",
       "subBreed": null,
       "displayName": "Dalmatian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.529Z",
       "isActive": true
     },
@@ -519,12 +315,6 @@
       "breed": "dane",
       "subBreed": "great",
       "displayName": "Dane Great",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.583Z",
       "isActive": true
     },
@@ -534,12 +324,6 @@
       "breed": "danish",
       "subBreed": "swedish",
       "displayName": "Danish Swedish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.634Z",
       "isActive": true
     },
@@ -549,12 +333,6 @@
       "breed": "deerhound",
       "subBreed": "scottish",
       "displayName": "Deerhound Scottish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.686Z",
       "isActive": true
     },
@@ -564,12 +342,6 @@
       "breed": "dhole",
       "subBreed": null,
       "displayName": "Dhole",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.739Z",
       "isActive": true
     },
@@ -579,12 +351,6 @@
       "breed": "dingo",
       "subBreed": null,
       "displayName": "Dingo",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.791Z",
       "isActive": true
     },
@@ -594,12 +360,6 @@
       "breed": "doberman",
       "subBreed": null,
       "displayName": "Doberman",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.843Z",
       "isActive": true
     },
@@ -609,12 +369,6 @@
       "breed": "elkhound",
       "subBreed": "norwegian",
       "displayName": "Elkhound Norwegian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.895Z",
       "isActive": true
     },
@@ -624,12 +378,6 @@
       "breed": "entlebucher",
       "subBreed": null,
       "displayName": "Entlebucher",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.947Z",
       "isActive": true
     },
@@ -639,12 +387,6 @@
       "breed": "eskimo",
       "subBreed": null,
       "displayName": "Eskimo",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:52.999Z",
       "isActive": true
     },
@@ -654,12 +396,6 @@
       "breed": "finnish",
       "subBreed": "lapphund",
       "displayName": "Finnish Lapphund",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.051Z",
       "isActive": true
     },
@@ -669,12 +405,6 @@
       "breed": "frise",
       "subBreed": "bichon",
       "displayName": "Frise Bichon",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.104Z",
       "isActive": true
     },
@@ -684,12 +414,6 @@
       "breed": "gaddi",
       "subBreed": "indian",
       "displayName": "Gaddi Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.158Z",
       "isActive": true
     },
@@ -699,12 +423,6 @@
       "breed": "germanshepherd",
       "subBreed": null,
       "displayName": "Germanshepherd",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.210Z",
       "isActive": true
     },
@@ -714,12 +432,6 @@
       "breed": "greyhound",
       "subBreed": "indian",
       "displayName": "Greyhound Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.262Z",
       "isActive": true
     },
@@ -729,12 +441,6 @@
       "breed": "greyhound",
       "subBreed": "italian",
       "displayName": "Greyhound Italian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.314Z",
       "isActive": true
     },
@@ -744,12 +450,6 @@
       "breed": "groenendael",
       "subBreed": null,
       "displayName": "Groenendael",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.366Z",
       "isActive": true
     },
@@ -759,12 +459,6 @@
       "breed": "havanese",
       "subBreed": null,
       "displayName": "Havanese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.418Z",
       "isActive": true
     },
@@ -774,12 +468,6 @@
       "breed": "hound",
       "subBreed": "afghan",
       "displayName": "Hound Afghan",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.474Z",
       "isActive": true
     },
@@ -789,12 +477,6 @@
       "breed": "hound",
       "subBreed": "basset",
       "displayName": "Hound Basset",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.525Z",
       "isActive": true
     },
@@ -804,12 +486,6 @@
       "breed": "hound",
       "subBreed": "blood",
       "displayName": "Hound Blood",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.579Z",
       "isActive": true
     },
@@ -819,12 +495,6 @@
       "breed": "hound",
       "subBreed": "english",
       "displayName": "Hound English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.631Z",
       "isActive": true
     },
@@ -834,12 +504,6 @@
       "breed": "hound",
       "subBreed": "ibizan",
       "displayName": "Hound Ibizan",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.682Z",
       "isActive": true
     },
@@ -849,12 +513,6 @@
       "breed": "hound",
       "subBreed": "plott",
       "displayName": "Hound Plott",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.734Z",
       "isActive": true
     },
@@ -864,12 +522,6 @@
       "breed": "hound",
       "subBreed": "walker",
       "displayName": "Hound Walker",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.792Z",
       "isActive": true
     },
@@ -879,12 +531,6 @@
       "breed": "husky",
       "subBreed": null,
       "displayName": "Husky",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.844Z",
       "isActive": true
     },
@@ -894,12 +540,6 @@
       "breed": "keeshond",
       "subBreed": null,
       "displayName": "Keeshond",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.896Z",
       "isActive": true
     },
@@ -909,12 +549,6 @@
       "breed": "kelpie",
       "subBreed": null,
       "displayName": "Kelpie",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:53.949Z",
       "isActive": true
     },
@@ -924,12 +558,6 @@
       "breed": "kombai",
       "subBreed": null,
       "displayName": "Kombai",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.000Z",
       "isActive": true
     },
@@ -939,12 +567,6 @@
       "breed": "komondor",
       "subBreed": null,
       "displayName": "Komondor",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.053Z",
       "isActive": true
     },
@@ -954,12 +576,6 @@
       "breed": "kuvasz",
       "subBreed": null,
       "displayName": "Kuvasz",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.106Z",
       "isActive": true
     },
@@ -969,12 +585,6 @@
       "breed": "labradoodle",
       "subBreed": null,
       "displayName": "Labradoodle",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.165Z",
       "isActive": true
     },
@@ -984,12 +594,6 @@
       "breed": "labrador",
       "subBreed": null,
       "displayName": "Labrador",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 1,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-04T07:08:15.732Z",
       "isActive": true
     },
@@ -999,12 +603,6 @@
       "breed": "leonberg",
       "subBreed": null,
       "displayName": "Leonberg",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.274Z",
       "isActive": true
     },
@@ -1014,12 +612,6 @@
       "breed": "lhasa",
       "subBreed": null,
       "displayName": "Lhasa",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.326Z",
       "isActive": true
     },
@@ -1029,12 +621,6 @@
       "breed": "malamute",
       "subBreed": null,
       "displayName": "Malamute",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.375Z",
       "isActive": true
     },
@@ -1044,12 +630,6 @@
       "breed": "malinois",
       "subBreed": null,
       "displayName": "Malinois",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.431Z",
       "isActive": true
     },
@@ -1059,12 +639,6 @@
       "breed": "maltese",
       "subBreed": null,
       "displayName": "Maltese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.484Z",
       "isActive": true
     },
@@ -1074,12 +648,6 @@
       "breed": "mastiff",
       "subBreed": "bull",
       "displayName": "Mastiff Bull",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.536Z",
       "isActive": true
     },
@@ -1089,12 +657,6 @@
       "breed": "mastiff",
       "subBreed": "english",
       "displayName": "Mastiff English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.588Z",
       "isActive": true
     },
@@ -1104,12 +666,6 @@
       "breed": "mastiff",
       "subBreed": "indian",
       "displayName": "Mastiff Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.646Z",
       "isActive": true
     },
@@ -1119,12 +675,6 @@
       "breed": "mastiff",
       "subBreed": "tibetan",
       "displayName": "Mastiff Tibetan",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.698Z",
       "isActive": true
     },
@@ -1134,12 +684,6 @@
       "breed": "mexicanhairless",
       "subBreed": null,
       "displayName": "Mexicanhairless",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.751Z",
       "isActive": true
     },
@@ -1149,12 +693,6 @@
       "breed": "mix",
       "subBreed": null,
       "displayName": "Mix",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.802Z",
       "isActive": true
     },
@@ -1164,12 +702,6 @@
       "breed": "mountain",
       "subBreed": "bernese",
       "displayName": "Mountain Bernese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.854Z",
       "isActive": true
     },
@@ -1179,12 +711,6 @@
       "breed": "mountain",
       "subBreed": "swiss",
       "displayName": "Mountain Swiss",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.905Z",
       "isActive": true
     },
@@ -1194,12 +720,6 @@
       "breed": "mudhol",
       "subBreed": "indian",
       "displayName": "Mudhol Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:54.960Z",
       "isActive": true
     },
@@ -1209,12 +729,6 @@
       "breed": "newfoundland",
       "subBreed": null,
       "displayName": "Newfoundland",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.013Z",
       "isActive": true
     },
@@ -1224,12 +738,6 @@
       "breed": "otterhound",
       "subBreed": null,
       "displayName": "Otterhound",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.063Z",
       "isActive": true
     },
@@ -1239,12 +747,6 @@
       "breed": "ovcharka",
       "subBreed": "caucasian",
       "displayName": "Ovcharka Caucasian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.115Z",
       "isActive": true
     },
@@ -1254,12 +756,6 @@
       "breed": "papillon",
       "subBreed": null,
       "displayName": "Papillon",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.167Z",
       "isActive": true
     },
@@ -1269,12 +765,6 @@
       "breed": "pariah",
       "subBreed": "indian",
       "displayName": "Pariah Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.219Z",
       "isActive": true
     },
@@ -1284,12 +774,6 @@
       "breed": "pekinese",
       "subBreed": null,
       "displayName": "Pekinese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.271Z",
       "isActive": true
     },
@@ -1299,12 +783,6 @@
       "breed": "pembroke",
       "subBreed": null,
       "displayName": "Pembroke",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.323Z",
       "isActive": true
     },
@@ -1314,12 +792,6 @@
       "breed": "pinscher",
       "subBreed": "miniature",
       "displayName": "Pinscher Miniature",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.374Z",
       "isActive": true
     },
@@ -1329,12 +801,6 @@
       "breed": "pitbull",
       "subBreed": null,
       "displayName": "Pitbull",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.428Z",
       "isActive": true
     },
@@ -1344,12 +810,6 @@
       "breed": "pointer",
       "subBreed": "german",
       "displayName": "Pointer German",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.481Z",
       "isActive": true
     },
@@ -1359,12 +819,6 @@
       "breed": "pointer",
       "subBreed": "germanlonghair",
       "displayName": "Pointer Germanlonghair",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.532Z",
       "isActive": true
     },
@@ -1374,12 +828,6 @@
       "breed": "pomeranian",
       "subBreed": null,
       "displayName": "Pomeranian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.586Z",
       "isActive": true
     },
@@ -1389,12 +837,6 @@
       "breed": "poodle",
       "subBreed": "medium",
       "displayName": "Poodle Medium",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 1,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-04T07:08:27.969Z",
       "isActive": true
     },
@@ -1404,12 +846,6 @@
       "breed": "poodle",
       "subBreed": "miniature",
       "displayName": "Poodle Miniature",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.708Z",
       "isActive": true
     },
@@ -1419,12 +855,6 @@
       "breed": "poodle",
       "subBreed": "standard",
       "displayName": "Poodle Standard",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.760Z",
       "isActive": true
     },
@@ -1434,12 +864,6 @@
       "breed": "poodle",
       "subBreed": "toy",
       "displayName": "Poodle Toy",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.814Z",
       "isActive": true
     },
@@ -1449,12 +873,6 @@
       "breed": "pug",
       "subBreed": null,
       "displayName": "Pug",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.901Z",
       "isActive": true
     },
@@ -1464,12 +882,6 @@
       "breed": "puggle",
       "subBreed": null,
       "displayName": "Puggle",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:55.961Z",
       "isActive": true
     },
@@ -1479,12 +891,6 @@
       "breed": "pyrenees",
       "subBreed": null,
       "displayName": "Pyrenees",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.018Z",
       "isActive": true
     },
@@ -1494,12 +900,6 @@
       "breed": "rajapalayam",
       "subBreed": "indian",
       "displayName": "Rajapalayam Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.075Z",
       "isActive": true
     },
@@ -1509,12 +909,6 @@
       "breed": "redbone",
       "subBreed": null,
       "displayName": "Redbone",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.128Z",
       "isActive": true
     },
@@ -1524,12 +918,6 @@
       "breed": "retriever",
       "subBreed": "chesapeake",
       "displayName": "Retriever Chesapeake",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.181Z",
       "isActive": true
     },
@@ -1539,12 +927,6 @@
       "breed": "retriever",
       "subBreed": "curly",
       "displayName": "Retriever Curly",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.234Z",
       "isActive": true
     },
@@ -1554,12 +936,6 @@
       "breed": "retriever",
       "subBreed": "flatcoated",
       "displayName": "Retriever Flatcoated",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.286Z",
       "isActive": true
     },
@@ -1569,12 +945,6 @@
       "breed": "retriever",
       "subBreed": "golden",
       "displayName": "Retriever Golden",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.338Z",
       "isActive": true
     },
@@ -1584,12 +954,6 @@
       "breed": "ridgeback",
       "subBreed": "rhodesian",
       "displayName": "Ridgeback Rhodesian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.391Z",
       "isActive": true
     },
@@ -1599,12 +963,6 @@
       "breed": "rottweiler",
       "subBreed": null,
       "displayName": "Rottweiler",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.442Z",
       "isActive": true
     },
@@ -1614,12 +972,6 @@
       "breed": "saluki",
       "subBreed": null,
       "displayName": "Saluki",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.494Z",
       "isActive": true
     },
@@ -1629,12 +981,6 @@
       "breed": "samoyed",
       "subBreed": null,
       "displayName": "Samoyed",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.546Z",
       "isActive": true
     },
@@ -1644,12 +990,6 @@
       "breed": "schipperke",
       "subBreed": null,
       "displayName": "Schipperke",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.598Z",
       "isActive": true
     },
@@ -1659,12 +999,6 @@
       "breed": "schnauzer",
       "subBreed": "giant",
       "displayName": "Schnauzer Giant",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.650Z",
       "isActive": true
     },
@@ -1674,12 +1008,6 @@
       "breed": "schnauzer",
       "subBreed": "miniature",
       "displayName": "Schnauzer Miniature",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.702Z",
       "isActive": true
     },
@@ -1689,12 +1017,6 @@
       "breed": "segugio",
       "subBreed": "italian",
       "displayName": "Segugio Italian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.755Z",
       "isActive": true
     },
@@ -1704,12 +1026,6 @@
       "breed": "setter",
       "subBreed": "english",
       "displayName": "Setter English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.812Z",
       "isActive": true
     },
@@ -1719,12 +1035,6 @@
       "breed": "setter",
       "subBreed": "gordon",
       "displayName": "Setter Gordon",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.864Z",
       "isActive": true
     },
@@ -1734,12 +1044,6 @@
       "breed": "setter",
       "subBreed": "irish",
       "displayName": "Setter Irish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.920Z",
       "isActive": true
     },
@@ -1749,12 +1053,6 @@
       "breed": "sharpei",
       "subBreed": null,
       "displayName": "Sharpei",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:56.982Z",
       "isActive": true
     },
@@ -1764,12 +1062,6 @@
       "breed": "sheepdog",
       "subBreed": "english",
       "displayName": "Sheepdog English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.061Z",
       "isActive": true
     },
@@ -1779,12 +1071,6 @@
       "breed": "sheepdog",
       "subBreed": "indian",
       "displayName": "Sheepdog Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.114Z",
       "isActive": true
     },
@@ -1794,12 +1080,6 @@
       "breed": "sheepdog",
       "subBreed": "shetland",
       "displayName": "Sheepdog Shetland",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.167Z",
       "isActive": true
     },
@@ -1809,12 +1089,6 @@
       "breed": "shiba",
       "subBreed": null,
       "displayName": "Shiba",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.220Z",
       "isActive": true
     },
@@ -1824,12 +1098,6 @@
       "breed": "shihtzu",
       "subBreed": null,
       "displayName": "Shihtzu",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.272Z",
       "isActive": true
     },
@@ -1839,12 +1107,6 @@
       "breed": "spaniel",
       "subBreed": "blenheim",
       "displayName": "Spaniel Blenheim",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.326Z",
       "isActive": true
     },
@@ -1854,12 +1116,6 @@
       "breed": "spaniel",
       "subBreed": "brittany",
       "displayName": "Spaniel Brittany",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.379Z",
       "isActive": true
     },
@@ -1869,12 +1125,6 @@
       "breed": "spaniel",
       "subBreed": "cocker",
       "displayName": "Spaniel Cocker",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.431Z",
       "isActive": true
     },
@@ -1884,12 +1134,6 @@
       "breed": "spaniel",
       "subBreed": "irish",
       "displayName": "Spaniel Irish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.484Z",
       "isActive": true
     },
@@ -1899,12 +1143,6 @@
       "breed": "spaniel",
       "subBreed": "japanese",
       "displayName": "Spaniel Japanese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.535Z",
       "isActive": true
     },
@@ -1914,12 +1152,6 @@
       "breed": "spaniel",
       "subBreed": "sussex",
       "displayName": "Spaniel Sussex",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.589Z",
       "isActive": true
     },
@@ -1929,12 +1161,6 @@
       "breed": "spaniel",
       "subBreed": "welsh",
       "displayName": "Spaniel Welsh",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.645Z",
       "isActive": true
     },
@@ -1944,12 +1170,6 @@
       "breed": "spitz",
       "subBreed": "indian",
       "displayName": "Spitz Indian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.698Z",
       "isActive": true
     },
@@ -1959,12 +1179,6 @@
       "breed": "spitz",
       "subBreed": "japanese",
       "displayName": "Spitz Japanese",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.751Z",
       "isActive": true
     },
@@ -1974,12 +1188,6 @@
       "breed": "springer",
       "subBreed": "english",
       "displayName": "Springer English",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.802Z",
       "isActive": true
     },
@@ -1989,12 +1197,6 @@
       "breed": "stbernard",
       "subBreed": null,
       "displayName": "Stbernard",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.855Z",
       "isActive": true
     },
@@ -2004,12 +1206,6 @@
       "breed": "terrier",
       "subBreed": "american",
       "displayName": "Terrier American",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.907Z",
       "isActive": true
     },
@@ -2019,12 +1215,6 @@
       "breed": "terrier",
       "subBreed": "australian",
       "displayName": "Terrier Australian",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:57.958Z",
       "isActive": true
     },
@@ -2034,12 +1224,6 @@
       "breed": "terrier",
       "subBreed": "bedlington",
       "displayName": "Terrier Bedlington",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.010Z",
       "isActive": true
     },
@@ -2049,12 +1233,6 @@
       "breed": "terrier",
       "subBreed": "border",
       "displayName": "Terrier Border",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.061Z",
       "isActive": true
     },
@@ -2064,12 +1242,6 @@
       "breed": "terrier",
       "subBreed": "cairn",
       "displayName": "Terrier Cairn",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.112Z",
       "isActive": true
     },
@@ -2079,12 +1251,6 @@
       "breed": "terrier",
       "subBreed": "dandie",
       "displayName": "Terrier Dandie",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.164Z",
       "isActive": true
     },
@@ -2094,12 +1260,6 @@
       "breed": "terrier",
       "subBreed": "fox",
       "displayName": "Terrier Fox",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.217Z",
       "isActive": true
     },
@@ -2109,12 +1269,6 @@
       "breed": "terrier",
       "subBreed": "irish",
       "displayName": "Terrier Irish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.268Z",
       "isActive": true
     },
@@ -2124,12 +1278,6 @@
       "breed": "terrier",
       "subBreed": "kerryblue",
       "displayName": "Terrier Kerryblue",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.318Z",
       "isActive": true
     },
@@ -2139,12 +1287,6 @@
       "breed": "terrier",
       "subBreed": "lakeland",
       "displayName": "Terrier Lakeland",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.372Z",
       "isActive": true
     },
@@ -2154,12 +1296,6 @@
       "breed": "terrier",
       "subBreed": "norfolk",
       "displayName": "Terrier Norfolk",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.431Z",
       "isActive": true
     },
@@ -2169,12 +1305,6 @@
       "breed": "terrier",
       "subBreed": "norwich",
       "displayName": "Terrier Norwich",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.483Z",
       "isActive": true
     },
@@ -2184,12 +1314,6 @@
       "breed": "terrier",
       "subBreed": "patterdale",
       "displayName": "Terrier Patterdale",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.538Z",
       "isActive": true
     },
@@ -2199,12 +1323,6 @@
       "breed": "terrier",
       "subBreed": "russell",
       "displayName": "Terrier Russell",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.588Z",
       "isActive": true
     },
@@ -2214,12 +1332,6 @@
       "breed": "terrier",
       "subBreed": "scottish",
       "displayName": "Terrier Scottish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.639Z",
       "isActive": true
     },
@@ -2229,12 +1341,6 @@
       "breed": "terrier",
       "subBreed": "sealyham",
       "displayName": "Terrier Sealyham",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.691Z",
       "isActive": true
     },
@@ -2244,12 +1350,6 @@
       "breed": "terrier",
       "subBreed": "silky",
       "displayName": "Terrier Silky",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.744Z",
       "isActive": true
     },
@@ -2259,12 +1359,6 @@
       "breed": "terrier",
       "subBreed": "tibetan",
       "displayName": "Terrier Tibetan",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.796Z",
       "isActive": true
     },
@@ -2274,12 +1368,6 @@
       "breed": "terrier",
       "subBreed": "toy",
       "displayName": "Terrier Toy",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.848Z",
       "isActive": true
     },
@@ -2289,12 +1377,6 @@
       "breed": "terrier",
       "subBreed": "welsh",
       "displayName": "Terrier Welsh",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.901Z",
       "isActive": true
     },
@@ -2304,12 +1386,6 @@
       "breed": "terrier",
       "subBreed": "westhighland",
       "displayName": "Terrier Westhighland",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:58.952Z",
       "isActive": true
     },
@@ -2319,12 +1395,6 @@
       "breed": "terrier",
       "subBreed": "wheaten",
       "displayName": "Terrier Wheaten",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.004Z",
       "isActive": true
     },
@@ -2334,12 +1404,6 @@
       "breed": "terrier",
       "subBreed": "yorkshire",
       "displayName": "Terrier Yorkshire",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.055Z",
       "isActive": true
     },
@@ -2349,12 +1413,6 @@
       "breed": "tervuren",
       "subBreed": null,
       "displayName": "Tervuren",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.107Z",
       "isActive": true
     },
@@ -2364,12 +1422,6 @@
       "breed": "vizsla",
       "subBreed": null,
       "displayName": "Vizsla",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.159Z",
       "isActive": true
     },
@@ -2379,12 +1431,6 @@
       "breed": "waterdog",
       "subBreed": "spanish",
       "displayName": "Waterdog Spanish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.210Z",
       "isActive": true
     },
@@ -2394,12 +1440,6 @@
       "breed": "weimaraner",
       "subBreed": null,
       "displayName": "Weimaraner",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.264Z",
       "isActive": true
     },
@@ -2409,12 +1449,6 @@
       "breed": "whippet",
       "subBreed": null,
       "displayName": "Whippet",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.317Z",
       "isActive": true
     },
@@ -2424,12 +1458,6 @@
       "breed": "wolfhound",
       "subBreed": "irish",
       "displayName": "Wolfhound Irish",
-      "imageCount": 0,
-      "popularity": {
-        "viewCount": 0,
-        "favoriteCount": 0,
-        "searchCount": 0
-      },
       "lastSync": "2025-07-03T05:19:59.370Z",
       "isActive": true
     }

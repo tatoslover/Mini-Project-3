@@ -227,17 +227,6 @@
               "maximum": 50,
               "default": 10
             }
-          },
-          {
-            "name": "sortBy",
-            "in": "query",
-            "description": "Sort results by",
-            "required": false,
-            "schema": {
-              "type": "string",
-              "enum": ["relevance", "name", "popularity"],
-              "default": "relevance"
-            }
           }
         ],
         "responses": {
@@ -784,27 +773,7 @@
                   "nullable": true,
                   "example": null
                 },
-                "imageCount": {
-                  "type": "integer",
-                  "example": 0
-                },
-                "popularity": {
-                  "type": "object",
-                  "properties": {
-                    "viewCount": {
-                      "type": "integer",
-                      "example": 0
-                    },
-                    "favoriteCount": {
-                      "type": "integer",
-                      "example": 0
-                    },
-                    "searchCount": {
-                      "type": "integer",
-                      "example": 0
-                    }
-                  }
-                },
+
                 "lastSync": {
                   "type": "string",
                   "format": "date-time",
@@ -823,12 +792,6 @@
                 "breed": "affenpinscher",
                 "subBreed": null,
                 "displayName": "Affenpinscher",
-                "imageCount": 0,
-                "popularity": {
-                  "viewCount": 0,
-                  "favoriteCount": 0,
-                  "searchCount": 0
-                },
                 "lastSync": "2025-07-03T05:19:50.714Z",
                 "isActive": true
               },
@@ -838,12 +801,6 @@
                 "breed": "african",
                 "subBreed": null,
                 "displayName": "African",
-                "imageCount": 0,
-                "popularity": {
-                  "viewCount": 0,
-                  "favoriteCount": 0,
-                  "searchCount": 0
-                },
                 "lastSync": "2025-07-03T05:19:50.771Z",
                 "isActive": true
               },
@@ -853,12 +810,6 @@
                 "breed": "australian",
                 "subBreed": "kelpie",
                 "displayName": "Australian Kelpie",
-                "imageCount": 0,
-                "popularity": {
-                  "viewCount": 0,
-                  "favoriteCount": 0,
-                  "searchCount": 0
-                },
                 "lastSync": "2025-07-03T05:19:50.989Z",
                 "isActive": true
               }
@@ -1055,17 +1006,23 @@
                 "displayName": {
                   "type": "string",
                   "example": "Labrador"
-                },
-                "relevanceScore": {
-                  "type": "number",
-                  "example": 0.95
-                },
-                "popularity": {
-                  "type": "integer",
-                  "example": 142
                 }
               }
-            }
+            },
+            "example": [
+              {
+                "breed": "labrador",
+                "displayName": "Labrador"
+              },
+              {
+                "breed": "retriever-labrador",
+                "displayName": "Retriever Labrador"
+              },
+              {
+                "breed": "labradoodle",
+                "displayName": "Labradoodle"
+              }
+            ]
           }
         }
       },

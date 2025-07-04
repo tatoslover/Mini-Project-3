@@ -58,18 +58,12 @@ exports.handler = async (event, context) => {
 
     if (cachedBreeds && cachedBreeds.length > 0) {
       // Use cached data
-      breeds = cachedBreeds.map(breed => ({
+      breeds = cachedBreeds.map((breed) => ({
         id: breed.breedId,
         name: breed.name,
         breed: breed.breed,
         subBreed: breed.subBreed,
         displayName: breed.displayName,
-        imageCount: breed.metadata?.imageCount || 0,
-        popularity: {
-          viewCount: breed.popularity?.viewCount || 0,
-          favoriteCount: breed.popularity?.favoriteCount || 0,
-          searchCount: breed.popularity?.searchCount || 0,
-        },
         lastSync: breed.metadata?.externalApiLastSync,
         isActive: breed.metadata?.isActive || true,
       }));
@@ -96,12 +90,6 @@ exports.handler = async (event, context) => {
                 breed: breed,
                 subBreed: subBreed,
                 displayName: displayName,
-                imageCount: 0,
-                popularity: {
-                  viewCount: 0,
-                  favoriteCount: 0,
-                  searchCount: 0,
-                },
                 lastSync: new Date(),
                 isActive: true,
               });
@@ -126,7 +114,7 @@ exports.handler = async (event, context) => {
                     isActive: true,
                   },
                 },
-                { upsert: true, new: true }
+                { upsert: true, new: true },
               );
             }
           } else {
@@ -140,12 +128,6 @@ exports.handler = async (event, context) => {
               breed: breed,
               subBreed: null,
               displayName: displayName,
-              imageCount: 0,
-              popularity: {
-                viewCount: 0,
-                favoriteCount: 0,
-                searchCount: 0,
-              },
               lastSync: new Date(),
               isActive: true,
             });
@@ -170,7 +152,7 @@ exports.handler = async (event, context) => {
                   isActive: true,
                 },
               },
-              { upsert: true, new: true }
+              { upsert: true, new: true },
             );
           }
         }
@@ -212,7 +194,9 @@ exports.handler = async (event, context) => {
       count: breeds.length,
       data: breeds,
       metadata: {
-        lastUpdated: fromCache ? cachedBreeds[0]?.metadata?.externalApiLastSync : new Date(),
+        lastUpdated: fromCache
+          ? cachedBreeds[0]?.metadata?.externalApiLastSync
+          : new Date(),
         responseTime: responseTime,
         cached: fromCache,
       },
@@ -277,6 +261,6 @@ async function updateDailyStats(responseTime, endpoint) {
         updatedAt: new Date(),
       },
     },
-    { upsert: true, new: true }
+    { upsert: true, new: true },
   );
 }
