@@ -231,7 +231,7 @@ exports.handler = async (event, context) => {
 
     const errorResponse = {
       success: false,
-      error: "Failed to retrieve external API data",
+      error: "Failed to retrieve breed data",
       message: error.message,
       timestamp: new Date().toISOString(),
     };

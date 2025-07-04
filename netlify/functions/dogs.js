@@ -37,8 +37,6 @@ exports.handler = async (event, context) => {
     const dogId = pathSegments[pathSegments.length - 1];
     const isSpecificDog = dogId !== "dogs" && dogId.length > 0;
 
-    const responseTime = Date.now() - startTime;
-
     // Route to appropriate handler based on HTTP method and path
     switch (event.httpMethod) {
       case "GET":
@@ -147,7 +145,7 @@ exports.handler = async (event, context) => {
 
     const errorResponse = {
       success: false,
-      error: getOperationErrorMessage(event.httpMethod, pathSegments),
+      error: getOperationErrorMessage(event.httpMethod, event.path),
       message: error.message,
       timestamp: new Date().toISOString(),
     };
@@ -580,7 +578,8 @@ async function handleDeleteDog(
 }
 
 // Helper function to get operation-specific error messages
-function getOperationErrorMessage(httpMethod, pathSegments) {
+function getOperationErrorMessage(httpMethod, path) {
+  const pathSegments = path.split("/");
   const dogId = pathSegments[pathSegments.length - 1];
   const isSpecificDog = dogId !== "dogs" && dogId.length > 0;
 

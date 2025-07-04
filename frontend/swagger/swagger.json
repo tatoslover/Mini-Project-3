@@ -1123,11 +1123,11 @@
           },
           "error": {
             "type": "string",
-            "example": "Failed to process database operation"
+            "example": "Failed to retrieve breed data"
           },
           "message": {
             "type": "string",
-            "example": "Database operation failed"
+            "example": "Connection to database failed"
           },
           "timestamp": {
             "type": "string",
@@ -1156,7 +1156,7 @@
             "summary": "Database Connection Error",
             "value": {
               "success": false,
-              "error": "Failed to process database operation",
+              "error": "Failed to retrieve breed data",
               "message": "Connection to database failed",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
@@ -1165,8 +1165,8 @@
             "summary": "Internal Database CRUD Error",
             "value": {
               "success": false,
-              "error": "Failed to process database operation",
-              "message": "Unable to complete the requested operation",
+              "error": "Failed to retrieve data",
+              "message": "Unable to fetch records from internal database",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
@@ -1219,8 +1219,8 @@
             "summary": "External API Error",
             "value": {
               "success": false,
-              "error": "Failed to retrieve external API data",
-              "message": "Connection to external service failed",
+              "error": "Failed to retrieve breed data",
+              "message": "Connection to external Dog API failed",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
@@ -1233,12 +1233,12 @@
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
-          "read_operation_failed": {
-            "summary": "Read Operation Failed",
+          "crud_read_single_failed": {
+            "summary": "CRUD Read Single Record Failed",
             "value": {
               "success": false,
-              "error": "Failed to retrieve data",
-              "message": "Unable to fetch records from database",
+              "error": "Failed to retrieve record",
+              "message": "Unable to fetch the requested record",
               "timestamp": "2025-01-27T10:30:00.000Z"
             }
           },
